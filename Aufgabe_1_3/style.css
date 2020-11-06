@@ -18,18 +18,27 @@ a{
 iframe{
   width:70%;
   height:200px;
+  border: 1px solid grey;
 }
 input, textarea{
   transition: .4s;
-}
 
+}
+form *{
+  display: block;
+  margin: 0 auto;
+
+}
+form img{
+  margin-top: 20px ;
+}
 input[type="text"], input[type="email"], input[type="tel"], textarea{
   border: 1px solid grey;
   padding: 5px 12px;
   font-size:16px;
   outline:none;
   width:45%;
-  margin:5px;
+  margin-top:5px ;
 }
 input[type="submit"]{
   width:80px;
@@ -38,6 +47,7 @@ input[type="submit"]{
   border: 1px solid #333;
   font-size: 16px;
   position: relative;
+  margin-top:20px ;
 }
 input[type="submit"]:hover{
   background: #333;
@@ -58,8 +68,23 @@ form{
 form img{
   width:70px;
 }
+label{
+  margin-top:10px;
+}
 audio{
   padding:5px;
+  display: block;
+}
+video{
+  margin-top:20px;
+  width:100px;
+height: 100px;}
+cite{
+  font-style: normal;
+  font-weight: 400;
+}
+aside{
+  margin-top:50px;
 }
 /*MENU*/
 .flexContainer{
@@ -77,6 +102,7 @@ audio{
   width:800px;
   box-sizing: border-box;
   z-index: 100;
+
 }
 .menu h1{
   display:inline;
@@ -95,7 +121,9 @@ audio{
 .menu a:hover{
   color:#ffa600;
 }
-
+.menu + h2{
+  padding-top:50px;
+}
 #active{
   color:#ffa600;
 }
@@ -111,6 +139,7 @@ audio{
 }
 #profile{
   width:300px;
+  margin-top: 50px;
 }
 img + h5, audio + h5{
   margin-top:3px;
@@ -141,14 +170,15 @@ td:nth-child(1){
 .portfolio-img{
   width:300px;
 }
-.caps{
-  padding-top:20px;
+hr{
+  margin-top:40px;
+  margin-bottom:40px;
 }
 
 #menuList{
   padding-top:20px;
 }
-table a:last-of-type{
+table a:last-of-type i{
   color:#ffa600;
 }
 li > a{
