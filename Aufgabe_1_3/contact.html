@@ -19,16 +19,16 @@
 
     <a href="about.html">Über mich</a>
 
-    <a id="active" href="contact.html">Kontakt</a><br><br><br>
+    <a id="active" href="contact.html">Kontakt</a>
   </div>
     <a target="_blank" href="https://www.instagram.com/yanakinnn815/"><img src="instIcon.png" alt="instagram" class="social-icon"></a>
 
   </div>
 
 
-    <br><br>
 
-    <h2>Kontakt</h2>
+
+    <h2><u>Kontakt</u></h2>
     <table>
       <tr>
         <td><b>Telefon</b></td>
@@ -44,25 +44,34 @@
       </tr>
       <tr>
         <td><b>Instagram</b></td>
-        <td><a target="_blank" href="https://www.instagram.com/yanakinnn815/">Link zu Instagram-Account</a></td>
+        <td><a target="_blank" href="https://www.instagram.com/yanakinnn815/"><i>Link zu Instagram-Account</i></a></td>
       </tr>
     </table>
-    <br>
+
+<hr>
 
     <h4>Sie können mich über dieses Formular (nicht) kontaktieren</h4>
     <form method="POST" action="email.php">
-      <input type="text" name="vorname" placeholder="Vorname" required>
-      <input type="text" name="nachname" placeholder="Nachname" required>
-      <br>
-      <input type="email" name="email" placeholder="E-Mail" required>
-      <br>
-      <input type="tel" name="tel" placeholder="Telefon (Optional)">
-      <br>
-      <textarea name="message" placeholder="Nachricht"></textarea>
-      <br>
+      <label for="vorname">Vorname</label>
+      <input id="vorname" type="text" name="vorname" placeholder="Vorname" required>
+
+      <label for="nachname">Nachname</label>
+      <input id="nachname" type="text" name="nachname" placeholder="Nachname" required>
+
+      <label for="email">E-Mail</label>
+      <input id="email" type="email" name="email" placeholder="E-Mail" required>
+
+      <label for="tel">Telefon</label>
+      <input id="tel" type="tel" name="tel" placeholder="Telefon (Optional)">
+
+      <label for="message">Nachricht</label>
+      <textarea id="message" name="message" placeholder="Nachricht"></textarea>
+
       <input type="submit" value="Senden">
-      <br><br>
-      <img alt="senden" src="tenor.gif"><br>
+
+      <video loop autoplay>
+        <source src="tenor.mp4" type="video/mp4">
+      </video>
       <a target="_blank" href="https://tenor.com/assets/dist/licenses.txt">Copyright</a>
     </form>
 
