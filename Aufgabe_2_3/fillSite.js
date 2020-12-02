@@ -6,6 +6,20 @@ var data;
     const typ = urlParams.get("typ");
     console.log(typ);
     let con = document.getElementById("container");
+    function communicate(_url) {
+        // try to communicate
+        let promise = fetch(_url);
+        // establish the functions to call when communications 1. succeeds, 2. fails
+        promise.then(handleSuccess, handleFailure);
+    }
+    function handleFailure(_response) {
+        console.log("Failure", _response);
+    }
+    function handleSuccess(_response) {
+        console.log("Success", _response);
+    }
+    //let allData2: Baustein = JSON.parse(communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Aufgabe_2_3/data.json"));
+    communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Aufgabe_2_3/data.json");
     function fillSite(_part) {
         for (let index = 0; index < data.allData.length; index++) {
             if (data.allData[index].typ == _part) {

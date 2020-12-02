@@ -8,14 +8,31 @@ console.log(typ);
 
 let con: HTMLElement = document.getElementById("container");
 
+function communicate(_url: RequestInfo): void {
+    // try to communicate
+    let promise: Promise<Response> = fetch(_url);
+    // establish the functions to call when communications 1. succeeds, 2. fails
+    promise.then(handleSuccess, handleFailure);
+  }
+  
+function handleFailure(_response: Response): void {
+    console.log("Failure", _response);
+}
+  
+function handleSuccess(_response: Response): void {
+    console.log("Success", _response);
+}
+
+//let allData2: Baustein = JSON.parse(communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Aufgabe_2_3/data.json"));
+communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Aufgabe_2_3/data.json");
 function fillSite(_part: number): void {
 
-    for (let index: number = 0; index < data.allData.length; index++) {
-        if (data.allData[index].typ == _part) {
+    for (let index: number = 0; index < allData.length; index++) {
+        if (allData[index].typ == _part) {
             let div1: HTMLParagraphElement = document.createElement("div");
             let img: HTMLParagraphElement = document.createElement("img");
-            img.setAttribute("src", data.allData[index].src);
-            img.setAttribute("alt", data.allData[index].name);
+            img.setAttribute("src", allData[index].src);
+            img.setAttribute("alt", allData[index].name);
             img.setAttribute("id", <string><unknown>data.allData[index].typ);
             div1.setAttribute("style", "background-color: black;");
             div1.appendChild(img);
