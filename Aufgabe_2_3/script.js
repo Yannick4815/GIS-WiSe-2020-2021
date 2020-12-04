@@ -3,18 +3,23 @@ var data;
 (function (data) {
     //Nur auf index.html
     if (window.location.pathname.endsWith("index.html")) {
+        //Auswahlmöglichkeiten
         let kopfDiv = document.getElementById("kopf");
         let rumpfDiv = document.getElementById("rumpf");
         let beineDiv = document.getElementById("beine");
+        //Allgemein
         let frame = document.getElementById("frame");
         let resetBtn = document.getElementById("reset");
+        //Textblöcke
         let kopfAnweisung = document.createElement("h5");
         let rumpfAnweisung = document.createElement("h5");
         let beineAnweisung = document.createElement("h5");
+        //Eventlistener
         kopfDiv.addEventListener("click", link1);
         rumpfDiv.addEventListener("click", link2);
         beineDiv.addEventListener("click", link3);
         resetBtn.addEventListener("click", reset);
+        //Inhalt generieren
         if (localStorage.figur) {
             kopfDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).kopf.src);
             rumpfDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).rumpf.src);
@@ -72,29 +77,27 @@ var data;
     function link3() {
         window.location.href = "select.html?typ=3";
     }
+    function reset() {
+        console.log("reset");
+        localStorage.removeItem("figur");
+        window.location.reload();
+    }
     if (localStorage.figur) {
         console.log("Figur wird aus Local Storage geparsed");
         data.figur = JSON.parse(localStorage.figur);
     }
     else {
-        console.log("Local Storage noch nicht gefüllt, Figur noch nicht erstellt");
+        console.log("Local Storage noch nicht gefüllt, Figur noch nicht erstellt => Wird jetzt gefüllt");
         data.figur = {
             "kopf": { "typ": 0, "name": "", "src": "auswahl.png" },
             "rumpf": { "typ": 0, "name": "", "src": "auswahl.png" },
             "beine": { "typ": 0, "name": "", "src": "auswahl.png" }
         };
     }
-    console.log("JSONStringified = " + JSON.stringify(data.figur));
+    //console.log("JSONStringified = " + JSON.stringify(figur));
     let jsonFigur = JSON.stringify(data.figur);
-    console.log("JSONFgur = " + jsonFigur);
-    //document.cookie = "figur=" + jsonFigur + "; path=/";
-    console.log("localSt = " + localStorage.figur);
-    localStorage.setItem("figur", JSON.stringify(data.figur));
-    function reset() {
-        console.log("reset");
-        localStorage.removeItem("figur");
-        window.location.reload();
-    }
+    //console.log("JSONFigur = " + jsonFigur);
+    //console.log("localSt = " + localStorage.figur);
+    localStorage.setItem("figur", jsonFigur);
 })(data || (data = {}));
-//deleteAllCookies();
 //# sourceMappingURL=script.js.map

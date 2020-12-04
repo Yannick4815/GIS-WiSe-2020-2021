@@ -3,29 +3,35 @@ namespace data {
   //Nur auf index.html
   if (window.location.pathname.endsWith("index.html")) {
 
+    //Auswahlmöglichkeiten
     let kopfDiv: HTMLImageElement = document.getElementById("kopf") as HTMLImageElement;
     let rumpfDiv: HTMLImageElement = document.getElementById("rumpf") as HTMLImageElement;
     let beineDiv: HTMLImageElement = document.getElementById("beine") as HTMLImageElement;
 
+    //Allgemein
     let frame: HTMLElement = document.getElementById("frame");
     let resetBtn: HTMLElement = document.getElementById("reset");
 
+    //Textblöcke
     let kopfAnweisung: HTMLParagraphElement = document.createElement("h5");
     let rumpfAnweisung: HTMLParagraphElement = document.createElement("h5");
     let beineAnweisung: HTMLParagraphElement = document.createElement("h5");
 
+
+    //Eventlistener
     kopfDiv.addEventListener("click", link1);
     rumpfDiv.addEventListener("click", link2);
     beineDiv.addEventListener("click", link3);
 
     resetBtn.addEventListener("click", reset);
 
+
+    //Inhalt generieren
     if (localStorage.figur) {
       kopfDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).kopf.src);
       rumpfDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).rumpf.src);
       beineDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).beine.src);
     }
-
 
     if (kopfDiv.src.endsWith("auswahl.png")) {
       kopfAnweisung.innerText = "Kopf auswählen!";
@@ -39,19 +45,19 @@ namespace data {
       beineAnweisung.innerText = "Beine auswählen!";
       frame.appendChild(beineAnweisung);
     }
+
     if (kopfAnweisung.innerText == "" && rumpfAnweisung.innerText == "" && beineAnweisung.innerText == "") {
       kopfAnweisung.setAttribute("class", "complete");  //kopfAnweisung wird hier als allgemeine Anzeige "Recycelt"
       kopfAnweisung.innerText = "Auswahl vollständig!";
       frame.appendChild(kopfAnweisung);
 
-      
       let url: string = "https://gis-communication.herokuapp.com";
       let query: URLSearchParams = new URLSearchParams(<any>JSON.parse(localStorage.figur));
       url = url + "?" + query.toString();
       //console.log(url);
       communicate(url);
     }
-    
+
     async function communicate(_url: RequestInfo): Promise<void> {
       let response: Response = await fetch(_url);
       let jsonResponse: any = await response.json();
@@ -69,7 +75,6 @@ namespace data {
         serverResponse.setAttribute("class", "error");
       }
 
-      
       frame.appendChild(serverResponse);
     }
 
@@ -90,43 +95,38 @@ namespace data {
     window.location.href = "select.html?typ=3";
   }
 
+  function reset(): void {
+    console.log("reset");
+    localStorage.removeItem("figur");
+    window.location.reload();
+  }
 
 
-  ////KOMMUNIKATION////
+  ////STORAGE////
   export let figur: Figur;
 
   if (localStorage.figur) {
     console.log("Figur wird aus Local Storage geparsed");
     figur = JSON.parse(localStorage.figur);
-
   }
   else {
-    console.log("Local Storage noch nicht gefüllt, Figur noch nicht erstellt");
+    console.log("Local Storage noch nicht gefüllt, Figur noch nicht erstellt => Wird jetzt gefüllt");
     figur = {
       "kopf": { "typ": 0, "name": "", "src": "auswahl.png" },
       "rumpf": { "typ": 0, "name": "", "src": "auswahl.png" },
       "beine": { "typ": 0, "name": "", "src": "auswahl.png" }
     };
   }
-  console.log("JSONStringified = " + JSON.stringify(figur));
+  //console.log("JSONStringified = " + JSON.stringify(figur));
 
   let jsonFigur: string = JSON.stringify(figur);
-  console.log("JSONFgur = " + jsonFigur);
-  //document.cookie = "figur=" + jsonFigur + "; path=/";
 
-  console.log("localSt = " + localStorage.figur);
+  //console.log("JSONFigur = " + jsonFigur);
 
-  localStorage.setItem("figur", JSON.stringify(figur));
+  //console.log("localSt = " + localStorage.figur);
 
-
+  localStorage.setItem("figur", jsonFigur);
 
 
 
-
-  function reset(): void {
-    console.log("reset");
-    localStorage.removeItem("figur");
-    window.location.reload();
-  }
 }
-//deleteAllCookies();
