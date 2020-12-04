@@ -1,54 +1,100 @@
 "use strict";
-let main = document.body;
-let kopfDiv = document.getElementById("kopf");
-let rumpfDiv = document.getElementById("rumpf");
-let beineDiv = document.getElementById("beine");
-function cRArr() {
-    for (let index = 0; index < 5; index++) {
-        let div1 = document.createElement("div");
-        div1.innerText = "Ein neuer Paragraph an dieser Stelle.";
-        div1.setAttribute("style", "background-color: black; height:200px;");
-        main.appendChild(div1);
-    }
-}
-function cR() {
-    let div1 = document.createElement("div");
-    div1.innerText = "Ein neuer Paragraph an dieser Stelle.";
-    div1.setAttribute("style", "background-color: black; height:200px;");
-    main.appendChild(div1);
-}
-function link1() {
-    window.location.href = "select.html?typ=1";
-}
-function link2() {
-    window.location.href = "select.html?typ=2";
-}
-function link3() {
-    window.location.href = "select.html?typ=3";
-}
-kopfDiv.addEventListener("click", link1);
-rumpfDiv.addEventListener("click", link2);
-beineDiv.addEventListener("click", link3);
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
+var data;
+(function (data) {
+    //Nur auf index.html
+    if (window.location.pathname.endsWith("index.html")) {
+        let kopfDiv = document.getElementById("kopf");
+        let rumpfDiv = document.getElementById("rumpf");
+        let beineDiv = document.getElementById("beine");
+        let frame = document.getElementById("frame");
+        let resetBtn = document.getElementById("reset");
+        let kopfAnweisung = document.createElement("h5");
+        let rumpfAnweisung = document.createElement("h5");
+        let beineAnweisung = document.createElement("h5");
+        kopfDiv.addEventListener("click", link1);
+        rumpfDiv.addEventListener("click", link2);
+        beineDiv.addEventListener("click", link3);
+        resetBtn.addEventListener("click", reset);
+        if (localStorage.figur) {
+            kopfDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).kopf.src);
+            rumpfDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).rumpf.src);
+            beineDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).beine.src);
         }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+        if (kopfDiv.src.endsWith("auswahl.png")) {
+            kopfAnweisung.innerText = "Kopf auswählen!";
+            frame.appendChild(kopfAnweisung);
+        }
+        if (rumpfDiv.src.endsWith("auswahl.png")) {
+            rumpfAnweisung.innerText = "Rumpf auswählen!";
+            frame.appendChild(rumpfAnweisung);
+        }
+        if (beineDiv.src.endsWith("auswahl.png")) {
+            beineAnweisung.innerText = "Beine auswählen!";
+            frame.appendChild(beineAnweisung);
+        }
+        if (kopfAnweisung.innerText == "" && rumpfAnweisung.innerText == "" && beineAnweisung.innerText == "") {
+            kopfAnweisung.setAttribute("class", "complete"); //kopfAnweisung wird hier als allgemeine Anzeige "Recycelt"
+            kopfAnweisung.innerText = "Auswahl vollständig!";
+            frame.appendChild(kopfAnweisung);
+            let url = "http://gis-communication.herokuapp.com";
+            let query = new URLSearchParams(JSON.parse(localStorage.figur));
+            url = url + "?" + query.toString();
+            //console.log(url);
+            communicate(url);
+        }
+        async function communicate(_url) {
+            let response = await fetch(_url);
+            let jsonResponse = await response.json();
+            let serverResponse = document.createElement("h4");
+            if (jsonResponse.hasOwnProperty("error")) {
+                serverResponse.innerText = "Error: " + JSON.stringify(jsonResponse.error);
+                serverResponse.setAttribute("class", "error");
+            }
+            else if (jsonResponse.hasOwnProperty("message")) {
+                serverResponse.innerText = "Message: " + JSON.stringify(jsonResponse.message);
+            }
+            else {
+                serverResponse.innerText = "Da ist jetzt irgendwas komplett falsch gelaufen";
+                serverResponse.setAttribute("class", "error");
+            }
+            frame.appendChild(serverResponse);
         }
     }
-    return "../img/auswahl.png";
-}
-kopfDiv.setAttribute("src", "../img/" + getCookie("feld1"));
-rumpfDiv.setAttribute("src", "../img/" + getCookie("feld2"));
-beineDiv.setAttribute("src", "../img/" + getCookie("feld3"));
-for (let index = 1; index < 4; index++) {
-    console.log(getCookie("feld" + index));
-}
-console.log("cookies" + document.cookie);
+    //Auf allen Seiten
+    ////FUNKTIONEN////
+    //Links
+    function link1() {
+        window.location.href = "select.html?typ=1";
+    }
+    function link2() {
+        window.location.href = "select.html?typ=2";
+    }
+    function link3() {
+        window.location.href = "select.html?typ=3";
+    }
+    if (localStorage.figur) {
+        console.log("Figur wird aus Local Storage geparsed");
+        data.figur = JSON.parse(localStorage.figur);
+    }
+    else {
+        console.log("Local Storage noch nicht gefüllt, Figur noch nicht erstellt");
+        data.figur = {
+            "kopf": { "typ": 0, "name": "", "src": "auswahl.png" },
+            "rumpf": { "typ": 0, "name": "", "src": "auswahl.png" },
+            "beine": { "typ": 0, "name": "", "src": "auswahl.png" }
+        };
+    }
+    console.log("JSONStringified = " + JSON.stringify(data.figur));
+    let jsonFigur = JSON.stringify(data.figur);
+    console.log("JSONFgur = " + jsonFigur);
+    //document.cookie = "figur=" + jsonFigur + "; path=/";
+    console.log("localSt = " + localStorage.figur);
+    localStorage.setItem("figur", JSON.stringify(data.figur));
+    function reset() {
+        console.log("reset");
+        localStorage.removeItem("figur");
+        window.location.reload();
+    }
+})(data || (data = {}));
+//deleteAllCookies();
 //# sourceMappingURL=script.js.map

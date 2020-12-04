@@ -1,7 +1,8 @@
 namespace data {
-    interface Figur {
+    export interface Figur {
         kopf: Baustein;
         rumpf: Baustein;
         beine: Baustein;
+
     }
 }

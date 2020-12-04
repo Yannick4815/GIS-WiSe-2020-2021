@@ -1,64 +1,132 @@
-let main: HTMLElement = document.body;
+namespace data {
 
+  //Nur auf index.html
+  if (window.location.pathname.endsWith("index.html")) {
 
+    let kopfDiv: HTMLImageElement = document.getElementById("kopf") as HTMLImageElement;
+    let rumpfDiv: HTMLImageElement = document.getElementById("rumpf") as HTMLImageElement;
+    let beineDiv: HTMLImageElement = document.getElementById("beine") as HTMLImageElement;
 
-let kopfDiv: HTMLElement = document.getElementById("kopf");
-let rumpfDiv: HTMLElement = document.getElementById("rumpf");
-let beineDiv: HTMLElement = document.getElementById("beine");
+    let frame: HTMLElement = document.getElementById("frame");
+    let resetBtn: HTMLElement = document.getElementById("reset");
 
+    let kopfAnweisung: HTMLParagraphElement = document.createElement("h5");
+    let rumpfAnweisung: HTMLParagraphElement = document.createElement("h5");
+    let beineAnweisung: HTMLParagraphElement = document.createElement("h5");
 
-function cRArr(): void {
-    for (let index: number = 0; index < 5; index++) {
-        let div1: HTMLParagraphElement = document.createElement("div");
-        div1.innerText = "Ein neuer Paragraph an dieser Stelle.";
-        div1.setAttribute("style", "background-color: black; height:200px;");
-        main.appendChild(div1);
+    kopfDiv.addEventListener("click", link1);
+    rumpfDiv.addEventListener("click", link2);
+    beineDiv.addEventListener("click", link3);
+
+    resetBtn.addEventListener("click", reset);
+
+    if (localStorage.figur) {
+      kopfDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).kopf.src);
+      rumpfDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).rumpf.src);
+      beineDiv.setAttribute("src", "../img/" + JSON.parse(localStorage.figur).beine.src);
     }
-}
 
-function cR(): void {
-   
-        let div1: HTMLParagraphElement = document.createElement("div");
-        div1.innerText = "Ein neuer Paragraph an dieser Stelle.";
-        div1.setAttribute("style", "background-color: black; height:200px;");
-        main.appendChild(div1);
+
+    if (kopfDiv.src.endsWith("auswahl.png")) {
+      kopfAnweisung.innerText = "Kopf auswählen!";
+      frame.appendChild(kopfAnweisung);
+    }
+    if (rumpfDiv.src.endsWith("auswahl.png")) {
+      rumpfAnweisung.innerText = "Rumpf auswählen!";
+      frame.appendChild(rumpfAnweisung);
+    }
+    if (beineDiv.src.endsWith("auswahl.png")) {
+      beineAnweisung.innerText = "Beine auswählen!";
+      frame.appendChild(beineAnweisung);
+    }
+    if (kopfAnweisung.innerText == "" && rumpfAnweisung.innerText == "" && beineAnweisung.innerText == "") {
+      kopfAnweisung.setAttribute("class", "complete");  //kopfAnweisung wird hier als allgemeine Anzeige "Recycelt"
+      kopfAnweisung.innerText = "Auswahl vollständig!";
+      frame.appendChild(kopfAnweisung);
+
+      
+      let url: string = "http://gis-communication.herokuapp.com";
+      let query: URLSearchParams = new URLSearchParams(<any>JSON.parse(localStorage.figur));
+      url = url + "?" + query.toString();
+      //console.log(url);
+      communicate(url);
+    }
     
-}
-function link1(): void {
-   window.location.href = "select.html?typ=1";
-}
-function link2(): void {
-    window.location.href = "select.html?typ=2";
-}
-function link3(): void {
-    window.location.href = "select.html?typ=3";
-}
-kopfDiv.addEventListener("click", link1);
-rumpfDiv.addEventListener("click", link2);
-beineDiv.addEventListener("click", link3);
+    async function communicate(_url: RequestInfo): Promise<void> {
+      let response: Response = await fetch(_url);
+      let jsonResponse: any = await response.json();
+      let serverResponse: HTMLParagraphElement = document.createElement("h4");
 
-function getCookie(cname: string) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
+      if (jsonResponse.hasOwnProperty("error")) {
+        serverResponse.innerText = "Error: " + JSON.stringify(jsonResponse.error);
+        serverResponse.setAttribute("class", "error");
       }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
+      else if (jsonResponse.hasOwnProperty("message")) {
+        serverResponse.innerText = "Message: " + JSON.stringify(jsonResponse.message);
       }
+      else {
+        serverResponse.innerText = "Da ist jetzt irgendwas komplett falsch gelaufen";
+        serverResponse.setAttribute("class", "error");
+      }
+
+      
+      frame.appendChild(serverResponse);
     }
-    return "../img/auswahl.png";
+
+  }
+
+
+  //Auf allen Seiten
+
+  ////FUNKTIONEN////
+  //Links
+  function link1(): void {
+    window.location.href = "select.html?typ=1";
+  }
+  function link2(): void {
+    window.location.href = "select.html?typ=2";
+  }
+  function link3(): void {
+    window.location.href = "select.html?typ=3";
+  }
+
+
+
+  ////KOMMUNIKATION////
+  export let figur: Figur;
+
+  if (localStorage.figur) {
+    console.log("Figur wird aus Local Storage geparsed");
+    figur = JSON.parse(localStorage.figur);
+
+  }
+  else {
+    console.log("Local Storage noch nicht gefüllt, Figur noch nicht erstellt");
+    figur = {
+      "kopf": { "typ": 0, "name": "", "src": "auswahl.png" },
+      "rumpf": { "typ": 0, "name": "", "src": "auswahl.png" },
+      "beine": { "typ": 0, "name": "", "src": "auswahl.png" }
+    };
+  }
+  console.log("JSONStringified = " + JSON.stringify(figur));
+
+  let jsonFigur: string = JSON.stringify(figur);
+  console.log("JSONFgur = " + jsonFigur);
+  //document.cookie = "figur=" + jsonFigur + "; path=/";
+
+  console.log("localSt = " + localStorage.figur);
+
+  localStorage.setItem("figur", JSON.stringify(figur));
+
+
+
+
+
+
+  function reset(): void {
+    console.log("reset");
+    localStorage.removeItem("figur");
+    window.location.reload();
+  }
 }
-kopfDiv.setAttribute("src", "../img/" + getCookie("feld1"));
-rumpfDiv.setAttribute("src", "../img/" + getCookie("feld2"));
-beineDiv.setAttribute("src", "../img/" + getCookie("feld3"));
-
-
-for (let index: number = 1; index < 4; index++) {
-    console.log(getCookie("feld" + index));
-}
-
-console.log("cookies" + document.cookie);
+//deleteAllCookies();

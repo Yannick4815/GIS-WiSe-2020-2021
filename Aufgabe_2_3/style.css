@@ -1,12 +1,26 @@
+h1, h4, h5 {
+    font-family: Helvetica, Arial;
+}
+h5{
+    font-weight:400;
+    color: lightcoral;
+}
+.complete{
+    color: lightgreen;
+}
+h5:first-of-type{
+    padding-top:40px;
+}
 .flexbox {
     display: flex;
     flex-wrap: wrap;
-    background-color: DodgerBlue;
+    background-color: #333;
     width: 440px;
-    height:40vh;
+    height:440px;
     min-height: 200px;
     overflow-y: scroll;
     padding:10px;
+    margin: 0 auto;
 }
 .flexbox > div {
     background-color: #f1f1f1;
@@ -15,10 +29,43 @@
     text-align: center;
     line-height: 75px;
     font-size: 30px;
-  }
-img{
-    width:100%;
 }
-center {
-    margin-top:30vh;
+#frame{
+    height: 60vh;
+}
+img{
+    height:20vh;
+    transition: .3s;
+}
+img:hover{
+    opacity:.8;
+    cursor: pointer;
+}
+.flexbox img{
+    width:100%;
+    height: auto;
+}
+
+.center {
+    text-align:center;
+    margin-top:10vh;
+    width:100vw;
+}
+.error{
+    color:red;
+}
+button{
+    font-size:18px;
+    padding:5px 12px;
+    border: 1px solid #333;
+    background-color: transparent;
+    color:#333;
+    transition: .3s;
+    position: relative;
+    left:20vw;
+}
+button:hover{
+    color:white;
+    background-color: #333;
+    cursor: pointer;
 }
