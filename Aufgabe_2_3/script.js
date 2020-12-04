@@ -36,7 +36,7 @@ var data;
             kopfAnweisung.setAttribute("class", "complete"); //kopfAnweisung wird hier als allgemeine Anzeige "Recycelt"
             kopfAnweisung.innerText = "Auswahl vollständig!";
             frame.appendChild(kopfAnweisung);
-            let url = "http://gis-communication.herokuapp.com";
+            let url = "https://gis-communication.herokuapp.com";
             let query = new URLSearchParams(JSON.parse(localStorage.figur));
             url = url + "?" + query.toString();
             //console.log(url);

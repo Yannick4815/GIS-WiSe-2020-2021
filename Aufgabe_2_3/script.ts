@@ -45,7 +45,7 @@ namespace data {
       frame.appendChild(kopfAnweisung);
 
       
-      let url: string = "http://gis-communication.herokuapp.com";
+      let url: string = "https://gis-communication.herokuapp.com";
       let query: URLSearchParams = new URLSearchParams(<any>JSON.parse(localStorage.figur));
       url = url + "?" + query.toString();
       //console.log(url);
