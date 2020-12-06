@@ -7,10 +7,10 @@ var data;
     let con = document.getElementById("container");
     //Übersicht: communicate() => fillSite() => addListeners() => Warte auf Eingabe => Auswahl speichern und leite auf index.html
     communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Aufgabe_2_3/data.json")
-        .then((allDataFetched) => fillSite(typ, JSON.parse(allDataFetched)["allData"])
+        .then((allDataFetched) => fillSite(Number(typ), JSON.parse(allDataFetched)["allData"])
     //console.log(allDataFetched);
     );
-    //FUNKTIONEN
+    ////#region FUNKTIONEN
     async function communicate(_url) {
         let response = await fetch(_url);
         let allDataFetched = JSON.stringify(await response.json());
@@ -56,5 +56,6 @@ var data;
             });
         });
     }
+    ////#endregion
 })(data || (data = {}));
 //# sourceMappingURL=fillSite.js.map

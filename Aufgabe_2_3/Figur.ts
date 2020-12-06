@@ -3,6 +3,5 @@ namespace data {
         kopf: Baustein;
         rumpf: Baustein;
         beine: Baustein;
-
     }
 }

@@ -6,10 +6,7 @@
         {"typ": 1, "name": "Kopf_4", "src": "../img/kopf4.png"},
         {"typ": 1, "name": "Kopf_5", "src": "../img/kopf5.png"},
 
-        {"typ": 2, "name": "Rumpf_1", "src": "../img/rumpf1.png"},
-        {"typ": 2, "name": "Rumpf_2", "src": "../img/rumpf2.png"},
-        {"typ": 2, "name": "Rumpf_3", "src": "../img/rumpf3.png"},
-        {"typ": 2, "name": "Rumpf_4", "src": "../img/rumpf4.png"},
+       
         {"typ": 2, "name": "Rumpf_5", "src": "../img/rumpf5.png"},
 
         {"typ": 3, "name": "Beine_1", "src": "../img/beine1.png"},

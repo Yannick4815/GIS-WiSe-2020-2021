@@ -1,6 +1,6 @@
 namespace data {
 
-  //Nur auf index.html
+  ////#region Nur auf index.html
   if (window.location.pathname.endsWith("index.html")) {
 
     //Auswahlmöglichkeiten
@@ -79,11 +79,13 @@ namespace data {
     }
 
   }
+  ////#endregion
 
 
   //Auf allen Seiten
 
-  ////FUNKTIONEN////
+  ////#region FUNKTIONEN
+
   //Links
   function link1(): void {
     window.location.href = "select.html?typ=1";
@@ -95,6 +97,7 @@ namespace data {
     window.location.href = "select.html?typ=3";
   }
 
+  //Weiteres
   function reset(): void {
     console.log("reset");
     localStorage.removeItem("figur");
@@ -102,7 +105,7 @@ namespace data {
   }
 
 
-  ////STORAGE////
+  ////#region Storage
   export let figur: Figur;
 
   if (localStorage.figur) {
@@ -127,6 +130,6 @@ namespace data {
 
   localStorage.setItem("figur", jsonFigur);
 
-
+  ////#endregion
 
 }

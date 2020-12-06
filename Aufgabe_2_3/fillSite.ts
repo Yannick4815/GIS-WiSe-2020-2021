@@ -10,13 +10,13 @@ namespace data {
     //Übersicht: communicate() => fillSite() => addListeners() => Warte auf Eingabe => Auswahl speichern und leite auf index.html
     communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Aufgabe_2_3/data.json")
         .then((allDataFetched) =>
-            fillSite(<number><unknown>typ, JSON.parse(allDataFetched)["allData"])
+            fillSite(Number(typ), JSON.parse(allDataFetched)["allData"])
             //console.log(allDataFetched);
 
         );
 
 
-    //FUNKTIONEN
+    ////#region FUNKTIONEN
     async function communicate(_url: RequestInfo): Promise<string> {
         let response: Response = await fetch(_url);
         let allDataFetched: string = JSON.stringify(await response.json());
@@ -68,6 +68,6 @@ namespace data {
             });
         });
     }
-
+    ////#endregion
 
 }

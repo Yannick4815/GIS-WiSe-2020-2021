@@ -1,7 +1,7 @@
 "use strict";
 var data;
 (function (data) {
-    //Nur auf index.html
+    ////#region Nur auf index.html
     if (window.location.pathname.endsWith("index.html")) {
         //Auswahlmöglichkeiten
         let kopfDiv = document.getElementById("kopf");
@@ -65,8 +65,9 @@ var data;
             frame.appendChild(serverResponse);
         }
     }
+    ////#endregion
     //Auf allen Seiten
-    ////FUNKTIONEN////
+    ////#region FUNKTIONEN
     //Links
     function link1() {
         window.location.href = "select.html?typ=1";
@@ -77,6 +78,7 @@ var data;
     function link3() {
         window.location.href = "select.html?typ=3";
     }
+    //Weiteres
     function reset() {
         console.log("reset");
         localStorage.removeItem("figur");
@@ -99,5 +101,6 @@ var data;
     //console.log("JSONFigur = " + jsonFigur);
     //console.log("localSt = " + localStorage.figur);
     localStorage.setItem("figur", jsonFigur);
+    ////#endregion
 })(data || (data = {}));
 //# sourceMappingURL=script.js.map
