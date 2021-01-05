@@ -52,6 +52,7 @@ var P_3_1Server;
         let orders = mongoClient.db("Test").collection("Students");
         console.log(orders);
     }
+    console.log("Test");
     connectMDB();
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
 //mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority

@@ -62,6 +62,7 @@ export namespace P_3_1Server {
         let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
         console.log(orders);
     }
+    console.log("Test");
     connectMDB();
 
 }
