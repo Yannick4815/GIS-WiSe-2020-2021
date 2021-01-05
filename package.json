@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "gistest",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "@types/mongodb": "^3.6.3",
+    "mongodb": "^3.6.3"
+  },
   "devDependencies": {
     "@types/node": "^14.14.20"
   },

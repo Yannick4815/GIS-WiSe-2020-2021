@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.P_3_1Server = void 0;
 const Http = require("http");
 const url = require("url");
+const Mongo = require("mongodb");
 var P_3_1Server;
 (function (P_3_1Server) {
     //Diesen Code innerhalb von einem aktiven Server testen:
@@ -42,6 +43,14 @@ var P_3_1Server;
         url = url + "?" + query.toString();
         await fetch(url);
     }
+    async function connectMDB() {
+        let _url = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
+        let mongoClient = new Mongo.MongoClient(_url);
+        await mongoClient.connect();
+        let orders = mongoClient.db("Test").collection("Students");
+        console.log(orders);
+    }
+    connectMDB();
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
-//mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/<dbname>?retryWrites=true&w=majority
+//mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority
 //# sourceMappingURL=main.js.map

@@ -1,6 +1,7 @@
 import * as Http from "http";
 import { ParsedUrlQuery } from "querystring";
 import * as url from "url";
+import * as Mongo from "mongodb";
 
 export namespace P_3_1Server {
     //Diesen Code innerhalb von einem aktiven Server testen:
@@ -50,5 +51,17 @@ export namespace P_3_1Server {
         url = url + "?" + query.toString();
         await fetch(url);
     }
+
+    
+    async function connectMDB(): Promise<void> {
+        let _url: string = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
+        let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(_url);
+        await mongoClient.connect();
+
+        let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
+        console.log(orders);
+    }
+    connectMDB();
+
 }
-//mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/<dbname>?retryWrites=true&w=majority
+//mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority
