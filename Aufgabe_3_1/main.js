@@ -5,12 +5,12 @@ const Http = require("http");
 var P_3_1Server;
 (function (P_3_1Server) {
     console.log("Starting server");
-    let port = Number(process.env.PORT);
-    if (!port)
+    let port = Number(process.env.PORT); //port herausfinden und in variable schreiben
+    if (!port) //wenn kein port gesetzt ist, ihn auf 8100 stellen
         port = 8100;
-    let server = Http.createServer();
-    server.addListener("request", handleRequest);
-    server.addListener("listening", handleListen);
+    let server = Http.createServer(); //server in variable schreiben
+    server.addListener("request", handleRequest); //bei request die Funktion handleRequeest ausführen
+    server.addListener("listening", handleListen); //"leerlauf" des Servers, er wartet auf request
     server.listen(port);
     function handleListen() {
         console.log("Listening");
