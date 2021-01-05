@@ -43,4 +43,5 @@ var P_3_1Server;
         await fetch(url);
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
+//mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/<dbname>?retryWrites=true&w=majority
 //# sourceMappingURL=main.js.map

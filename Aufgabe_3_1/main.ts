@@ -51,3 +51,4 @@ export namespace P_3_1Server {
         await fetch(url);
     }
 }
+//mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/<dbname>?retryWrites=true&w=majority
