@@ -25,7 +25,7 @@ var P_3_1Server;
     }
     async function sendForm() {
         let formData = new FormData(document.forms[0]);
-        let url = "https://testgis2021.herokuapp.com";
+        let url = document.forms[0].action;
         let query = new URLSearchParams(formData);
         url = url + "?" + query.toString();
         await fetch(url);

@@ -27,7 +27,7 @@ export namespace P_3_1Server {
 
     async function sendForm(): Promise<void> {
         let formData: FormData = new FormData(document.forms[0]);
-        let url: string = "https://testgis2021.herokuapp.com";
+        let url: string = document.forms[0].action;
         let query: URLSearchParams = new URLSearchParams(<any>formData);
         url = url + "?" + query.toString();
         await fetch(url);
