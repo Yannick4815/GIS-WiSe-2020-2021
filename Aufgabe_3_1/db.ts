@@ -1,4 +1,3 @@
-
 import * as Mongo from "mongodb";
 
 async function connectMDB(): Promise<void> {
