@@ -24,4 +24,12 @@ export namespace P_3_1Server {
         console.log(_request.url);
         _response.end();
     }
+
+    async function sendForm(): Promise<void> {
+        let formData: FormData = new FormData(document.forms[0]);
+        let url: string = "https://testgis2021.herokuapp.com";
+        let query: URLSearchParams = new URLSearchParams(<any>formData);
+        url = url + "?" + query.toString();
+        await fetch(url);
+    }
 }

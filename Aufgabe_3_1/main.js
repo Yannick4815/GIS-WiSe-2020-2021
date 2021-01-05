@@ -23,5 +23,12 @@ var P_3_1Server;
         console.log(_request.url);
         _response.end();
     }
+    async function sendForm() {
+        let formData = new FormData(document.forms[0]);
+        let url = "https://testgis2021.herokuapp.com";
+        let query = new URLSearchParams(formData);
+        url = url + "?" + query.toString();
+        await fetch(url);
+    }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
 //# sourceMappingURL=main.js.map
