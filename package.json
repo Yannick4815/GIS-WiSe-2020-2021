@@ -1,0 +1,24 @@
+{
+  "name": "gis-wise-2020-2021",
+  "version": "1.0.0",
+  "description": "gistest",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "start": "node Aufgabe_3_1/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yannick4815/GIS-WiSe-2020-2021.git"
+  },
+  "keywords": [
+    "gis"
+  ],
+  "author": "Yannick Reiche",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yannick4815/GIS-WiSe-2020-2021/issues"
+  },
+  "homepage": "https://github.com/Yannick4815/GIS-WiSe-2020-2021#readme"
+}
