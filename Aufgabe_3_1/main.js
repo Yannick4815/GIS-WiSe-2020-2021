@@ -44,9 +44,11 @@ var P_3_1Server;
         await fetch(url);
     }
     async function connectMDB() {
+        console.log("Waiting");
         let _url = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
         let mongoClient = new Mongo.MongoClient(_url);
         await mongoClient.connect();
+        console.log("Success");
         let orders = mongoClient.db("Test").collection("Students");
         console.log(orders);
     }
