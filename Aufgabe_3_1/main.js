@@ -48,9 +48,9 @@ var P_3_1Server;
         let _url = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
         let mongoClient = new Mongo.MongoClient(_url);
         await mongoClient.connect();
-        console.log("Success");
+        console.log("Success2");
         let orders = mongoClient.db("Test").collection("Students");
-        console.log(orders);
+        console.log(orders.find());
     }
     console.log("Test");
     connectMDB();
