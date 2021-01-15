@@ -60,7 +60,7 @@ export namespace P_3_1Server {
         await mongoClient.connect();
         console.log("Success");
         let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
-        console.log(orders);
+        console.log(orders.find);
     }
     console.log("Test");
     connectMDB();
