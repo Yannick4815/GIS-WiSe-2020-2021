@@ -50,7 +50,7 @@ var P_3_1Server;
         await mongoClient.connect();
         console.log("Success");
         let orders = mongoClient.db("Test").collection("Students");
-        console.log(orders.find);
+        console.log(orders);
     }
     console.log("Test");
     connectMDB();
