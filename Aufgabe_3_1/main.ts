@@ -60,8 +60,8 @@ export namespace P_3_1Server {
         await mongoClient.connect();
         console.log("Success2");
         let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
-        console.log(orders.findOne);
-        orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
+        console.log(orders.find({"vorname": "Yannick"}));
+        //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
     }
     console.log("Test");
     connectMDB();
