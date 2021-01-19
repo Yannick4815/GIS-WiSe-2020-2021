@@ -54,8 +54,8 @@ var P_3_1Server;
         await console.log(names);
     }
     //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
+    console.log("Test");
+    connectMDB();
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
-console.log("Test");
-connectMDB();
 //mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority
 //# sourceMappingURL=main.js.map

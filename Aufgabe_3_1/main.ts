@@ -67,9 +67,10 @@ export namespace P_3_1Server {
         
 }
         //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
+        console.log("Test");
+        connectMDB();
     }
-    console.log("Test");
-    connectMDB();
+    
 
 }
 //mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority
