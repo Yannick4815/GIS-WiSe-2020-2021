@@ -82,8 +82,8 @@ async function communicate(_url: RequestInfo): Promise<string> {
 
 communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
         .then((allDataFetched) =>
-            //fillSite(JSON.parse(allDataFetched)["allData"])
-            console.log("allDataFetched")
+            fillSite(JSON.parse(allDataFetched)["allData"])
+            //console.log("allDataFetched")
 
         );
 /*
