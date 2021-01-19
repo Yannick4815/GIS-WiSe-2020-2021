@@ -1,6 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-let con = document.getElementById("container");
+let con = document.getElementById("flexbox");
 function fillSite(_allData) {
     //console.log(_allData);
     for (let index = 0; index < _allData.length; index++) {
@@ -51,17 +50,18 @@ function fillSite(_allData) {
         div.appendChild(divOrder);
         con.appendChild(div);
     }
-    addListeners();
+    //addListeners();
 }
 async function communicate(_url) {
+    console.log("rest");
     let response = await fetch(_url);
     let allDataFetched = JSON.stringify(await response.json());
     return allDataFetched;
 }
 communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
-    .then((allDataFetched) => fillSite(JSON.parse(allDataFetched)["allData"])
-//console.log(allDataFetched);
-);
+    .then((allDataFetched) => 
+//fillSite(JSON.parse(allDataFetched)["allData"])
+console.log("allDataFetched"));
 function addListeners() {
     document.querySelectorAll("img").forEach(item => {
         item.addEventListener("click", function () {

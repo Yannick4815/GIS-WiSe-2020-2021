@@ -4,5 +4,5 @@ interface Item {
     preis: string;
     user: string;
     img: string;
-    description: string:
+    description: string;
 }
