@@ -2,6 +2,7 @@ import * as Http from "http";
 import { ParsedUrlQuery } from "querystring";
 import * as url from "url";
 import * as Mongo from "mongodb";
+import { prependOnceListener } from "process";
 
 export namespace P_3_1Server {
     //Diesen Code innerhalb von einem aktiven Server testen:
@@ -60,10 +61,10 @@ export namespace P_3_1Server {
         let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(_url);
         await mongoClient.connect();
         console.log("Success2");
-        let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
+        let orders: Mongo.Collection = await mongoClient.db("Test").collection("Students");
         let names: Mongo.Cursor = await orders.find({});
+        
 
-        await console.log(names);
         
 }
         //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});

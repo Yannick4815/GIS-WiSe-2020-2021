@@ -49,9 +49,8 @@ var P_3_1Server;
         let mongoClient = new Mongo.MongoClient(_url);
         await mongoClient.connect();
         console.log("Success2");
-        let orders = mongoClient.db("Test").collection("Students");
+        let orders = await mongoClient.db("Test").collection("Students");
         let names = await orders.find({});
-        await console.log(names);
     }
     //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
     console.log("Test");
