@@ -63,15 +63,15 @@ export namespace P_3_1Server {
         console.log("Success2");
         let orders: Mongo.Collection = await mongoClient.db("Test").collection("Students");
         let names: Mongo.Cursor = await orders.find({});
-        
-        console.log(names);
-        
-}
-        //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
-        console.log("Test");
-        connectMDB();
+
+        console.log(names.read);
+
     }
+    //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
+    console.log("Test");
+    connectMDB();
+}
     
 
-}
+
 //mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority
