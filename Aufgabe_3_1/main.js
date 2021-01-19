@@ -51,11 +51,11 @@ var P_3_1Server;
         console.log("Success2");
         let orders = mongoClient.db("Test").collection("Students");
         let names = await orders.find({});
-        console.log(names);
-        //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
+        await console.log(names);
     }
-    console.log("Test");
-    connectMDB();
+    //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
+console.log("Test");
+connectMDB();
 //mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority
 //# sourceMappingURL=main.js.map

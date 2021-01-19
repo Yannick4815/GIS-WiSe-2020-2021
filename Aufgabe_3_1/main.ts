@@ -52,7 +52,7 @@ export namespace P_3_1Server {
         await fetch(url);
     }
 
-    interface Vorname {}
+
 
     async function connectMDB(): Promise<void> {
         console.log("Waiting");
@@ -61,8 +61,11 @@ export namespace P_3_1Server {
         await mongoClient.connect();
         console.log("Success2");
         let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
-        let names = await orders.find({});
-        console.log(names);
+        let names: Mongo.Cursor = await orders.find({});
+
+        await console.log(names);
+        
+}
         //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
     }
     console.log("Test");
