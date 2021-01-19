@@ -86,7 +86,7 @@ communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.j
             console.log("allDataFetched")
 
         );
-
+/*
 function addListeners(): void {
     document.querySelectorAll("img").forEach(item => {
         item.addEventListener("click", function (): void {
@@ -115,4 +115,4 @@ function addListeners(): void {
             window.location.href = "index.html";
         });
     });
-}
+}*/

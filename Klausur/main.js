@@ -62,10 +62,13 @@ communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.j
     .then((allDataFetched) => 
 //fillSite(JSON.parse(allDataFetched)["allData"])
 console.log("allDataFetched"));
-function addListeners() {
+/*
+function addListeners(): void {
     document.querySelectorAll("img").forEach(item => {
-        item.addEventListener("click", function () {
-            figur = JSON.parse(localStorage.figur); //Figur aus dem Localstorage holen
+        item.addEventListener("click", function (): void {
+
+            figur = JSON.parse(localStorage.figur);     //Figur aus dem Localstorage holen
+
             //ID bestimmt, ob Kopf, Rumpf oder Beine
             if (this.id == "1") {
                 figur.kopf.typ = 1;
@@ -82,9 +85,11 @@ function addListeners() {
                 figur.beine.name = this.alt;
                 figur.beine.src = (this.src).replace(/^.*[\\\/]/, "");
             }
-            localStorage.figur = JSON.stringify(figur); //veränderte Figur in den LocalStorage packen
+
+            localStorage.figur = JSON.stringify(figur);     //veränderte Figur in den LocalStorage packen
+
             window.location.href = "index.html";
         });
     });
-}
+}*/ 
 //# sourceMappingURL=main.js.map
