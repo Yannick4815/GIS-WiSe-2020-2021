@@ -64,7 +64,7 @@ export namespace P_3_1Server {
         let orders: Mongo.Collection = await mongoClient.db("Test").collection("Students");
         let names: Mongo.Cursor = await orders.find({});
 
-        console.log(names.read);
+        console.log(names);
 
     }
     //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
