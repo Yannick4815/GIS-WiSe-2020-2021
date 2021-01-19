@@ -1,13 +1,13 @@
 {
     "allData" : [
-        {"name": "Kamera", "status": 1, "user": "-", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg"},
+        {"name": "Kamera", "status": 1, "preis": "30,99", "user": "-", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg", "description": "sjfosj oseifj osij oij oij oi "},
 
-        {"name": "Kamera 2", "status": 2, "user": "testtes", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg"},
+        {"name": "Kamera 2", "status": 2, "preis": "33,99" ,"user": "testtes", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg", "description": "sjfosjiuztredcvbnmkiuzoij  oi "},
 
-        {"name": "Kamera 3", "status": 3, "user": "Ttestest", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg"},
+        {"name": "Kamera 3", "status": 3, "preis": "32,99" , "user": "Ttestest", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg", "description": "sjfasdfgh fgdfd df oi "},
 
-        {"name": "Kamera 4", "status": 1, "user": "-", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg"},
+        {"name": "Kamera 4", "status": 1, "preis": "34,99" , "user": "-", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg", "description": "sjfosj oseifj osij oij oij oi "},
 
-        {"name": "Kamera 5", "status": 3, "user": "Testest", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg"}
+        {"name": "Kamera 5", "status": 3, "preis": "35,99" , "user": "Testest", "img": "https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg", "description": "sjfosj redrtzuik mnbgesoij oij oi "}
     ]
 }

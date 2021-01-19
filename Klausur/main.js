@@ -1,14 +1,54 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 let con = document.getElementById("container");
 function fillSite(_allData) {
     //console.log(_allData);
     for (let index = 0; index < _allData.length; index++) {
+        //main div
         let div = document.createElement("div");
+        div.setAttribute("class", "item");
+        //heading div
+        let divHeading = document.createElement("div");
+        divHeading.setAttribute("class", "itemHeading");
+        let h4 = document.createElement("h4");
+        h4.innerText = _allData[index].name;
+        let divCircle = document.createElement("div");
+        if (_allData[index].status == 1) {
+            divCircle.setAttribute("class", "circleGreen");
+        }
+        else if (_allData[index].status == 2) {
+            divCircle.setAttribute("class", "circleOrange");
+        }
+        else {
+            divCircle.setAttribute("class", "circleRed");
+        }
+        divHeading.appendChild(h4);
+        //image Div
+        let divImage = document.createElement("div");
+        divImage.setAttribute("class", "itemImage");
         let img = document.createElement("img");
-        img.setAttribute("src", _allData[index].src);
+        img.setAttribute("src", _allData[index].img);
         img.setAttribute("alt", _allData[index].name);
-        img.setAttribute("id", String(_allData[index].typ));
-        div.appendChild(img);
+        divImage.appendChild(img);
+        //description Div
+        let divDescription = document.createElement("div");
+        divDescription.setAttribute("class", "itemDescription");
+        let h6 = document.createElement("h6");
+        h6.innerText = _allData[index].preis + "€ / Tag";
+        let h5 = document.createElement("h5");
+        h5.innerText = _allData[index].description;
+        divDescription.appendChild(h6);
+        divDescription.appendChild(h5);
+        //order Div
+        let divOrder = document.createElement("div");
+        divOrder.setAttribute("class", "itemOrder");
+        let button = document.createElement("button");
+        button.innerText = "In den Warenkorb";
+        divOrder.appendChild(button);
+        div.appendChild(divHeading);
+        div.appendChild(divImage);
+        div.appendChild(divDescription);
+        div.appendChild(divOrder);
         con.appendChild(div);
     }
     addListeners();

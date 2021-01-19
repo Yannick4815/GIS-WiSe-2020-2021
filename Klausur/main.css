@@ -18,6 +18,14 @@ h4{
 h5{
     font-size: 12px;
     line-height: 12px;
+    
+}
+h6 {
+    padding-bottom:5px;
+    font-weight: bold;
+    font-size:18px;
+    line-height: 18px;
+    padding-right:5px;
 }
 
 .header{
@@ -95,12 +103,28 @@ h5{
 }
 .itemDescription {
     text-align: left;
-    height:20%;
+    height:10%;
     background-color: #aaa;
     padding:10px;
 }
+.itemOrder {
+    text-align: center;
+    
+    background-color: #aaa;
+    padding:10px;
+    border-top:1px solid grey;
+}
+.itemOrder button {
+    font-size: 15px;
+    line-height: 30px;
+    width:auto;
+    padding: 5px 12px;
+    border-radius:10px;
+    border: 1px solid white;
+    background-color: transparent;
+}
 
-.circlered {
+.circleRed {
     height:25px;
     width:25px;
     border-radius:50%;
@@ -110,7 +134,7 @@ h5{
     left:15px;
     position: relative;
 }
-.circleorange {
+.circleOrange {
     height:25px;
     width:25px;
     border-radius:50%;
@@ -120,7 +144,7 @@ h5{
     left:15px;
     position: relative;
 }
-.circlegreen {
+.circleGreen {
     height:25px;
     width:25px;
     border-radius:50%;
