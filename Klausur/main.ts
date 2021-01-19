@@ -18,7 +18,7 @@ function fillSite(_allData: Item[]): void {
         h4.innerText = _allData[index].name;
 
         let divCircle: HTMLParagraphElement = document.createElement("div");
-        if (_allData[index].status == 1){
+        if (_allData[index].status == 1) {
             divCircle.setAttribute("class", "circleGreen");
         }
         else if (_allData[index].status == 2) {
