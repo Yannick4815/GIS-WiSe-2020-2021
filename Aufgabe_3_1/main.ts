@@ -52,7 +52,8 @@ export namespace P_3_1Server {
         await fetch(url);
     }
 
-    
+    interface Vorname {}
+
     async function connectMDB(): Promise<void> {
         console.log("Waiting");
         let _url: string = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
@@ -60,7 +61,8 @@ export namespace P_3_1Server {
         await mongoClient.connect();
         console.log("Success2");
         let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
-        console.log(orders.find({"vorname": "Yannick"}));
+        let names = await orders.find({});
+        console.log(names);
         //orders.insertOne({vorname: "Test", nachname: "TestNach", matrikel: 123456});
     }
     console.log("Test");
