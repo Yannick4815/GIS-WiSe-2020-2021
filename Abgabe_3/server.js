@@ -16,23 +16,32 @@ var P_3_1Server;
         console.log("Listening");
     }
     function handleRequest(_request, _response) {
+        _response.setHeader("content-type", "text/html; charset=utf-8");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
+        _response.write("Was geht?");
+        _response.end();
+    }
+    /*function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
+       
         if (_request.method == "POST") {
             let body = "";
             _request.on("formData", data => {
-                body += data;
+              body += data;
             });
             _request.on("end", async () => {
-                let post = JSON.parse(body);
-                _response.write(post);
+              let post: any = JSON.parse(body);
+              _response.write(post);
             });
-        }
-        else {
+            
+          }
+          else{
             _response.write("Hallo");
-        }
+          }
+        
         _response.end();
-    }
+    }*/
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
 //# sourceMappingURL=server.js.map

@@ -14,7 +14,7 @@ async function sendData(): Promise<void> {
         },
         body: JSON.stringify(formData)
       });*/
-    console.log(response);
+    console.log(response.body);
 }
 
 function hello(): void {

@@ -13,7 +13,7 @@ async function sendData() {
         },
         body: JSON.stringify(formData)
       });*/
-    console.log(response);
+    console.log(response.body);
 }
 function hello() {
     let formData = new FormData(document.forms[0]);
