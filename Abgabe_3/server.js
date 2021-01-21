@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.P_3_1Server = void 0;
 const Http = require("http");
+const Mongo = require("mongodb");
 var P_3_1Server;
 (function (P_3_1Server) {
     console.log("Starting server");
@@ -31,8 +32,18 @@ var P_3_1Server;
         }
         else {
             _response.write("Keine POST anfrage");
+            let orders = connectDB();
+            _response.write(orders);
         }
         _response.end();
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
+async function connectDB() {
+    let _url = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
+    let mongoClient = new Mongo.MongoClient(_url);
+    await mongoClient.connect();
+    console.log("Success");
+    let orders = mongoClient.db("Test").collection("Students");
+    return orders;
+}
 //# sourceMappingURL=server.js.map

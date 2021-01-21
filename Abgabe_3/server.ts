@@ -1,5 +1,5 @@
 import * as Http from "http";
-
+import * as Mongo from "mongodb";
 
 export namespace P_3_1Server {
     console.log("Starting server");
@@ -35,8 +35,20 @@ export namespace P_3_1Server {
           }
           else{
             _response.write("Keine POST anfrage");
+            let orders: Promise<Mongo.Collection> = connectDB();
+            _response.write(orders);
           }
         
+
         _response.end();
     }
+}
+
+async function connectDB(): Promise<Mongo.Collection> {
+    let _url: string = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
+    let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(_url);
+    await mongoClient.connect();
+    console.log("Success");
+    let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
+    return orders;
 }
