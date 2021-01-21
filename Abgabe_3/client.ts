@@ -5,8 +5,9 @@ async function sendData(): Promise<void> {
     let url: string = "https://testgis2021.herokuapp.com";
     let query: URLSearchParams = new URLSearchParams(<any>formData);
     url = url + "?" + query.toString();
-    console.log("test");
+    
     let response: Response = await fetch(url);
+    console.log(response);
     /*let response: Response = await fetch(url, {
         method: "POST",
         headers: {
@@ -14,7 +15,6 @@ async function sendData(): Promise<void> {
         },
         body: JSON.stringify(formData)
       });*/
-    console.log(response.body);
 }
 
 function hello(): void {
