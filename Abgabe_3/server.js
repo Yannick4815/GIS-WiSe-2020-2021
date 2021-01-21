@@ -32,7 +32,8 @@ var P_3_1Server;
         }
         else {
             _response.write("Keine POST anfrage");
-            let orders = connectDB();
+            //let orders: Promise<Mongo.Collection> = connectDB();
+            let orders = "testtest";
             _response.write(orders);
         }
         _response.end();

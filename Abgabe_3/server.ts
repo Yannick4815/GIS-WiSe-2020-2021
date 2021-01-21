@@ -35,7 +35,8 @@ export namespace P_3_1Server {
           }
           else{
             _response.write("Keine POST anfrage");
-            let orders: Promise<Mongo.Collection> = connectDB();
+            //let orders: Promise<Mongo.Collection> = connectDB();
+            let orders: string = "testtest";
             _response.write(orders);
           }
         
