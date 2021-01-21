@@ -5,14 +5,14 @@ async function sendData() {
     let query = new URLSearchParams(formData);
     url = url + "?" + query.toString();
     console.log("test");
-    //let response: Response = await fetch(url);
-    let response = await fetch(url, {
+    let response = await fetch(url);
+    /*let response: Response = await fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": "text/plain"
+          "Content-Type": "text/plain"
         },
         body: JSON.stringify(formData)
-    });
+      });*/
     console.log(response);
 }
 function hello() {

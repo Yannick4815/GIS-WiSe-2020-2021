@@ -29,6 +29,9 @@ var P_3_1Server;
                 _response.write(post);
             });
         }
+        else {
+            _response.write(_request.url);
+        }
         _response.end();
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
