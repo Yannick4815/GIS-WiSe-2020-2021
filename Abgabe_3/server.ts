@@ -37,7 +37,7 @@ export namespace P_3_1Server {
             _response.write("Keine POST anfrage");
             let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            _response.write(orders);
+            _response.write(await orders);
           }
         
 
