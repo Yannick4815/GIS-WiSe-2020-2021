@@ -1,14 +1,23 @@
 "use strict";
 async function sendData() {
     let formData = new FormData(document.forms[0]);
-    let url = "https://gis-example.herokuapp.com";
+    let url = "https://testgis2021.herokuapp.com";
     let query = new URLSearchParams(formData);
     url = url + "?" + query.toString();
     console.log("test");
-    let response = await fetch(url);
+    //let response: Response = await fetch(url);
+    let response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain"
+        },
+        body: JSON.stringify(formData)
+    });
     console.log(response);
 }
 function hello() {
-    console.log("hello");
+    let formData = new FormData(document.forms[0]);
+    let query = new URLSearchParams(formData);
+    console.log(query);
 }
 //# sourceMappingURL=client.js.map

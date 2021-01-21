@@ -19,7 +19,16 @@ var P_3_1Server;
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
-        _response.write(_request.url);
+        if (_request.method == "POST") {
+            let body = "";
+            _request.on("formData", data => {
+                body += data;
+            });
+            _request.on("end", async () => {
+                let post = JSON.parse(body);
+                _response.write(post);
+            });
+        }
         _response.end();
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
