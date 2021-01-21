@@ -16,7 +16,7 @@ var P_3_1Server;
     function handleListen() {
         console.log("Listening");
     }
-    function handleRequest(_request, _response) {
+    async function handleRequest(_request, _response) {
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
@@ -32,8 +32,8 @@ var P_3_1Server;
         }
         else {
             _response.write("Keine POST anfrage");
-            //let orders: Promise<Mongo.Collection> = connectDB();
-            let orders = "testtest";
+            let orders = connectDB();
+            //let orders: string = "testtest";
             _response.write(orders);
         }
         _response.end();
