@@ -5,7 +5,7 @@ async function sendData() {
     let query = new URLSearchParams(formData);
     url = url + "?" + query.toString();
     let response = await fetch(url);
-    console.log(response);
+    console.log(response.text());
     /*let response: Response = await fetch(url, {
         method: "POST",
         headers: {

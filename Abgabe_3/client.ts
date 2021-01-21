@@ -7,7 +7,7 @@ async function sendData(): Promise<void> {
     url = url + "?" + query.toString();
     
     let response: Response = await fetch(url);
-    console.log(response);
+    console.log(response.text());
     /*let response: Response = await fetch(url, {
         method: "POST",
         headers: {
