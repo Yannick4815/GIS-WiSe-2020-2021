@@ -33,7 +33,7 @@ export namespace P_3_1Server {
             
           }
           else{
-            _response.write(_request.url);
+            _response.write("Hallo");
           }
         
         _response.end();
