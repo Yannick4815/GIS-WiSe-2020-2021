@@ -1,12 +1,28 @@
+body {
+    background-image: url("img/background.jpg");
+    background-attachment: fixed;
+    background-size:cover;
+    background-repeat: no-repeat;
+    margin:0;
+}
+
+
 h1, h2, h3, h4, h5, h6{
     font-family: Helvetica, Arial;
     margin:0;
 }
 h1{
     line-height: 100px;
+    color:white;
+}
+h2 {
+    color:white;
 }
 h3 {
     font-size: 30px;
+    padding-top:50px;
+    padding-bottom:60px;
+    padding-left:30px;
 }
 h4{
     line-height: 60px; /* 300px/3=3px ;  3px=1%  Höhe20% => 20*3px = 60px */
@@ -36,6 +52,9 @@ h6 {
     color:white;
     top:0;
     left:0;
+    z-index: 100;
+    border:0;
+    border-bottom: 3px solid teal;
 }
 .header h1{
     display: inline-block;
@@ -44,30 +63,106 @@ h6 {
     margin-left: 30px;
 }
 .header h2{
-    
+    line-height: 100px;
     position: relative;
     right:30px;
     float:right;
+    cursor: pointer;
 }
 
 .container{
-    width:100vw;
-    height:2000px;
+    
+    height:85vh;
     text-align: center;
     margin-top:100px;
+    border:0;
 }
 .main{
-    width:1100px;
-    background-color: #aaa;
-    height:100%;
+    width:1005px;
+    background-color: #333;
+    height:auto;
     text-align: left;
     margin: 0 auto;
+    padding:60px;
+}
+.main h4 {
+    color:white;
+    border-bottom: 1px solid #ccc;
+    position: initial;
+    padding-left: 20px;
+    padding-right:20px;
+}
+#overview + h4{
+    background-color: teal;
+}
+#overview h4:last-of-type{
+    border-bottom: 3px solid white;
+}
+.admin h4:last-of-type{
+    border-bottom: 0 !important;
+}
+.main span {
+    float:right;
+}
+#overview {
+    margin-top:50px;
+}
+.main h2{
+    margin-top:30px;
+    margin-bottom:20px;
+}
+.main h5{
+    color:white;
+    float:right;
+    font-weight: 400;
+    font-size:16px;
+}
+.main h5:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.main input[type=text], .main input[type=email] {
+    border:none;
+    border-bottom:1px solid #ccc;
+    background-color: transparent;
+    font-size: 28px;
+    color:white;
+    padding: 5px 0px 5px 0px;
+    outline: none;
+    display: block;
+    margin-bottom:30px;
+    transition: .3s;
+}
+.main input[type=text]:focus, .main input[type=email]:focus {
+    border-bottom:1px solid teal;
+}
+.main input[type=submit] {
+    margin-top:30px;
+    font-size: 24px;
+    line-height: 24px;
+    width: auto;
+    padding: 8px 14px;
+    border-radius:30px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    color:#ccc;
+    transition: .3s;
+}
+.main input[type=submit]:hover {
+    background-color: #008080;
+    color:white;
+    border: 1px solid white;
+    cursor: pointer;
+}
+#form {
+    width:100%;
+    margin-top: 50px;
 }
 
 .flexbox {
     display: flex;
     flex-wrap: wrap;
-    background-color: teal;
+    background-color: #333;
     width: 1005px;
     height:800px;
     min-height: 200px;
@@ -84,73 +179,317 @@ h6 {
     text-align: center;
     line-height: 75px;
     font-size: 30px;
+    height:400px;
+    
+   
 }
 
-.item {
-    height:300px;
-    width:300px;
-}
 .itemHeading {
-    height:20%;
+    height:60px;
     background-color: #aaa;
     text-align: left;
 }
 .itemImage {
-    height:60%;
+    height:190px;
 }
 .itemImage img{
     height:100%;
 }
 .itemDescription {
     text-align: left;
-    height:10%;
+    height:70px;
     background-color: #aaa;
     padding:10px;
 }
 .itemOrder {
     text-align: center;
-    
+    height:40px;
     background-color: #aaa;
     padding:10px;
     border-top:1px solid grey;
 }
 .itemOrder button {
     font-size: 15px;
-    line-height: 30px;
-    width:auto;
-    padding: 5px 12px;
-    border-radius:10px;
-    border: 1px solid white;
+    line-height: 15px;
+    width: auto;
+    padding: 8px 14px;
+    border-radius:30px;
+    border: 1px solid #333;
     background-color: transparent;
+    color:#333;
+    transition: .3s;
+}
+.itemOrder button:hover {
+    background-color: #008080;
+    color:white;
+    border: 1px solid white;
+    cursor: pointer;
 }
 
-.circleRed {
+.circleRed, .circleOrange, .circleGreen {
     height:25px;
     width:25px;
     border-radius:50%;
-    background-color: red;
     float: left;
-    top:15px;
+    top:17px;
     left:15px;
     position: relative;
+}
+.circleRed {
+    background-color: red;
 }
 .circleOrange {
-    height:25px;
-    width:25px;
-    border-radius:50%;
     background-color: orange;
-    float: left;
-    top:15px;
-    left:15px;
-    position: relative;
 }
 .circleGreen {
-    height:25px;
-    width:25px;
-    border-radius:50%;
     background-color: green;
-    float: left;
-    top:15px;
-    left:15px;
-    position: relative;
 }
+
+
+.onList .itemOrder {
+    background-color: teal;
+}
+.onList button{
+    background-color:rgb(87, 65, 81);
+    color:#ccc;
+}
+.onList button:hover{
+    background-color: #330a28;
+}
+
+.disabled{
+    opacity: 0.5;
+    border: 0;
+}
+
+
+.disabled button:hover{
+    cursor: no-drop;
+    background-color:transparent;
+    color: #333;
+    border:1px solid #333;
+}
+
+#basketOverlay {
+    position: fixed;
+    top:0;
+    right:0;
+    background-color: #666;
+    z-index: 101;
+    width: 200px;
+    text-align: left;
+    padding:10px;
+    margin-top: 100px;
+    display: none;
+}
+#basketOverlay h4{
+    font-size:18px;
+    line-height: 18px;
+    color: #eee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #888;
+}
+#basketOverlay h4:last-of-type{
+    border-top: 3px solid #888;
+    border-bottom: 0px;
+}
+#basketBtnDiv {
+    text-align: center;
+    
+}
+#checkoutBtn {
+    padding: 5px 12px;
+    border: 1px solid #333;
+    border-radius:30px;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom:10px;
+    background-color: teal;
+    transition: .3s;
+    
+}
+#checkoutBtn:hover{
+    cursor: pointer;
+    border: 1px solid white;
+    color:white;
+}
+#overview h4{
+    font-weight: normal;
+}
+
+.display {
+    display:block !important;
+}
+
+
+/*RESPONSIVE index.html*/
+@media only screen and (max-width: 1500px){
+    .display {
+        display: none !important;
+    }
+    .displayMobile {
+        display: block !important;
+    }
+
+    
+}
+
+@media only screen and (max-width: 1034px){
+    .flexbox{
+        width:675px;
+    }
+}
+@media only screen and (max-width: 707px){
+    .flexbox{
+        width:335px;
+    }
+}
+@media only screen and (max-width: 440px){
+    .header h2{
+        position: fixed;
+        bottom:0;
+        background-color: #333;
+        padding-left: 30px;
+        padding-right:30px;
+        right:0;
+        line-height:80px;
+        border: 2px solid #ccc;
+    }
+}
+@media only screen and (max-width: 364px){
+    .flexbox{
+        width:100vw;
+        padding:0;
+    }
+    .flexbox > div {
+        width: 100vw;
+        margin:0;
+        margin-bottom: 30px;
+    }
+}
+
+
+/*RESPONSIVE checkout.html*/
+
+@media only screen and (max-width: 1125px){
+    .main{
+        width:100vw;
+        box-sizing: border-box;
+    }
+}
+@media only screen and (max-width: 643px){
+    .main h5{
+        float: none;
+        margin-top:60px;
+    }
+}
+@media only screen and (max-width: 475px){
+    .main{
+        padding:20px;
+    }
+    .main input{
+        width:100%;
+    }
+}
+
+/*RESPONSIVE admin.html*/
+@media only screen and (max-width: 660px){
+    h1{
+        font-size:5vw ;
+    }
+    .admin h4 {
+        font-size:4vw;
+        padding-left:0;
+       line-height:50px;
+    }
+    #overview{
+        margin-top:20px;
+    }
+    .main{
+        padding:20px;
+    }
+    .circleGreen, .circleOrange, .circleRed {
+        top: 12px;
+    }
+
+
+}
+@media only screen and (max-width: 475px){
+    .circleGreen, .circleOrange, .circleRed {
+        width:15px;
+        height:15px;
+        top: 17px;
+    }
+}
+@media only screen and (max-width: 350px){
+    .admin h4 {
+        line-height: 30px;
+    }
+    .circleGreen, .circleOrange, .circleRed {
+        top: 7px;
+    }
+}
+
+.admin div{
+    height:6px;
+    width:6px;
+    margin: 7px;
+    border-radius: 50px;
+    background-color: white;
+    margin-left: 50px;
+    
+}
+.admin span {
+    cursor: pointer;
+}
+.admin span:nth-child(2){
+    cursor:unset;
+}
+.admin span div:first-of-type{
+    margin-top:13px;
+}
+#toggleStateOverlay{
+    background-color: rgba(1, 1, 1, 0.8);
+    position: absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    z-index: 2;
+    text-align: center;
+    display: none;
+}
+#toggleStateDiv{
+    position: relative;
+    width:400px;
+    padding:40px;
+    background-color: #333;
+    margin: 0 auto;
+    top: 400px;
+}
+#toggleStateDiv h2{
+    font-weight: normal;
+}
+#toggleStateOverlay button{
+    border: 1px solid #ccc;
+    font-size:24px;
+    padding:5px 12px;
+    margin-top:30px;
+    background-color: transparent;
+    color:#ccc;
+    transition: .3s;
+}
+#toggleStateOverlay button:hover{
+    border: 1px solid white;
+    color:white;
+    cursor: pointer;
+}
+#toggleStateOverlay button:first-of-type:hover{
+    background-color: teal;
+}
+#toggleStateOverlay button:last-of-type:hover{
+    background-color: rgb(185, 33, 33);
+}
+
+

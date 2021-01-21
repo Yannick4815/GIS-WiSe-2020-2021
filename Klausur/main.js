@@ -1,11 +1,29 @@
 "use strict";
 let con = document.getElementById("flexbox");
+if (localStorage.orders.length == undefined || localStorage.orders.length == 0) {
+    localStorage.orders = JSON.stringify([]);
+}
 function fillSite(_allData) {
     //console.log(_allData);
+    let basketBtn = document.getElementById("basketBtn");
+    let basketOverlay = document.getElementById("basketOverlay");
+    basketBtn.addEventListener("mouseenter", function () {
+        changeClass(true, basketOverlay, "displayMobile");
+    });
+    basketBtn.addEventListener("mouseleave", function () {
+        changeClass(false, basketOverlay, "displayMobile");
+    });
+    basketOverlay.addEventListener("mouseenter", function () {
+        changeClass(true, basketOverlay, "displayMobile");
+    });
+    basketOverlay.addEventListener("mouseleave", function () {
+        changeClass(false, basketOverlay, "displayMobile");
+    });
     for (let index = 0; index < _allData.length; index++) {
         //main div
         let div = document.createElement("div");
         div.setAttribute("class", "item");
+        div.setAttribute("id", "item_" + _allData[index].name);
         //heading div
         let divHeading = document.createElement("div");
         divHeading.setAttribute("class", "itemHeading");
@@ -21,6 +39,7 @@ function fillSite(_allData) {
         else {
             divCircle.setAttribute("class", "circleRed");
         }
+        divHeading.appendChild(divCircle);
         divHeading.appendChild(h4);
         //image Div
         let divImage = document.createElement("div");
@@ -43,53 +62,119 @@ function fillSite(_allData) {
         divOrder.setAttribute("class", "itemOrder");
         let button = document.createElement("button");
         button.innerText = "In den Warenkorb";
+        button.setAttribute("class", "reservierenBtn");
+        button.setAttribute("id", "order_" + _allData[index].name);
+        if (_allData[index].status != 1) {
+            changeClass(true, div, "disabled");
+            changeClass(true, button, "disabled");
+        }
         divOrder.appendChild(button);
+        //check if item is in basket
+        let orders = JSON.parse(localStorage.orders);
+        orders.forEach(el => {
+            if (el == _allData[index].name) {
+                changeClass(true, div, "onList");
+                button.innerText = "Aus Warenkorb entfernen";
+                countAndFillBasket(true, el);
+            }
+        });
         div.appendChild(divHeading);
         div.appendChild(divImage);
         div.appendChild(divDescription);
         div.appendChild(divOrder);
         con.appendChild(div);
     }
-    //addListeners();
+    addListeners();
 }
-async function communicate(_url) {
-    console.log("rest");
-    let response = await fetch(_url);
-    let allDataFetched = JSON.stringify(await response.json());
-    return allDataFetched;
+function changeClass(_addOrRemove, _el, _class) {
+    if (_addOrRemove) {
+        _el.classList.add(_class);
+    }
+    else {
+        _el.classList.remove(_class);
+    }
+}
+function toggleOverlay(_orders) {
+    if (_orders.length > 2) { // > 2, weil im localStorage, bei einem leeren Array immer noch zwei Zeichen [] sind
+        changeClass(true, document.getElementById("basketOverlay"), "display");
+    }
+    else {
+        changeClass(false, document.getElementById("basketOverlay"), "display");
+    }
+    console.log("orders:" + _orders.length + "count" + _orders);
+}
+function addListeners() {
+    document.querySelectorAll(".reservierenBtn").forEach(item => {
+        let el = document.getElementById(item.id);
+        if (el.classList.contains("disabled")) {
+            el.innerText = "Reserviert";
+        }
+        else {
+            item.addEventListener("click", function () {
+                let el = document.getElementById(this.id);
+                let orders = JSON.parse(localStorage.orders); //Figur aus dem Localstorage holen
+                let stringArr = this.id.split("_");
+                let itemEl = document.getElementById("item_" + stringArr[1]);
+                let search = orders.find(e => e === stringArr[1]);
+                if (search != undefined) {
+                    let key = orders.indexOf(search, 0);
+                    orders.splice(key, 1);
+                    el.innerText = "In den Warenkorb";
+                    itemEl.classList.remove("onList");
+                    fillStorage(orders);
+                    countAndFillBasket(false, stringArr[1]);
+                }
+                else {
+                    orders.push(stringArr[1]);
+                    el.innerText = "Aus Warenkorb entfernen";
+                    itemEl.classList.add("onList");
+                    fillStorage(orders);
+                    countAndFillBasket(true, stringArr[1]);
+                }
+            });
+        }
+    });
+}
+//fülle localStorage mit mitgegebenem Warenkorb
+function fillStorage(_orders) {
+    localStorage.orders = JSON.stringify(_orders);
+    console.log(localStorage);
+}
+//zähle items im Warenkorb
+//wenn _add = true, füge mitgegebenes Item auf den Warenkorb
+//wenn _add = false, entferne mitgegebenes Item aus dem Warenkorb
+function countAndFillBasket(_add, _item) {
+    let itemsCount = JSON.parse(localStorage.orders).length;
+    let basketBtn = document.getElementById("basketBtn");
+    let basket = document.getElementById("basket");
+    console.log(itemsCount);
+    if (_add == true) {
+        let h4 = document.createElement("h4");
+        h4.innerText = _item;
+        h4.setAttribute("id", "basket_" + _item);
+        basket.appendChild(h4);
+    }
+    else {
+        let h4 = document.getElementById("basket_" + _item);
+        basket.removeChild(h4);
+    }
+    displaySum(basket);
+    basketBtn.innerText = "Warenkorb (" + itemsCount + ")";
+    toggleOverlay(localStorage.orders);
+}
+function displaySum(_basket) {
+    let h4Old = document.getElementById("sum");
+    let h4 = document.createElement("h4");
+    communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
+        .then((allDataFetched) => h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
+    //console.log("allDataFetched")
+    );
+    h4.setAttribute("id", "sum");
+    _basket.removeChild(h4Old);
+    _basket.appendChild(h4);
 }
 communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
     .then((allDataFetched) => fillSite(JSON.parse(allDataFetched)["allData"])
 //console.log("allDataFetched")
 );
-/*
-function addListeners(): void {
-    document.querySelectorAll("img").forEach(item => {
-        item.addEventListener("click", function (): void {
-
-            figur = JSON.parse(localStorage.figur);     //Figur aus dem Localstorage holen
-
-            //ID bestimmt, ob Kopf, Rumpf oder Beine
-            if (this.id == "1") {
-                figur.kopf.typ = 1;
-                figur.kopf.name = this.alt;
-                figur.kopf.src = (this.src).replace(/^.*[\\\/]/, "");
-            }
-            if (this.id == "2") {
-                figur.rumpf.typ = 1;
-                figur.rumpf.name = this.alt;
-                figur.rumpf.src = (this.src).replace(/^.*[\\\/]/, "");
-            }
-            if (this.id == "3") {
-                figur.beine.typ = 1;
-                figur.beine.name = this.alt;
-                figur.beine.src = (this.src).replace(/^.*[\\\/]/, "");
-            }
-
-            localStorage.figur = JSON.stringify(figur);     //veränderte Figur in den LocalStorage packen
-
-            window.location.href = "index.html";
-        });
-    });
-}*/ 
 //# sourceMappingURL=main.js.map

@@ -4,18 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <script href="test.js" defer></script>
+    <script src="main.js" defer></script>
+    <script src="shared.js"></script>
     <title>Verleih</title>
 </head>
 
 <body>
     <div class="header">
-        <h1>Asta-Verleih</h1>
-        <h2>Warenkorb</h2>
+        <h1>ASta-Verleih</h1>
+        <h2 id="basketBtn">Warenkorb (0)</h2>
+    </div>
+
+    <div id="basketOverlay" >
+        <div id="basket">
+            <h4 id="sum"></h4>
+        </div>
+        <div id="basketBtnDiv">
+            <button id="checkoutBtn" onclick='window.location.href="checkout.html"'>Checkout</button>
+        </div>
+        
+        
     </div>
     <div class="container">
-        <div class="main">
-            <h3>Angebot</h3>
+       
+            
             <div class="flexbox" id="flexbox">
                 <!--<div class="item">
                     <div class="itemHeading"><div class="circlered"></div><h4>Stativ</h4></div>
@@ -23,26 +35,9 @@
                     <div class="itemDescription"><h6>30,99€ / Tag</h6><h5>Beschreibung asoijd oja doiaj oaji  </h5></div>
                     <div class="itemOrder"><button>In den Warenkorb</button></div>
                 </div>
-
-                <div class="item">
-                    <div class="itemHeading"><div class="circleorange"></div><h4>Stativ</h4></div>
-                    <div class="itemImage"><img src="https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg" alt=""></div>
-                    <div class="itemDescription"><h5>Beschreibung asoijd oja doiaj oaji  </h5></div>
-                </div>
-
-                <div class="item">
-                    <div class="itemHeading"><div class="circlegreen"></div><h4>Stativ</h4></div>
-                    <div class="itemImage"><img src="https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg" alt=""></div>
-                    <div class="itemDescription"><h5>Beschreibung asoijd oja doiaj oaji  </h5></div>
-                </div>
-
-                <div class="item">
-                    <div class="itemHeading"><div class="circlegreen"></div><h4>Stativ</h4></div>
-                    <div class="itemImage"><img src="https://images-na.ssl-images-amazon.com/images/I/512mvAPzBlL._AC_.jpg" alt=""></div>
-                    <div class="itemDescription"><h5>Beschreibung asoijd oja doiaj oaji  </h5></div>
-                </div>-->
+-->
             </div>
-        </div>
+        
     </div>
 </body>
 

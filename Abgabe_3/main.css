@@ -1,0 +1,40 @@
+.formDiv{
+    margin: 0 auto;
+    width:300px;
+    text-align: center;
+}
+form{
+
+    position: relative;
+    
+    width:100%;
+    margin-top:100px;
+}
+input {
+    margin:20px;
+    font-size:20px;
+    padding: 5px 12px;
+    outline: none;
+    border:none;
+    border-bottom: 2px solid grey;
+    transition: .3s;
+}
+input[type=text]{
+   
+}
+input[type=text]:focus, input[type=email]:focus, input[type=password]:focus{
+    border-bottom: 2px solid teal;
+}
+button{
+    margin-top:20px;
+    border:2px solid teal;
+    background-color: transparent;
+    font-size:24px;
+    color:#333;
+    transition: .3s;
+}
+button:hover{
+    background-color: teal;
+    color:white;
+    cursor: pointer;
+}

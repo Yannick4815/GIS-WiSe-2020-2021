@@ -1,14 +1,39 @@
 
-
 let con: HTMLElement = document.getElementById("flexbox");
+
+if (localStorage.orders.length == undefined || localStorage.orders.length == 0) {
+    localStorage.orders = JSON.stringify([]);
+}
+
 
 function fillSite(_allData: Item[]): void {
     //console.log(_allData);
+    let basketBtn: HTMLElement = document.getElementById("basketBtn");
+    let basketOverlay: HTMLElement = document.getElementById("basketOverlay");
+    basketBtn.addEventListener("mouseenter", function (): void {
+        changeClass(true, basketOverlay, "displayMobile");
+    });
+    basketBtn.addEventListener("mouseleave", function (): void {
+        changeClass(false, basketOverlay, "displayMobile");
+    });
+    basketOverlay.addEventListener("mouseenter", function (): void {
+        changeClass(true, basketOverlay, "displayMobile");
+    });
+    basketOverlay.addEventListener("mouseleave", function (): void {
+        changeClass(false, basketOverlay, "displayMobile");
+    });
+
     for (let index: number = 0; index < _allData.length; index++) {
+
+
+
 
         //main div
         let div: HTMLParagraphElement = document.createElement("div");
         div.setAttribute("class", "item");
+        div.setAttribute("id", "item_" + _allData[index].name);
+
+
 
         //heading div
         let divHeading: HTMLParagraphElement = document.createElement("div");
@@ -28,6 +53,7 @@ function fillSite(_allData: Item[]): void {
             divCircle.setAttribute("class", "circleRed");
         }
 
+        divHeading.appendChild(divCircle);
         divHeading.appendChild(h4);
 
         //image Div
@@ -52,67 +78,170 @@ function fillSite(_allData: Item[]): void {
 
         divDescription.appendChild(h6);
         divDescription.appendChild(h5);
+
         //order Div
         let divOrder: HTMLParagraphElement = document.createElement("div");
         divOrder.setAttribute("class", "itemOrder");
 
         let button: HTMLButtonElement = document.createElement("button");
         button.innerText = "In den Warenkorb";
+        button.setAttribute("class", "reservierenBtn");
+        button.setAttribute("id", "order_" + _allData[index].name);
+        if (_allData[index].status != 1) {
+            changeClass(true, div, "disabled");
+            changeClass(true, button, "disabled");
 
+        }
         divOrder.appendChild(button);
-        
-        
+
+        //check if item is in basket
+        let orders: string[] = JSON.parse(localStorage.orders);
+        orders.forEach(el => {
+            if (el == _allData[index].name) {
+                changeClass(true, div, "onList");
+                button.innerText = "Aus Warenkorb entfernen";
+                countAndFillBasket(true, el);
+            }
+        });
+
         div.appendChild(divHeading);
         div.appendChild(divImage);
         div.appendChild(divDescription);
         div.appendChild(divOrder);
 
+
+
+
         con.appendChild(div);
 
+
     }
-    //addListeners();
+    addListeners();
 }
 
-async function communicate(_url: RequestInfo): Promise<string> {
-    console.log("rest");
-    let response: Response = await fetch(_url);
-    let allDataFetched: string = JSON.stringify(await response.json());
-    return allDataFetched;
+function changeClass(_addOrRemove: boolean, _el: HTMLElement, _class: string): void {
+    if (_addOrRemove) {
+        _el.classList.add(_class);
+    }
+    else {
+        _el.classList.remove(_class);
+    }
+
+}
+function toggleOverlay(_orders: string[]): void {
+    if (_orders.length > 2) {   // > 2, weil im localStorage, bei einem leeren Array immer noch zwei Zeichen [] sind
+        changeClass(true, document.getElementById("basketOverlay"), "display");
+    }
+    else {
+        changeClass(false, document.getElementById("basketOverlay"), "display");
+    }
+    console.log("orders:" + _orders.length + "count" + _orders);
 }
 
-communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
-        .then((allDataFetched) =>
-            fillSite(JSON.parse(allDataFetched)["allData"])
-            //console.log("allDataFetched")
 
-        );
-/*
 function addListeners(): void {
-    document.querySelectorAll("img").forEach(item => {
-        item.addEventListener("click", function (): void {
+    document.querySelectorAll(".reservierenBtn").forEach(item => {
+        let el: HTMLElement = document.getElementById(item.id);
+        
+        if (el.classList.contains("disabled")) {
+            el.innerText = "Reserviert";
+        }
+        else {
+            item.addEventListener("click", function (this: HTMLButtonElement): void {
 
-            figur = JSON.parse(localStorage.figur);     //Figur aus dem Localstorage holen
 
-            //ID bestimmt, ob Kopf, Rumpf oder Beine
-            if (this.id == "1") {
-                figur.kopf.typ = 1;
-                figur.kopf.name = this.alt;
-                figur.kopf.src = (this.src).replace(/^.*[\\\/]/, "");
-            }
-            if (this.id == "2") {
-                figur.rumpf.typ = 1;
-                figur.rumpf.name = this.alt;
-                figur.rumpf.src = (this.src).replace(/^.*[\\\/]/, "");
-            }
-            if (this.id == "3") {
-                figur.beine.typ = 1;
-                figur.beine.name = this.alt;
-                figur.beine.src = (this.src).replace(/^.*[\\\/]/, "");
-            }
 
-            localStorage.figur = JSON.stringify(figur);     //veränderte Figur in den LocalStorage packen
+                let el: HTMLElement = document.getElementById(this.id);
 
-            window.location.href = "index.html";
-        });
+
+
+
+                let orders: string[] = JSON.parse(localStorage.orders);     //Figur aus dem Localstorage holen
+
+                let stringArr: string[] = this.id.split("_");
+
+                let itemEl: HTMLElement = document.getElementById("item_" + stringArr[1]);
+
+                let search: string = orders.find(e => e === stringArr[1]);
+                if (search != undefined) {
+                    let key: number = orders.indexOf(search, 0);
+                    orders.splice(key, 1);
+                    el.innerText = "In den Warenkorb";
+                    itemEl.classList.remove("onList");
+                    fillStorage(orders);
+                    countAndFillBasket(false, stringArr[1]);
+                }
+                else {
+
+                    orders.push(stringArr[1]);
+                    el.innerText = "Aus Warenkorb entfernen";
+                    itemEl.classList.add("onList");
+                    fillStorage(orders);
+                    countAndFillBasket(true, stringArr[1]);
+                }
+
+                
+                
+
+
+
+
+
+
+
+            });
+        }
+
     });
-}*/
+}
+
+//fülle localStorage mit mitgegebenem Warenkorb
+function fillStorage(_orders: string[]): void {
+    localStorage.orders = JSON.stringify(_orders);
+    console.log(localStorage);
+}
+
+//zähle items im Warenkorb
+//wenn _add = true, füge mitgegebenes Item auf den Warenkorb
+//wenn _add = false, entferne mitgegebenes Item aus dem Warenkorb
+function countAndFillBasket(_add: boolean, _item: string): void {
+    let itemsCount: number = JSON.parse(localStorage.orders).length;
+    let basketBtn: HTMLElement = document.getElementById("basketBtn");
+    let basket: HTMLElement = document.getElementById("basket");
+    console.log(itemsCount);
+    if (_add == true) {
+        let h4: HTMLElement = document.createElement("h4");
+        h4.innerText = _item;
+        h4.setAttribute("id", "basket_" + _item);
+        basket.appendChild(h4);
+    }
+    else {
+        let h4: HTMLElement = document.getElementById("basket_" + _item);
+        basket.removeChild(h4);
+    }
+    displaySum(basket);
+    basketBtn.innerText = "Warenkorb (" + itemsCount + ")";
+    toggleOverlay(localStorage.orders);
+}
+function displaySum(_basket: HTMLElement): void {
+
+    let h4Old: HTMLElement = document.getElementById("sum");
+    let h4: HTMLElement = document.createElement("h4");
+    communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
+    .then((allDataFetched) =>
+    h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
+        //console.log("allDataFetched")
+
+    );
+    h4.setAttribute("id", "sum");
+    _basket.removeChild(h4Old);
+    _basket.appendChild(h4);
+
+}
+communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
+    .then((allDataFetched) =>
+        fillSite(JSON.parse(allDataFetched)["allData"])
+        //console.log("allDataFetched")
+
+    );
+
