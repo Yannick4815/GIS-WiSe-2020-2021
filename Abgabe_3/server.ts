@@ -16,30 +16,35 @@ export namespace P_3_1Server {
         console.log("Listening");
     }
 
-    
+
     async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
-       
+
         if (_request.method == "POST") {
             let body = "";
             _request.on("formData", data => {
-              body += data;
+                body += data;
             });
             _request.on("end", async () => {
-              let post: any = JSON.parse(body);
-              _response.write(post);
+                let post: any = JSON.parse(body);
+                _response.write(post);
             });
-            
-          }
-          else{
+
+        }
+        else {
             _response.write("Keine POST anfrage");
-            let orders: Promise<Mongo.Collection> = connectDB();
+            //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            _response.write(await orders);
-          }
-        
+            let _url: string = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
+            let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(_url);
+            await mongoClient.connect();
+            console.log("Success");
+            let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
+            _response.write(orders);
+        }
+
 
         _response.end();
     }

@@ -32,9 +32,14 @@ var P_3_1Server;
         }
         else {
             _response.write("Keine POST anfrage");
-            let orders = connectDB();
+            //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            _response.write(await orders);
+            let _url = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
+            let mongoClient = new Mongo.MongoClient(_url);
+            await mongoClient.connect();
+            console.log("Success");
+            let orders = mongoClient.db("Test").collection("Students");
+            _response.write(orders);
         }
         _response.end();
     }
