@@ -40,7 +40,7 @@ var P_3_1Server;
             let result = orders.find({});
             //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            _response.write(result);
+            _response.write(await result.toArray());
         }
         //_response.write("Testst");
         _response.end();

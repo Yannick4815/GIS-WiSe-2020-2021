@@ -2,7 +2,7 @@ import * as Http from "http";
 import * as Mongo from "mongodb";
 
 export namespace P_3_1Server {
-    
+
     let orders: Mongo.Collection;
     
     main();
@@ -46,10 +46,10 @@ export namespace P_3_1Server {
         }
         else {
             //_response.write("Keine POST anfrage");
-            let result: any = orders.find({});
+            let result: Mongo.Cursor = orders.find({});
             //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            _response.write(result);
+            _response.write(await result.toArray());
         }
 
         //_response.write("Testst");
