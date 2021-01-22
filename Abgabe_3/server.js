@@ -34,7 +34,7 @@ var P_3_1Server;
         }
         else {
             _response.write("Keine POST anfrage");
-            let result = orders.find({});
+            let result = await orders.find({});
             //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
             _response.write(result);
