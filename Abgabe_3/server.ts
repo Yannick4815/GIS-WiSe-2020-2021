@@ -7,6 +7,8 @@ export namespace P_3_1Server {
     if (!port)
         port = 8100;
 
+    let orders: Mongo.Collection;
+    connectDB(orders);
     let server: Http.Server = Http.createServer();
     server.addListener("request", handleRequest);
     server.addListener("listening", handleListen);
@@ -35,14 +37,10 @@ export namespace P_3_1Server {
         }
         else {
             _response.write("Keine POST anfrage");
+            let result: any = orders.find();
             //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            let _url: string = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
-            let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(_url);
-            await mongoClient.connect();
-            console.log("Success");
-            let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
-            _response.write(orders);
+            _response.write(result);
         }
 
 
@@ -50,11 +48,11 @@ export namespace P_3_1Server {
     }
 }
 
-async function connectDB(): Promise<Mongo.Collection> {
+async function connectDB(_orders: Mongo.Collection): Promise<void> {
     let _url: string = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
     let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(_url);
     await mongoClient.connect();
     console.log("Success");
-    let orders: Mongo.Collection = mongoClient.db("Test").collection("Students");
-    return orders;
+    _orders = mongoClient.db("Test").collection("Students");
+    
 }

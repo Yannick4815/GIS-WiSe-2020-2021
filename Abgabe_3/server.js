@@ -9,6 +9,8 @@ var P_3_1Server;
     let port = Number(process.env.PORT);
     if (!port)
         port = 8100;
+    let orders;
+    connectDB(orders);
     let server = Http.createServer();
     server.addListener("request", handleRequest);
     server.addListener("listening", handleListen);
@@ -32,24 +34,19 @@ var P_3_1Server;
         }
         else {
             _response.write("Keine POST anfrage");
+            let result = orders.find();
             //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            let _url = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
-            let mongoClient = new Mongo.MongoClient(_url);
-            await mongoClient.connect();
-            console.log("Success");
-            let orders = mongoClient.db("Test").collection("Students");
-            _response.write(orders);
+            _response.write(result);
         }
         _response.end();
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
-async function connectDB() {
+async function connectDB(_orders) {
     let _url = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
     let mongoClient = new Mongo.MongoClient(_url);
     await mongoClient.connect();
     console.log("Success");
-    let orders = mongoClient.db("Test").collection("Students");
-    return orders;
+    _orders = mongoClient.db("Test").collection("Students");
 }
 //# sourceMappingURL=server.js.map
