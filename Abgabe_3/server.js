@@ -33,13 +33,13 @@ var P_3_1Server;
             });
         }
         else {
-            _response.write("Keine POST anfrage");
-            //let result: any = await orders.find({});
+            //_response.write("Keine POST anfrage");
+            let result = orders.find({});
             //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            //_response.write(result);
+            _response.write(result);
         }
-        _response.write("Testst");
+        //_response.write("Testst");
         _response.end();
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));

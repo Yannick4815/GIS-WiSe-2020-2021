@@ -12,11 +12,6 @@ async function sendData() {
         },
         body: JSON.stringify(formData)
     });*/
-    console.log(response.text());
-}
-function hello() {
-    let formData = new FormData(document.forms[0]);
-    let query = new URLSearchParams(formData);
-    console.log(query);
+    console.log(await response.text());
 }
 //# sourceMappingURL=client.js.map

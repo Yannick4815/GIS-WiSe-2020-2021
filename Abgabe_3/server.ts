@@ -19,7 +19,7 @@ export namespace P_3_1Server {
     }
 
 
-    async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
+    async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): Promise<void> {
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
@@ -36,14 +36,14 @@ export namespace P_3_1Server {
 
         }
         else {
-            _response.write("Keine POST anfrage");
-            //let result: any = await orders.find({});
+            //_response.write("Keine POST anfrage");
+            let result: any = orders.find({});
             //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            //_response.write(result);
+            _response.write(result);
         }
 
-        _response.write("Testst");
+        //_response.write("Testst");
         _response.end();
     }
 }

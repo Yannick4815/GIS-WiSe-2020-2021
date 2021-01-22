@@ -15,13 +15,8 @@ async function sendData(): Promise<void> {
         },
         body: JSON.stringify(formData)
     });*/
-    console.log(response.text());
+    console.log(await response.text());
 }
 
-function hello(): void {
-    let formData: FormData = new FormData(document.forms[0]);
-    let query: URLSearchParams = new URLSearchParams(<any>formData);
-    console.log(query);
-}
 
 
