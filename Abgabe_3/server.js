@@ -5,16 +5,19 @@ const Http = require("http");
 const Mongo = require("mongodb");
 var P_3_1Server;
 (function (P_3_1Server) {
-    console.log("Starting server");
-    let port = Number(process.env.PORT);
-    if (!port)
-        port = 8100;
     let orders;
-    connectDB(orders);
-    let server = Http.createServer();
-    server.addListener("request", handleRequest);
-    server.addListener("listening", handleListen);
-    server.listen(port);
+    main();
+    async function main() {
+        console.log("Starting server");
+        let port = Number(process.env.PORT);
+        if (!port)
+            port = 8100;
+        orders = await connectDB();
+        let server = Http.createServer();
+        server.addListener("request", handleRequest);
+        server.addListener("listening", handleListen);
+        server.listen(port);
+    }
     function handleListen() {
         console.log("Listening");
     }
@@ -43,11 +46,11 @@ var P_3_1Server;
         _response.end();
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));
-async function connectDB(_orders) {
+async function connectDB() {
     let _url = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
     let mongoClient = new Mongo.MongoClient(_url);
     await mongoClient.connect();
     console.log("Success");
-    _orders = mongoClient.db("Test").collection("Students");
+    return mongoClient.db("Test").collection("Students");
 }
 //# sourceMappingURL=server.js.map

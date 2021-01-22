@@ -2,17 +2,26 @@ import * as Http from "http";
 import * as Mongo from "mongodb";
 
 export namespace P_3_1Server {
-    console.log("Starting server");
-    let port: number = Number(process.env.PORT);
-    if (!port)
-        port = 8100;
-
+    
     let orders: Mongo.Collection;
-    connectDB(orders);
-    let server: Http.Server = Http.createServer();
-    server.addListener("request", handleRequest);
-    server.addListener("listening", handleListen);
-    server.listen(port);
+    
+    main();
+
+    async function main(): Promise<void> {
+        console.log("Starting server");
+        let port: number = Number(process.env.PORT);
+        if (!port)
+            port = 8100;
+
+
+        orders = await connectDB();
+
+        let server: Http.Server = Http.createServer();
+        server.addListener("request", handleRequest);
+        server.addListener("listening", handleListen);
+        server.listen(port);
+    }
+
 
     function handleListen(): void {
         console.log("Listening");
@@ -48,11 +57,10 @@ export namespace P_3_1Server {
     }
 }
 
-async function connectDB(_orders: Mongo.Collection): Promise<void> {
+async function connectDB(): Promise<Mongo.Collection> {
     let _url: string = "mongodb+srv://dbUser:dbUserPass21@meingiscluster.x6hud.mongodb.net/Test?retryWrites=true&w=majority";
     let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(_url);
     await mongoClient.connect();
     console.log("Success");
-    _orders = mongoClient.db("Test").collection("Students");
-    
+    return mongoClient.db("Test").collection("Students");
 }
