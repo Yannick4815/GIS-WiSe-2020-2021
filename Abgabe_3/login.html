@@ -8,15 +8,23 @@
 </head>
 <body>
     <div class="formDiv">
-        <form action="" method="GET">
-            <input type="text" name="vorname" placeholder="Vorname">
-            <input type="text" name="nachname" placeholder="Nachname">
-            <input type="email" name="email" placeholder="E-Mail">
-            <input type="password" name="pwd" placeholder="Passwort">
-    
+        <div class="btnContainer">
+            <span id="registrieren" onclick="toggleForm(this)" class="active">Registrieren</span>
+            <span id="login" onclick="toggleForm(this)">Login</span>
+        </div>
+        
+        
+        <form id="form" action="" method="GET">
+            <input id="vornameInput" type="text" name="vorname" placeholder="Vorname" required>
+            <input id="nachnameInput" type="text" name="nachname" placeholder="Nachname" required>
+            <input id="matrikelInput" type="text" name="matrikel" placeholder="Matrikel" required>
+            <input id="emailInput" type="email" name="email" placeholder="E-Mail" required>
+            <input id="passwordInput" type="password" name="pwd" placeholder="Passwort" required>
+            <input id="requestInput" type="hidden" name="requestType" value="register">
             <button onclick="sendData();" type="button">Abschicken</button>
         </form>
-        
+        <h3 id="serverResponse"></h3>
+        <h5 onclick="window.location.href='overview.html'">Zur Übersicht</h5>
     </div>
    
 </body>

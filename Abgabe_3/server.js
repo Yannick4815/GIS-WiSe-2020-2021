@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.P_3_1Server = void 0;
 const Http = require("http");
 const Mongo = require("mongodb");
+const Url = require("url");
 var P_3_1Server;
 (function (P_3_1Server) {
     let orders;
@@ -32,15 +33,72 @@ var P_3_1Server;
             });
             _request.on("end", async () => {
                 let post = JSON.parse(body);
-                _response.write(post);
+                _response.write(JSON.stringify(post));
             });
         }
         else {
             //_response.write("Keine POST anfrage");
-            let result = orders.find({});
+            let adresse = _request.url;
+            //Adresse parsen (umwandeln):
+            let q = Url.parse(adresse, true);
+            /*Die query Eigenschaft gibt ein Ojekt zurück, dass alle query-string Parameter als Eigenschaften besitzt. So können beliebig gesendete Attribute ausgelesen werden:*/
+            let qdata = q.query;
+            //console.log(qdata.email);
+            let result;
+            let resArr;
+            if (qdata.requestType == "register" || qdata.requestType == "login") {
+                result = orders.find({ "email": qdata.email });
+            }
+            if (qdata.requestType == "getAll") {
+                result = orders.find({});
+            }
+            resArr = await result.toArray();
+            //let email: string = JSON.stringify(resArr[0].email); //email als string oder []
+            let responseBody = { status: "error", message: "" };
+            if (qdata.requestType == "register") {
+                if (resArr.length == 0) {
+                    console.log("E-Mail frei");
+                    orders.insertOne({ vorname: qdata.vorname, nachname: qdata.nachname, matrikel: qdata.matrikel, email: qdata.email, pwd: qdata.pwd });
+                    responseBody.status = "registered";
+                    responseBody.message = "E-Mail angelegt";
+                }
+                else {
+                    console.log("E-Mail besetzt");
+                    responseBody.status = "error";
+                    responseBody.message = "E-Mail wird bereits verwendet";
+                }
+            }
+            else if (qdata.requestType == "login") {
+                if (resArr.length == 0) {
+                    console.log("Kein Konto mit dieser E-Mail gefunden");
+                    responseBody.status = "error";
+                    responseBody.message = "Kein Konto mit dieser E-Mail gefunden";
+                }
+                else {
+                    let pwd = resArr[0].pwd;
+                    let pwdEntered = String(qdata.pwd);
+                    if (pwd == pwdEntered) {
+                        console.log("matching");
+                        responseBody.status = "loggedIn";
+                        responseBody.message = "Sie wurden eingeloggt";
+                    }
+                    else {
+                        console.log("Falsches Passwort");
+                        responseBody.status = "error";
+                        responseBody.message = "Falsches Passwort";
+                    }
+                }
+            }
+            else if (qdata.requestType == "getAll") {
+                responseBody.status = "fill";
+                responseBody.message = JSON.stringify(resArr);
+            }
+            //console.log("qdata.email:" + qdata.email);
+            //console.log("email:" + email);
             //let orders: Promise<Mongo.Collection> = connectDB();
             //let orders: string = "testtest";
-            _response.write(await result.toArray());
+            //_response.write(JSON.stringify(await result.toArray()));
+            _response.write(JSON.stringify(responseBody));
         }
         //_response.write("Testst");
         _response.end();
@@ -51,6 +109,6 @@ async function connectDB() {
     let mongoClient = new Mongo.MongoClient(_url);
     await mongoClient.connect();
     console.log("Success");
-    return mongoClient.db("Test").collection("Students");
+    return mongoClient.db("Aufgabe_3").collection("User");
 }
 //# sourceMappingURL=server.js.map
