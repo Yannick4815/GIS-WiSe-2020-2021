@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="main.css">
     <script src="admin.js" defer></script>
     <script src="shared.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Administration</title>
 </head>
 <body>
@@ -19,6 +20,16 @@
         </div>
         
     </div>
+
+    <div id="deleteOverlay">
+        <div id="deleteOverlayDiv">
+            <h2>Wollen Sie "<span id="deleteElementVariable"></span>" löschen?</h2>
+        <button id="deleteYes">Ja</button>
+        <button id="deleteNo">Nein</button>
+        </div>
+        
+    </div>
+
     <div class="container">
         <div class="main">
             <h1>Artikel-Übersicht</h1>
@@ -27,6 +38,49 @@
                 <!--<h4>Kamera 1 - 30,99€ - frei - Yannick Reiche <span class="circleRed"></span></h4>-->
             </div>
 
+            <h1>Artikel hinzufügen</h1>
+
+            <form id="addItemForm" action="" method="GET">
+                <label id="label_name" for="name">Name</label>
+                <input id="name" type="text" name="name" data="Name" placeholder="Name">
+
+                <label id="label_preis" for="preis">Preis</label>
+                <input id="preis" type="text" name="preis" data="Preis" placeholder="Preis">
+
+                <label id="label_desc" for="desc">Beschreibung</label>
+                <input id="desc" type="text" name="description" data="Beschreibung" placeholder="Beschreibung">
+
+                <label id="label_img" for="img">Bild</label>
+                <input id="img" type="text" name="img" data="Bild" placeholder="Bild">
+
+                <input type="hidden" name="requestType" value="add">
+
+                <h6 id="inputError"></h6>
+
+                <input id="submit" type="button" value="Hinzufügen">
+            </form>
+
+            
+            <div id="previewDiv">
+                <div id="preview" class="item">
+                    <div  class="itemHeading">
+                        <div class="circleGreen"></div>
+                        <h4 id="previewName"></h4>
+                    </div>
+                    <div class="itemImage">
+                        <img id="previewImage" onerror="onError(this);" src="" alt="">
+                    </div>
+                    <div  class="itemDescription">
+                        <h6 id="previewPreis"></h6>
+                        <h5 id="previewDesc"></h5>
+                    </div>
+                    <div class="itemOrder">
+                        <button>In den Warenkorb</button>
+                    </div>
+                </div>
+            </div>
+
+           
            
         </div>
     </div>

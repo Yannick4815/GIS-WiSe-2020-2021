@@ -47,6 +47,7 @@ function fillSite(_allData) {
         let img = document.createElement("img");
         img.setAttribute("src", _allData[index].img);
         img.setAttribute("alt", _allData[index].name);
+        img.setAttribute("onerror", "onError(this)");
         divImage.appendChild(img);
         //description Div
         let divDescription = document.createElement("div");
@@ -162,19 +163,31 @@ function countAndFillBasket(_add, _item) {
     basketBtn.innerText = "Warenkorb (" + itemsCount + ")";
     toggleOverlay(localStorage.orders);
 }
-function displaySum(_basket) {
-    let h4Old = document.getElementById("sum");
+async function displaySum(_basket) {
+    let sumOld = document.getElementById("sum");
     let h4 = document.createElement("h4");
-    communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
-        .then((allDataFetched) => h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
-    //console.log("allDataFetched")
-    );
+    h4.innerText = calculateSum(await getData());
+    /* communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
+         .then((allDataFetched) =>
+             h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
+             //console.log("allDataFetched")
+ 
+         );*/
     h4.setAttribute("id", "sum");
-    _basket.removeChild(h4Old);
+    console.log("basket: " + _basket.hasChildNodes());
+    if (_basket.style.display != "none") {
+        _basket.removeChild(sumOld);
+    }
     _basket.appendChild(h4);
 }
-communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
-    .then((allDataFetched) => fillSite(JSON.parse(allDataFetched)["allData"])
-//console.log("allDataFetched")
-);
+/*communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
+    .then((allDataFetched) =>
+        fillSite(JSON.parse(allDataFetched)["allData"])
+        //console.log("allDataFetched")
+
+    );*/
+async function start() {
+    fillSite(await getData());
+}
+start();
 //# sourceMappingURL=main.js.map

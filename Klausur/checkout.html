@@ -21,18 +21,23 @@
             </div>
             <h4 id="sum">Summe <span>123,99€</span></h4>
 
+            
             <div id="form">
                 <h2>Persönliche Daten</h2>
                 <form action="">
-                    <input type="text" placeholder="Vorname" required>
-                    <input type="text" placeholder="Nachname" required>
+                    <input type="text" name="vorname" placeholder="Vorname" required>
+                    <input type="text" name="nachname" placeholder="Nachname" required>
     
-                    <input type="email" placeholder="E-Mail" required>
-    
-                    <input type="submit" value="Reservierung abschicken">
+                    <input type="email" name="email" placeholder="E-Mail" required>
+                    <input id="arrayInput" type="hidden" name="items" value="">
+                    <input type="hidden" name="requestType" value="insert">
+
+                    <input id="submit" type="button" value="Reservierung abschicken">
                 </form>
             </div>
-            <h5 onclick="window.location.href='index.html'">Zurück zur Auswahl</h5>
+            <h5 class="h5_Btn" onclick="window.location.href='index.html'">Zurück zur Auswahl</h5>
+ 
+            
            
         </div>
     </div>

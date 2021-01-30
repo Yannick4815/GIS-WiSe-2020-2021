@@ -44,6 +44,17 @@ h6 {
     padding-right:5px;
 }
 
+label{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#aaa;
+    font-size: 18px;
+    display: block;
+    top:31px;
+    left:5px;
+    position: relative;
+    opacity: 0;
+  }
+
 .header{
     width: 100vw;
     height:100px;
@@ -85,7 +96,7 @@ h6 {
     margin: 0 auto;
     padding:60px;
 }
-.main h4 {
+.admin h4, #overview h4, #overview + h4 {
     color:white;
     border-bottom: 1px solid #ccc;
     position: initial;
@@ -107,20 +118,22 @@ h6 {
 #overview {
     margin-top:50px;
 }
+
 .main h2{
     margin-top:30px;
     margin-bottom:20px;
 }
-.main h5{
+.h5_Btn{
     color:white;
     float:right;
     font-weight: 400;
     font-size:16px;
 }
-.main h5:hover {
+.h5_Btn:hover {
     text-decoration: underline;
     cursor: pointer;
 }
+
 .main input[type=text], .main input[type=email] {
     border:none;
     border-bottom:1px solid #ccc;
@@ -136,7 +149,7 @@ h6 {
 .main input[type=text]:focus, .main input[type=email]:focus {
     border-bottom:1px solid teal;
 }
-.main input[type=submit] {
+.main input[type=submit], input[type=button] {
     margin-top:30px;
     font-size: 24px;
     line-height: 24px;
@@ -147,8 +160,9 @@ h6 {
     background-color: transparent;
     color:#ccc;
     transition: .3s;
+    display: block;
 }
-.main input[type=submit]:hover {
+.main input[type=submit]:hover, input[type=button]:hover {
     background-color: #008080;
     color:white;
     border: 1px solid white;
@@ -172,7 +186,7 @@ h6 {
     
     overflow-y: scroll;
 }
-.flexbox > div {
+.flexbox > div, #preview {
     background-color: #f1f1f1;
     width: 300px;
     margin: 15px;
@@ -180,20 +194,37 @@ h6 {
     line-height: 75px;
     font-size: 30px;
     height:400px;
-    
+    border-radius:5px;
+}
+#addItemForm {
+    display: inline-block;
+}
+#previewDiv {
+    margin-left:150px;
+    display: none;
    
+}
+#previewDiv:after{
+    content: "Vorschau";
+    font-family: Arial, Helvetica, sans-serif;
+    color:white;
 }
 
 .itemHeading {
     height:60px;
     background-color: #aaa;
     text-align: left;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
 }
 .itemImage {
     height:190px;
+    background-color: white;
 }
 .itemImage img{
-    height:100%;
+    height:auto;
+    max-height: 190px;
+    max-width: 300px;
 }
 .itemDescription {
     text-align: left;
@@ -207,6 +238,8 @@ h6 {
     background-color: #aaa;
     padding:10px;
     border-top:1px solid grey;
+    border-bottom-right-radius: inherit;
+    border-bottom-left-radius: inherit;
 }
 .itemOrder button {
     font-size: 15px;
@@ -323,6 +356,81 @@ h6 {
 }
 
 
+
+.admin div{
+    height:6px;
+    width:6px;
+    margin: 7px;
+    border-radius: 50px;
+    background-color: white;
+    margin-left: 50px;
+    
+}
+.admin h4 {
+    cursor: pointer;
+    transition: .3s;
+}
+form h6{
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    padding:5px 12px;
+    background-color: rgba(255, 0, 0, 0.603);
+    display: none;
+}
+.admin h4:hover{
+    background-color:#444;
+}
+.admin span div:first-of-type{
+    margin-top:13px;
+}
+#toggleStateOverlay, #deleteOverlay{
+    background-color: rgba(1, 1, 1, 0.8);
+    position: fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    z-index: 2;
+    text-align: center;
+    display: none;
+}
+#toggleStateDiv, #deleteOverlayDiv{
+    border-radius: 5px;
+    position: relative;
+    width:400px;
+    padding:40px;
+    background-color: #333;
+    margin: 0 auto;
+    top: 400px;
+}
+#toggleStateDiv h2{
+    font-weight: normal;
+}
+#toggleStateOverlay button, #deleteOverlay button{
+    border: 1px solid #ccc;
+    font-size:24px;
+    padding:5px 12px;
+    margin-top:30px;
+    background-color: transparent;
+    color:#ccc;
+    transition: .3s;
+}
+#toggleStateOverlay button:hover, #deleteOverlay button:hover{
+    border: 1px solid white;
+    color:white;
+    cursor: pointer;
+}
+#toggleStateOverlay button:first-of-type:hover, 
+#deleteOverlay button:first-of-type:hover{
+    background-color: teal;
+}
+#toggleStateOverlay button:last-of-type:hover,
+#deleteOverlay button:last-of-type:hover{
+    background-color: rgb(185, 33, 33);
+}
+
+
+
 /*RESPONSIVE index.html*/
 @media only screen and (max-width: 1500px){
     .display {
@@ -394,6 +502,16 @@ h6 {
 }
 
 /*RESPONSIVE admin.html*/
+@media only screen and (max-width: 960px){
+    #previewDiv{
+        margin-left:20px;
+    }
+}
+@media only screen and (max-width: 822px){
+    #previewDiv{
+        margin-left:0px;
+    }
+}
 @media only screen and (max-width: 660px){
     h1{
         font-size:5vw ;
@@ -409,87 +527,86 @@ h6 {
     .main{
         padding:20px;
     }
-    .circleGreen, .circleOrange, .circleRed {
+    .admin .circleGreen, .circleOrange, .circleRed {
         top: 12px;
     }
 
 
 }
 @media only screen and (max-width: 475px){
-    .circleGreen, .circleOrange, .circleRed {
+    .admin .circleGreen, .circleOrange, .circleRed {
         width:15px;
         height:15px;
         top: 17px;
+    }
+}
+@media only screen and (max-width: 440px){
+    .main {
+        padding:0;
+    }
+    .input {
+        width:100%;
+    }
+    #addItemForm {
+        width:100%;
     }
 }
 @media only screen and (max-width: 350px){
     .admin h4 {
         line-height: 30px;
     }
-    .circleGreen, .circleOrange, .circleRed {
+    .admin .circleGreen, .circleOrange, .circleRed {
         top: 7px;
     }
 }
 
-.admin div{
-    height:6px;
-    width:6px;
-    margin: 7px;
-    border-radius: 50px;
-    background-color: white;
-    margin-left: 50px;
-    
-}
-.admin span {
-    cursor: pointer;
-}
-.admin span:nth-child(2){
-    cursor:unset;
-}
-.admin span div:first-of-type{
-    margin-top:13px;
-}
-#toggleStateOverlay{
-    background-color: rgba(1, 1, 1, 0.8);
-    position: absolute;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-    z-index: 2;
-    text-align: center;
-    display: none;
-}
-#toggleStateDiv{
+
+
+
+.move{
     position: relative;
-    width:400px;
-    padding:40px;
-    background-color: #333;
-    margin: 0 auto;
-    top: 400px;
-}
-#toggleStateDiv h2{
-    font-weight: normal;
-}
-#toggleStateOverlay button{
-    border: 1px solid #ccc;
-    font-size:24px;
-    padding:5px 12px;
-    margin-top:30px;
-    background-color: transparent;
-    color:#ccc;
-    transition: .3s;
-}
-#toggleStateOverlay button:hover{
-    border: 1px solid white;
-    color:white;
-    cursor: pointer;
-}
-#toggleStateOverlay button:first-of-type:hover{
-    background-color: teal;
-}
-#toggleStateOverlay button:last-of-type:hover{
-    background-color: rgb(185, 33, 33);
-}
+    animation: move;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+   
+    top:31px;
+    left:5px;
+    opacity: 0;
+  }
+  .moveBack{
+    position: relative;
+    animation: moveBack;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    
+  
+    top:0px;
+    left:0px;
+    opacity: 1;
+  }
 
-
+  @keyframes move {
+    from{
+      top:0px;
+      left:0px;
+      opacity: 1;
+    }
+    to{
+      top:31px;
+      left:5px;
+      opacity: 0;
+      
+    }
+  }
+  @keyframes moveBack {
+    from{
+      top:31px;
+      left:5px;
+      opacity: 0;
+    }
+    to{
+      top:0px;
+      left:0px;
+      opacity: 1;
+    }
+  }

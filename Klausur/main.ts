@@ -63,7 +63,7 @@ function fillSite(_allData: Item[]): void {
         let img: HTMLParagraphElement = document.createElement("img");
         img.setAttribute("src", _allData[index].img);
         img.setAttribute("alt", _allData[index].name);
-
+        img.setAttribute("onerror", "onError(this)");
         divImage.appendChild(img);
 
         //description Div
@@ -142,7 +142,7 @@ function toggleOverlay(_orders: string[]): void {
 function addListeners(): void {
     document.querySelectorAll(".reservierenBtn").forEach(item => {
         let el: HTMLElement = document.getElementById(item.id);
-        
+
         if (el.classList.contains("disabled")) {
             el.innerText = "Reserviert";
         }
@@ -180,8 +180,8 @@ function addListeners(): void {
                     countAndFillBasket(true, stringArr[1]);
                 }
 
-                
-                
+
+
 
 
 
@@ -223,25 +223,45 @@ function countAndFillBasket(_add: boolean, _item: string): void {
     basketBtn.innerText = "Warenkorb (" + itemsCount + ")";
     toggleOverlay(localStorage.orders);
 }
-function displaySum(_basket: HTMLElement): void {
+async function displaySum(_basket: HTMLElement): Promise<void> {
 
-    let h4Old: HTMLElement = document.getElementById("sum");
+    let sumOld: HTMLElement = document.getElementById("sum");
     let h4: HTMLElement = document.createElement("h4");
-    communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
-    .then((allDataFetched) =>
-    h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
-        //console.log("allDataFetched")
 
-    );
+    h4.innerText = calculateSum(await getData());
+   /* communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
+        .then((allDataFetched) =>
+            h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
+            //console.log("allDataFetched")
+
+        );*/
     h4.setAttribute("id", "sum");
-    _basket.removeChild(h4Old);
+    console.log("basket: " + _basket.hasChildNodes());
+    if (_basket.style.display != "none"){
+        _basket.removeChild(sumOld);
+    }
+   
     _basket.appendChild(h4);
 
 }
-communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
+/*communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
     .then((allDataFetched) =>
         fillSite(JSON.parse(allDataFetched)["allData"])
         //console.log("allDataFetched")
 
-    );
+    );*/
+
+
+
+async function start(): Promise<void> {
+    fillSite(await getData());
+}
+start();
+
+
+
+
+
+
+
 
