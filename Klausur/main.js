@@ -26,6 +26,7 @@ function fillSite(_allData) {
      });*/
     basketBtn.addEventListener("click", function () {
         console.log("hier");
+        alert("hier");
         if (localStorage.orders != "[]") {
             if (basketOverlay.classList.contains("displayMobile")) {
                 changeClass(false, basketOverlay, "displayMobile");

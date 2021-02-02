@@ -28,6 +28,7 @@ function fillSite(_allData: Item[]): void {
     });*/
     basketBtn.addEventListener("click", function (): void {
         console.log("hier");
+        alert("hier");
         if (localStorage.orders != "[]") {
             if (basketOverlay.classList.contains("displayMobile")){
                 changeClass(false, basketOverlay, "displayMobile");
