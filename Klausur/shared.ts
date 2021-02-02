@@ -49,3 +49,76 @@ function calculateSum(_allData: Item[]): string {
 function onError(_el: HTMLImageElement): void {
     _el.src = "img/missing.png";
 }
+
+function checkFor(_el: HTMLElement, _searchArray: string[]): boolean {
+    let pass: boolean = false;
+    
+    let inputElement: HTMLInputElement = <HTMLInputElement>_el;
+    let inputAsArray: string[] = inputElement.value.split("");
+
+    _searchArray.forEach(query => {
+        if (query == "") {
+            if (inputElement.value != "") {
+                pass = true;
+            }
+        }
+        else {
+            for (let i: number = 0; i < inputAsArray.length; i++) {
+               
+                if (!_searchArray.includes(inputAsArray[i])) {
+                    pass = false;
+                    break;
+                    
+                }
+                else {
+                    pass = true;
+                }
+            }
+        }
+    });
+    return pass;
+}
+
+function moveLabel(_input: HTMLInputElement): void {
+    let label: HTMLElement = document.getElementById("label_" + _input.id);
+    
+    if (_input.value != "") {
+        
+        label.classList.add("moveBack");
+        label.classList.remove("move");
+        _input.placeholder = "";
+    }
+    else {
+       
+        label.classList.add("move");
+        label.classList.remove("moveBack");
+        _input.placeholder = _input.getAttribute("data");
+
+    }
+}
+
+function message(_mes: string, _target: string): void {
+    let body: HTMLElement = document.getElementById("body");
+    let container: HTMLDivElement = document.createElement("div");
+    let mesDiv: HTMLDivElement = document.createElement("div");
+    let mes: HTMLParagraphElement = document.createElement("h2");
+    let mes2: HTMLParagraphElement = document.createElement("h5");
+    let a: HTMLElement = document.createElement("a");
+
+    body.innerHTML = "";
+    container.setAttribute("class", "mesContainer");
+    mesDiv.setAttribute("class", "mesDiv");
+    mes.innerText = _mes;
+    a.setAttribute("href", _target);
+    a.innerText = "oder klicken Sie hier";
+
+    mes2.innerText = "Sie werden in Kürze automatisch weitergeleitet";
+
+    mesDiv.appendChild(mes);
+    mesDiv.appendChild(mes2);
+    mesDiv.appendChild(a);
+    container.appendChild(mesDiv);
+    body.appendChild(container);
+
+    setTimeout(function(){ window.location.href = _target; }, 7000);
+}

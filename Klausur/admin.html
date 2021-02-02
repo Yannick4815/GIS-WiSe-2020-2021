@@ -1,19 +1,31 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/adminResponsive.css">
+
     <script src="admin.js" defer></script>
-    <script src="shared.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="shared.js" ></script>
+    
     <title>Administration</title>
+
 </head>
-<body>
+<body id="body">
     <div class="header">
         <h1>ASta-Verleih-Administration</h1>
     </div>
+    <input id="objectId" type="hidden">
     <div id="toggleStateOverlay">
         <div id="toggleStateDiv">
+            
             <h2>Wollen Sie "<span id="toggleElementVariable"></span>" in den Status "<span id="toggleStatusVariable"></span>" versetzen?</h2>
         <button id="toggleYes">Ja</button>
         <button id="toggleNo">Nein</button>
@@ -31,7 +43,7 @@
     </div>
 
     <div class="container">
-        <div class="main">
+        <div class="main adminMain">
             <h1>Artikel-Übersicht</h1>
 
             <div id="overview" class="admin">
@@ -68,7 +80,7 @@
                         <h4 id="previewName"></h4>
                     </div>
                     <div class="itemImage">
-                        <img id="previewImage" onerror="onError(this);" src="" alt="">
+                        <img id="previewImage" onerror="onError(this);" src="" alt="previewImage">
                     </div>
                     <div  class="itemDescription">
                         <h6 id="previewPreis"></h6>

@@ -72,7 +72,7 @@ export namespace Klausur {
                 responseBody.message = JSON.stringify(resArr);
 
             }
-            else if (qdata.requestType == "insert") {
+            else if (qdata.requestType == "login" || qdata.requestType == "register") {
                 console.log("Reading");
 
                 result = user.find({ email: qdata.email });
@@ -82,27 +82,65 @@ export namespace Klausur {
 
                 //console.log(await result.toArray());
                 let id: string;
-
-                if (JSON.stringify(foundUser) == "[]") {
-                    user.insertOne({ vorname: qdata.vorname, nachname: qdata.nachname, email: qdata.email });
-                    let newUser: Mongo.Cursor = user.find({ email: qdata.email });
-
-                    newUserObj = await newUser.toArray();
-
-                    id = newUserObj[0]._id;
+                let userExists: boolean;
+                let insert: boolean = false;
+                if (foundUser.length > 0) {
+                    userExists = true;
+                    console.log("FOUND USER");
                 }
                 else {
-                    id = foundUser[0]._id;
+                    userExists = false;
+                    console.log("NOT FOUND USER");
+                }
+                console.log(qdata.requestType);
+                if (qdata.requestType == "login") {
+                    if (userExists) {
+                        if (qdata.pwd == foundUser[0].passwort) {
+                            
+                            id = foundUser[0]._id;
+                            insert = true;
+                        }
+                        else {
+                            responseBody.message = "Falsches Passwort";
+                        }
+                    }
+                    else {
+                        responseBody.message = "Kein Konto mit dieser E-Mail gefunden";
+                    }
+                }
+                else {
+                    if (!userExists) {
+                        
+                        let res: Mongo.InsertOneWriteOpResult<any> = await user.insertOne({ vorname: qdata.vorname, nachname: qdata.nachname, email: qdata.email, passwort: qdata.pwd});
+                          
+                        id = res.insertedId;
+                        //let newUser: Mongo.Cursor = user.find({ email: qdata.email });
+
+                        //newUserObj = await newUser.toArray();
+                        //console.log("hier");
+                    
+                        //id = newUserObj[0]._id;
+
+                        insert = true;
+                    }
+                    else {
+                        responseBody.message = "E-Mail wird bereits verwendet!";
+                    }
+                }
+
+                if (insert) {
+                    let itemArr: string[] = JSON.parse(String(qdata.items));
+                    itemArr.forEach(element => {
+                        findAndSetUser(element, id, items);
+    
+                    });
+                    responseBody.status = "success";
+                    responseBody.message = "Vielen Dank für Ihre Reservierung";
                 }
 
 
-                let itemArr: string[] = JSON.parse(String(qdata.items));
-                itemArr.forEach(element => {
-                    findAndSetUser(element, id, items);
-                   
-                });
-                responseBody.status = "success";
-                responseBody.message = "Vielen Dank für Ihre Reservierung";
+               
+                
                 //result = items.find({});
                 //
             }
@@ -110,7 +148,7 @@ export namespace Klausur {
                 changeItemState(String(qdata.element), Number(qdata.state), items);
             }
             else if (qdata.requestType == "findUser") {
-                result = user.find({ _id: new Mongo.ObjectId(String(qdata.user))});
+                result = user.find({ _id: new Mongo.ObjectId(String(qdata.user)) });
                 let foundUser: Benutzer[] = await result.toArray();
                 if (JSON.stringify(foundUser) != "[]") {
                     responseBody.message = foundUser[0].vorname + " " + foundUser[0].nachname;
@@ -118,26 +156,27 @@ export namespace Klausur {
                 else {
                     console.log("cant find user " + qdata.user);
                 }
-                console.log(foundUser);
-                
+                //console.log(foundUser);
+
                 responseBody.status = "success";
             }
             else if (qdata.requestType == "add") {
                 items.insertOne({
                     user: "",
                     name: qdata.name,
-                    preis: qdata.preis, 
+                    preis: qdata.preis,
                     status: 1,
-                    description: qdata. description,
+                    description: qdata.description,
                     img: qdata.img
                 });
-            }   
+                responseBody.status = "success";
+            }
             else if (qdata.requestType == "delete") {
                 console.log("delete " + qdata.element);
-                result = items.find({name: qdata.element});
+                result = items.find({ _id: new Mongo.ObjectId(String(qdata.element)) });
                 let foundItem: Item[] = await result.toArray();
                 if (foundItem.length > 0) {
-                    items.deleteOne({_id: new Mongo.ObjectId(String(foundItem[0]._id))});
+                    items.deleteOne({ _id: new Mongo.ObjectId(String(foundItem[0]._id)) });
                     responseBody.message = "success";
                     responseBody.message = "Löschen erfolgreich";
                 }
@@ -145,8 +184,8 @@ export namespace Klausur {
                     responseBody.message = "Element nicht gefunden";
                     console.log("can't find item");
                 }
-                
-                
+
+
             }
             else {
                 _response.write("error");
@@ -236,19 +275,19 @@ async function findAndSetUser(_element: string, _userId: string, _items: Mongo.C
 
     await _items.updateOne({ name: _element }, {
         $set: {
-        user: _userId,
-        status: "2"
-    }
-        
+            user: _userId,
+            status: "2"
+        }
+
     });
 }
 
 async function changeItemState(_element: string, _state: number, _items: Mongo.Collection): Promise<void> {
-    await _items.updateOne({ name: _element }, {
+    await _items.updateOne({ _id: new Mongo.ObjectId(String(_element)) }, {
         $set: {
-        status: String(_state)
-    }
-        
+            status: String(_state)
+        }
+
     });
     console.log(_element + " " + _state);
 }

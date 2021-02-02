@@ -1,5 +1,4 @@
 
-
 mainAdmin();
 async function mainAdmin(): Promise<void> {
     fillList(await getData());
@@ -87,7 +86,7 @@ function changeState(_item: Element, _state: number, _index: number): void {
     let elVar: HTMLElement = document.getElementById("toggleElementVariable");
     let stVar: HTMLElement = document.getElementById("toggleStatusVariable");
     let overlay: HTMLElement = document.getElementById("toggleStateOverlay");
-
+    let objectVar: HTMLInputElement = <HTMLInputElement>document.getElementById("objectId");
     let delOverlay: HTMLElement = document.getElementById("deleteOverlay");
     let delElVar: HTMLElement = document.getElementById("deleteElementVariable");
 
@@ -114,9 +113,10 @@ function changeState(_item: Element, _state: number, _index: number): void {
         state = 1;
         delElVar.innerText = itemName;
     }
+    objectVar.value = itemArray[_index];
 
 
-    
+
 
     console.log("Wechsel " + (_index + 2) + " zu " + state);
 
@@ -131,7 +131,7 @@ async function findUser(_id: string): Promise<string> {
 document.getElementById("toggleYes").addEventListener("click", function (this: HTMLButtonElement): void {
 
     let request: string;
-    let elVar: HTMLElement = document.getElementById("toggleElementVariable");
+    let elVar: HTMLInputElement = <HTMLInputElement>document.getElementById("objectId");
     let stateVar: HTMLElement = document.getElementById("toggleStatusVariable");
     let state: number;
 
@@ -142,19 +142,31 @@ document.getElementById("toggleYes").addEventListener("click", function (this: H
         state = 3;
     }
 
-    request = "requestType=changeState&element=" + elVar.innerText + "&state=" + state;
+    request = "requestType=changeState&element=" + elVar.value + "&state=" + state;
     connectToServer(request);
-    window.location.reload();
-});
 
+    reload("toggleStateDiv");
+
+});
+function reload(_id: string): void {
+    let div: HTMLElement = document.getElementById(_id);
+    let img: HTMLImageElement = document.createElement("img");
+    img.setAttribute("src", "img/loading.gif");
+    img.setAttribute("alt", "loading");
+
+    div.innerHTML = "";
+    div.appendChild(img);
+
+    setTimeout(function () { window.location.reload(); }, 2000);
+}
 document.getElementById("deleteYes").addEventListener("click", function (this: HTMLButtonElement): void {
-    let elVar: HTMLElement = document.getElementById("deleteElementVariable");
+    let elVar: HTMLInputElement = <HTMLInputElement>document.getElementById("objectId");
     let request: string;
     console.log("delete" + elVar.innerText);
-    request = "requestType=delete&element=" + elVar.innerText;
+    request = "requestType=delete&element=" + elVar.value;
 
     connectToServer(request);
-    window.location.reload();
+    reload("deleteOverlayDiv");
 });
 document.getElementById("deleteNo").addEventListener("click", function (this: HTMLButtonElement): void {
     document.getElementById("deleteOverlay").style.display = "none";
@@ -167,25 +179,13 @@ document.querySelectorAll("input").forEach(item => {
         moveLabel(this);
         checkLength(this);
         updatePreview();
-        
+
     });
 });
-function moveLabel(_input: HTMLInputElement): void {
-    let label: HTMLElement = document.getElementById("label_" + _input.id);
-    if (_input.value != "") {
-        label.classList.add("moveBack");
-        label.classList.remove("move");
-        _input.placeholder = "";
-    }
-    else {
-        label.classList.add("move");
-        label.classList.remove("moveBack");
-        _input.placeholder = _input.getAttribute("data");
 
-    }
-}
 
-document.getElementById("submit").addEventListener("click", function (this: HTMLInputElement): void {
+
+document.getElementById("submit").addEventListener("click", async function (this: HTMLInputElement): Promise<void> {
 
     document.getElementById("name").style.borderBottomColor = "#ccc";
     document.getElementById("preis").style.borderBottomColor = "#ccc";
@@ -213,49 +213,27 @@ document.getElementById("submit").addEventListener("click", function (this: HTML
         inputError.innerText = "Alle Felder ausfüllen";
         inputError.style.display = "inline-block";
         document.getElementById("desc").style.borderBottomColor = "red";
-    } 
+    }
     else if (!checkFor(document.getElementById("img"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
         inputError.style.display = "inline-block";
         document.getElementById("img").style.borderBottomColor = "red";
-    } 
+    }
     else {
-        connectToServer("insert");
-        window.location.reload(); 
-    }   
-    
-    
+        let result: ResponseBody = await connectToServer("insert");
+        if (result.status == "success") {
+            message("Produkt erfolgreich hinzugefügt", "admin.html");
+        }
+        else {
+            message("Es ist ein Fehler aufgetreten!", "admin.html");
+        }
+    }
+
+
 });
 
 
-function checkFor(_el: HTMLElement, _searchArray: string[]): boolean {
-    let pass: boolean = false;
-    
-    let inputElement: HTMLInputElement = <HTMLInputElement>_el;
-    let inputAsArray: string[] = inputElement.value.split("");
 
-    _searchArray.forEach(query => {
-        if (query == "") {
-            if (inputElement.value != "") {
-                pass = true;
-            }
-        }
-        else {
-            for (let i: number = 0; i < inputAsArray.length; i++) {
-               
-                if (!_searchArray.includes(inputAsArray[i])) {
-                    pass = false;
-                    break;
-                    
-                }
-                else {
-                    pass = true;
-                }
-            }
-        }
-    });
-    return pass;
-}
 
 function updatePreview(): void {
     let inputName: HTMLInputElement = <HTMLInputElement>document.getElementById("name");
@@ -268,10 +246,10 @@ function updatePreview(): void {
         preview.style.display = "inline-block";
         let preName: HTMLElement = document.getElementById("previewName");
         preName.innerText = inputName.value;
-    
+
         let preImg: HTMLImageElement = <HTMLImageElement>document.getElementById("previewImage");
         preImg.src = inputImg.value;
-    
+
         let prePreis: HTMLElement = document.getElementById("previewPreis");
         if (inputPreis.value != "") {
             prePreis.innerText = inputPreis.value + " € / Tag";
@@ -279,8 +257,8 @@ function updatePreview(): void {
         else {
             prePreis.innerText = "";
         }
-        
-    
+
+
         let preDesc: HTMLElement = document.getElementById("previewDesc");
         preDesc.innerText = inputDesc.value;
     }

@@ -54,28 +54,60 @@ var Klausur;
                 responseBody.status = "success";
                 responseBody.message = JSON.stringify(resArr);
             }
-            else if (qdata.requestType == "insert") {
+            else if (qdata.requestType == "login" || qdata.requestType == "register") {
                 console.log("Reading");
                 result = user.find({ email: qdata.email });
                 let foundUser = await result.toArray();
                 let newUserObj;
                 //console.log(await result.toArray());
                 let id;
-                if (JSON.stringify(foundUser) == "[]") {
-                    user.insertOne({ vorname: qdata.vorname, nachname: qdata.nachname, email: qdata.email });
-                    let newUser = user.find({ email: qdata.email });
-                    newUserObj = await newUser.toArray();
-                    id = newUserObj[0]._id;
+                let userExists;
+                let insert = false;
+                if (foundUser.length > 0) {
+                    userExists = true;
+                    console.log("FOUND USER");
                 }
                 else {
-                    id = foundUser[0]._id;
+                    userExists = false;
+                    console.log("NOT FOUND USER");
                 }
-                let itemArr = JSON.parse(String(qdata.items));
-                itemArr.forEach(element => {
-                    findAndSetUser(element, id, items);
-                });
-                responseBody.status = "success";
-                responseBody.message = "Vielen Dank für Ihre Reservierung";
+                console.log(qdata.requestType);
+                if (qdata.requestType == "login") {
+                    if (userExists) {
+                        if (qdata.pwd == foundUser[0].passwort) {
+                            id = foundUser[0]._id;
+                            insert = true;
+                        }
+                        else {
+                            responseBody.message = "Falsches Passwort";
+                        }
+                    }
+                    else {
+                        responseBody.message = "Kein Konto mit dieser E-Mail gefunden";
+                    }
+                }
+                else {
+                    if (!userExists) {
+                        let res = await user.insertOne({ vorname: qdata.vorname, nachname: qdata.nachname, email: qdata.email, passwort: qdata.pwd });
+                        id = res.insertedId;
+                        //let newUser: Mongo.Cursor = user.find({ email: qdata.email });
+                        //newUserObj = await newUser.toArray();
+                        //console.log("hier");
+                        //id = newUserObj[0]._id;
+                        insert = true;
+                    }
+                    else {
+                        responseBody.message = "E-Mail wird bereits verwendet!";
+                    }
+                }
+                if (insert) {
+                    let itemArr = JSON.parse(String(qdata.items));
+                    itemArr.forEach(element => {
+                        findAndSetUser(element, id, items);
+                    });
+                    responseBody.status = "success";
+                    responseBody.message = "Vielen Dank für Ihre Reservierung";
+                }
                 //result = items.find({});
                 //
             }
@@ -91,7 +123,7 @@ var Klausur;
                 else {
                     console.log("cant find user " + qdata.user);
                 }
-                console.log(foundUser);
+                //console.log(foundUser);
                 responseBody.status = "success";
             }
             else if (qdata.requestType == "add") {
@@ -103,10 +135,11 @@ var Klausur;
                     description: qdata.description,
                     img: qdata.img
                 });
+                responseBody.status = "success";
             }
             else if (qdata.requestType == "delete") {
                 console.log("delete " + qdata.element);
-                result = items.find({ name: qdata.element });
+                result = items.find({ _id: new Mongo.ObjectId(String(qdata.element)) });
                 let foundItem = await result.toArray();
                 if (foundItem.length > 0) {
                     items.deleteOne({ _id: new Mongo.ObjectId(String(foundItem[0]._id)) });
@@ -203,7 +236,7 @@ async function findAndSetUser(_element, _userId, _items) {
     });
 }
 async function changeItemState(_element, _state, _items) {
-    await _items.updateOne({ name: _element }, {
+    await _items.updateOne({ _id: new Mongo.ObjectId(String(_element)) }, {
         $set: {
             status: String(_state)
         }

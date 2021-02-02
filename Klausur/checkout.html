@@ -1,18 +1,31 @@
+<!DOCTYPE html>
 <html lang="de">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/checkoutResponsive.css">
+
     <script src="checkout.js" defer></script>
-    <script src="shared.js"></script>
+    <script src="shared.js" ></script>
+
     <title>Checkout</title>
+
 </head>
-<body>
+
+<body id="body">
     <div class="header">
         <h1>ASta-Verleih</h1>
     </div>
 
-    <div class="container">
+    <div class="container checkout">
         <div class="main">
             <h1>Checkout</h1>
 
@@ -21,25 +34,41 @@
             </div>
             <h4 id="sum">Summe <span>123,99€</span></h4>
 
-            
+
             <div id="form">
                 <h2>Persönliche Daten</h2>
-                <form action="">
-                    <input type="text" name="vorname" placeholder="Vorname" required>
-                    <input type="text" name="nachname" placeholder="Nachname" required>
-    
-                    <input type="email" name="email" placeholder="E-Mail" required>
+
+                <h3 id="neukunde" class="active">Neukunde</h3>
+                <h3 id="anmelden">Anmelden</h3>
+
+                <form action="" method="GET">
+
+                    <label id="label_inputVorname" for="inputVorname">Vorname</label>
+                    <input id="inputVorname" type="text" name="vorname" placeholder="Vorname" data="Vorname">
+
+                    <label id="label_inputNachname" for="inputNachname">Nachname</label>
+                    <input id="inputNachname" type="text" name="nachname" placeholder="Nachname" data="Nachname">
+
+                    <label id="label_email" for="email">E-Mail</label>
+                    <input id="email" type="email" name="email" placeholder="E-Mail" data="E-Mail">
+
+                    <label id="label_pwd" for="pwd">Passwort</label>
+                    <input id="pwd" type="pwd" name="pwd" placeholder="Passwort" data="Passwort">
+
+                    
                     <input id="arrayInput" type="hidden" name="items" value="">
-                    <input type="hidden" name="requestType" value="insert">
+                    <input id="requestType" type="hidden" name="requestType" value="register">
 
                     <input id="submit" type="button" value="Reservierung abschicken">
                 </form>
             </div>
+            <h6 id="error"></h6>
             <h5 class="h5_Btn" onclick="window.location.href='index.html'">Zurück zur Auswahl</h5>
- 
-            
-           
+
+
+
         </div>
     </div>
 </body>
+
 </html>

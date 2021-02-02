@@ -60,6 +60,7 @@ function changeState(_item, _state, _index) {
     let elVar = document.getElementById("toggleElementVariable");
     let stVar = document.getElementById("toggleStatusVariable");
     let overlay = document.getElementById("toggleStateOverlay");
+    let objectVar = document.getElementById("objectId");
     let delOverlay = document.getElementById("deleteOverlay");
     let delElVar = document.getElementById("deleteElementVariable");
     console.log("change: " + itemName);
@@ -82,6 +83,7 @@ function changeState(_item, _state, _index) {
         state = 1;
         delElVar.innerText = itemName;
     }
+    objectVar.value = itemArray[_index];
     console.log("Wechsel " + (_index + 2) + " zu " + state);
 }
 async function findUser(_id) {
@@ -90,7 +92,7 @@ async function findUser(_id) {
 }
 document.getElementById("toggleYes").addEventListener("click", function () {
     let request;
-    let elVar = document.getElementById("toggleElementVariable");
+    let elVar = document.getElementById("objectId");
     let stateVar = document.getElementById("toggleStatusVariable");
     let state;
     if (stateVar.innerText == "frei") {
@@ -99,17 +101,26 @@ document.getElementById("toggleYes").addEventListener("click", function () {
     else {
         state = 3;
     }
-    request = "requestType=changeState&element=" + elVar.innerText + "&state=" + state;
+    request = "requestType=changeState&element=" + elVar.value + "&state=" + state;
     connectToServer(request);
-    window.location.reload();
+    reload("toggleStateDiv");
 });
+function reload(_id) {
+    let div = document.getElementById(_id);
+    let img = document.createElement("img");
+    img.setAttribute("src", "img/loading.gif");
+    img.setAttribute("alt", "loading");
+    div.innerHTML = "";
+    div.appendChild(img);
+    setTimeout(function () { window.location.reload(); }, 2000);
+}
 document.getElementById("deleteYes").addEventListener("click", function () {
-    let elVar = document.getElementById("deleteElementVariable");
+    let elVar = document.getElementById("objectId");
     let request;
     console.log("delete" + elVar.innerText);
-    request = "requestType=delete&element=" + elVar.innerText;
+    request = "requestType=delete&element=" + elVar.value;
     connectToServer(request);
-    window.location.reload();
+    reload("deleteOverlayDiv");
 });
 document.getElementById("deleteNo").addEventListener("click", function () {
     document.getElementById("deleteOverlay").style.display = "none";
@@ -121,20 +132,7 @@ document.querySelectorAll("input").forEach(item => {
         updatePreview();
     });
 });
-function moveLabel(_input) {
-    let label = document.getElementById("label_" + _input.id);
-    if (_input.value != "") {
-        label.classList.add("moveBack");
-        label.classList.remove("move");
-        _input.placeholder = "";
-    }
-    else {
-        label.classList.add("move");
-        label.classList.remove("moveBack");
-        _input.placeholder = _input.getAttribute("data");
-    }
-}
-document.getElementById("submit").addEventListener("click", function () {
+document.getElementById("submit").addEventListener("click", async function () {
     document.getElementById("name").style.borderBottomColor = "#ccc";
     document.getElementById("preis").style.borderBottomColor = "#ccc";
     document.getElementById("desc").style.borderBottomColor = "#ccc";
@@ -166,34 +164,15 @@ document.getElementById("submit").addEventListener("click", function () {
         document.getElementById("img").style.borderBottomColor = "red";
     }
     else {
-        connectToServer("insert");
-        window.location.reload();
-    }
-});
-function checkFor(_el, _searchArray) {
-    let pass = false;
-    let inputElement = _el;
-    let inputAsArray = inputElement.value.split("");
-    _searchArray.forEach(query => {
-        if (query == "") {
-            if (inputElement.value != "") {
-                pass = true;
-            }
+        let result = await connectToServer("insert");
+        if (result.status == "success") {
+            message("Produkt erfolgreich hinzugefügt", "admin.html");
         }
         else {
-            for (let i = 0; i < inputAsArray.length; i++) {
-                if (!_searchArray.includes(inputAsArray[i])) {
-                    pass = false;
-                    break;
-                }
-                else {
-                    pass = true;
-                }
-            }
+            message("Es ist ein Fehler aufgetreten!", "admin.html");
         }
-    });
-    return pass;
-}
+    }
+});
 function updatePreview() {
     let inputName = document.getElementById("name");
     let inputPreis = document.getElementById("preis");

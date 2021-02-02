@@ -1,0 +1,11 @@
+
+/*RESPONSIVE checkout.html*/
+
+
+@media only screen and (max-width: 440px){
+    input[type=button]{
+        font-size:20px;
+    }
+}
+
+

@@ -11,7 +11,9 @@ function fillSite(_allData: Item[]): void {
     let basketBtn: HTMLElement = document.getElementById("basketBtn");
     let basketOverlay: HTMLElement = document.getElementById("basketOverlay");
     basketBtn.addEventListener("mouseenter", function (): void {
-        changeClass(true, basketOverlay, "displayMobile");
+        if (localStorage.orders != "[]") {
+            changeClass(true, basketOverlay, "displayMobile");
+        } 
     });
     basketBtn.addEventListener("mouseleave", function (): void {
         changeClass(false, basketOverlay, "displayMobile");
@@ -24,9 +26,6 @@ function fillSite(_allData: Item[]): void {
     });
 
     for (let index: number = 0; index < _allData.length; index++) {
-
-
-
 
         //main div
         let div: HTMLParagraphElement = document.createElement("div");

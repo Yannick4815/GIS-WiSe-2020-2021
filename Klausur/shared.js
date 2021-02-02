@@ -38,4 +38,62 @@ function calculateSum(_allData) {
 function onError(_el) {
     _el.src = "img/missing.png";
 }
+function checkFor(_el, _searchArray) {
+    let pass = false;
+    let inputElement = _el;
+    let inputAsArray = inputElement.value.split("");
+    _searchArray.forEach(query => {
+        if (query == "") {
+            if (inputElement.value != "") {
+                pass = true;
+            }
+        }
+        else {
+            for (let i = 0; i < inputAsArray.length; i++) {
+                if (!_searchArray.includes(inputAsArray[i])) {
+                    pass = false;
+                    break;
+                }
+                else {
+                    pass = true;
+                }
+            }
+        }
+    });
+    return pass;
+}
+function moveLabel(_input) {
+    let label = document.getElementById("label_" + _input.id);
+    if (_input.value != "") {
+        label.classList.add("moveBack");
+        label.classList.remove("move");
+        _input.placeholder = "";
+    }
+    else {
+        label.classList.add("move");
+        label.classList.remove("moveBack");
+        _input.placeholder = _input.getAttribute("data");
+    }
+}
+function message(_mes, _target) {
+    let body = document.getElementById("body");
+    let container = document.createElement("div");
+    let mesDiv = document.createElement("div");
+    let mes = document.createElement("h2");
+    let mes2 = document.createElement("h5");
+    let a = document.createElement("a");
+    body.innerHTML = "";
+    container.setAttribute("class", "mesContainer");
+    mesDiv.setAttribute("class", "mesDiv");
+    mes.innerText = _mes;
+    a.setAttribute("href", _target);
+    a.innerText = "oder klicken Sie hier";
+    mes2.innerText = "Sie werden in Kürze automatisch weitergeleitet";
+    mesDiv.appendChild(mes);
+    mesDiv.appendChild(mes2);
+    mesDiv.appendChild(a);
+    container.appendChild(mesDiv);
+    body.appendChild(container);
+    setTimeout(function () { window.location.href = _target; }, 7000);
+}
 //# sourceMappingURL=shared.js.map

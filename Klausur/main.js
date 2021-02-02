@@ -8,7 +8,9 @@ function fillSite(_allData) {
     let basketBtn = document.getElementById("basketBtn");
     let basketOverlay = document.getElementById("basketOverlay");
     basketBtn.addEventListener("mouseenter", function () {
-        changeClass(true, basketOverlay, "displayMobile");
+        if (localStorage.orders != "[]") {
+            changeClass(true, basketOverlay, "displayMobile");
+        }
     });
     basketBtn.addEventListener("mouseleave", function () {
         changeClass(false, basketOverlay, "displayMobile");

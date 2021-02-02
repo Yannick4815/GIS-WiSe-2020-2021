@@ -1,5 +1,7 @@
+
+html{ overflow-x: hidden; }
 body {
-    background-image: url("img/background.jpg");
+    background-image: url("../img/background.jpg");
     background-attachment: fixed;
     background-size:cover;
     background-repeat: no-repeat;
@@ -134,7 +136,7 @@ label{
     cursor: pointer;
 }
 
-.main input[type=text], .main input[type=email] {
+.main input[type=text], .main input[type=email], .main input[type=pwd] {
     border:none;
     border-bottom:1px solid #ccc;
     background-color: transparent;
@@ -146,7 +148,7 @@ label{
     margin-bottom:30px;
     transition: .3s;
 }
-.main input[type=text]:focus, .main input[type=email]:focus {
+.main input[type=text]:focus, .main input[type=email]:focus, .main input[type=pwd]:focus {
     border-bottom:1px solid teal;
 }
 .main input[type=submit], input[type=button] {
@@ -168,6 +170,7 @@ label{
     border: 1px solid white;
     cursor: pointer;
 }
+
 #form {
     width:100%;
     margin-top: 50px;
@@ -191,9 +194,9 @@ label{
     width: 300px;
     margin: 15px;
     text-align: center;
-    line-height: 75px;
+    /*line-height: 75px;*/
     font-size: 30px;
-    height:400px;
+    height:401px;
     border-radius:5px;
 }
 #addItemForm {
@@ -231,19 +234,19 @@ label{
     height:70px;
     background-color: #aaa;
     padding:10px;
+    border-bottom:1px solid grey;
 }
 .itemOrder {
     text-align: center;
     height:40px;
     background-color: #aaa;
     padding:10px;
-    border-top:1px solid grey;
     border-bottom-right-radius: inherit;
     border-bottom-left-radius: inherit;
 }
 .itemOrder button {
-    font-size: 15px;
-    line-height: 15px;
+    font-size: 16px;
+    line-height: 16px;
     width: auto;
     padding: 8px 14px;
     border-radius:30px;
@@ -370,12 +373,15 @@ label{
     cursor: pointer;
     transition: .3s;
 }
-form h6{
+form h6, #error{
     color: rgb(255, 255, 255);
     font-weight: 400;
     padding:5px 12px;
     background-color: rgba(255, 0, 0, 0.603);
     display: none;
+}
+#error {
+    margin-top: 20px;
 }
 .admin h4:hover{
     background-color:#444;
@@ -403,6 +409,10 @@ form h6{
     margin: 0 auto;
     top: 400px;
 }
+#toggleStateDiv img, #deleteOverlayDiv img{
+    width:70px;
+    height:70px;
+}
 #toggleStateDiv h2{
     font-weight: normal;
 }
@@ -429,138 +439,61 @@ form h6{
     background-color: rgb(185, 33, 33);
 }
 
-
-
-/*RESPONSIVE index.html*/
-@media only screen and (max-width: 1500px){
-    .display {
-        display: none !important;
-    }
-    .displayMobile {
-        display: block !important;
-    }
-
-    
+.checkout h3{
+    color:white;
+    background-color: rgba(25, 168, 168, 0.178);
+    display: inline-block;
+    padding:5px 12px;
+    margin: 0;
+    transition: .3s;
 }
 
-@media only screen and (max-width: 1034px){
-    .flexbox{
-        width:675px;
-    }
+.active {
+    background-color: teal !important;
 }
-@media only screen and (max-width: 707px){
-    .flexbox{
-        width:335px;
-    }
+.checkout h3:hover {
+    background-color:teal;
+    cursor: pointer;
 }
-@media only screen and (max-width: 440px){
-    .header h2{
-        position: fixed;
-        bottom:0;
-        background-color: #333;
-        padding-left: 30px;
-        padding-right:30px;
-        right:0;
-        line-height:80px;
-        border: 2px solid #ccc;
-    }
-}
-@media only screen and (max-width: 364px){
-    .flexbox{
-        width:100vw;
-        padding:0;
-    }
-    .flexbox > div {
-        width: 100vw;
-        margin:0;
-        margin-bottom: 30px;
-    }
+.checkout form{
+    margin-top:30px;
 }
 
 
-/*RESPONSIVE checkout.html*/
-
-@media only screen and (max-width: 1125px){
-    .main{
-        width:100vw;
-        box-sizing: border-box;
-    }
+.mesContainer {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top:0;
+    left:0;
 }
-@media only screen and (max-width: 643px){
-    .main h5{
-        float: none;
-        margin-top:60px;
-    }
+.mesDiv {
+    width:600px;
+    height:auto;
+    margin: 0 auto;
+    margin-top: 100px;
+    background-color: #333;
+    color:white;
+    padding:40px;
+    font-weight: normal;
 }
-@media only screen and (max-width: 475px){
-    .main{
-        padding:20px;
-    }
-    .main input{
-        width:100%;
-    }
-}
-
-/*RESPONSIVE admin.html*/
-@media only screen and (max-width: 960px){
-    #previewDiv{
-        margin-left:20px;
-    }
-}
-@media only screen and (max-width: 822px){
-    #previewDiv{
-        margin-left:0px;
-    }
-}
-@media only screen and (max-width: 660px){
-    h1{
-        font-size:5vw ;
-    }
-    .admin h4 {
-        font-size:4vw;
-        padding-left:0;
-       line-height:50px;
-    }
-    #overview{
-        margin-top:20px;
-    }
-    .main{
-        padding:20px;
-    }
-    .admin .circleGreen, .circleOrange, .circleRed {
-        top: 12px;
-    }
-
+.mesDiv h5{
+    font-weight: 400;
+    margin-top:50px;
 
 }
-@media only screen and (max-width: 475px){
-    .admin .circleGreen, .circleOrange, .circleRed {
-        width:15px;
-        height:15px;
-        top: 17px;
-    }
-}
-@media only screen and (max-width: 440px){
-    .main {
-        padding:0;
-    }
-    .input {
-        width:100%;
-    }
-    #addItemForm {
-        width:100%;
-    }
-}
-@media only screen and (max-width: 350px){
-    .admin h4 {
-        line-height: 30px;
-    }
-    .admin .circleGreen, .circleOrange, .circleRed {
-        top: 7px;
-    }
+a {
+    color:white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
 }
 
 
+
+
+
+
+/*ANIMATION*/
 
 
 .move{
@@ -610,3 +543,101 @@ form h6{
       opacity: 1;
     }
   }
+
+
+
+  /*RESPONSIVE*/
+
+@media only screen and (max-width: 1125px){
+    .main{
+        width:100vw;
+        box-sizing: border-box;
+    }
+}
+@media only screen and (max-width: 930px){
+    #toggleStateDiv, #deleteOverlayDiv{
+        top:300px
+    }
+}
+@media only screen and (max-width: 700px){
+    #toggleStateDiv, #deleteOverlayDiv{
+        top:200px
+    }
+}
+@media only screen and (max-width: 680px){
+    .mesDiv{
+        width: 100vw;
+        padding:20px;
+        box-sizing: border-box;
+    }
+    .mesDiv h2 {
+        font-size:20px;
+    }
+    .mesDiv h5, .mesDiv a {
+        line-height:12px;
+        font-size:10px;
+    }
+}
+
+@media only screen and (max-width: 643px){
+    h1{
+        font-size:28px;
+        line-height:70px;
+    }
+    .header{
+        height:70px;
+    }
+    #basketOverlay {
+        margin-top:70px;
+    }
+    .container {
+        margin-top: 70px;
+    }
+    .main h5{
+        float: none;
+        margin-top:60px;
+    }
+}
+@media only screen and (max-width: 480px){
+    #toggleStateDiv, #deleteOverlayDiv{
+        margin:0;
+        width:100vw;
+        box-sizing: border-box;
+    }
+   
+
+}
+@media only screen and (max-width: 475px){
+    .main{
+        padding:20px;
+    }
+    .main input{
+        width:100%;
+    }
+    #error {
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+        margin-top:20px;
+    }
+}
+
+@media only screen and (max-width: 440px){
+    form {
+        width:95%;
+        margin: 0 auto;
+    }
+    #previewDiv {
+        width:95%;
+    }
+    #preview {
+        width: 100%;
+    }
+    #previewImage {
+        max-width:100%;
+    }
+}
+
+
+
+

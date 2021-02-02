@@ -1,0 +1,54 @@
+
+/*RESPONSIVE admin.html*/
+@media only screen and (max-width: 960px){
+    #previewDiv{
+        margin-left:20px;
+    }
+}   
+@media only screen and (max-width: 744px){
+    #preview {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top:50px;
+    }
+    #previewDiv{
+        margin-left:0px;
+    }
+}
+@media only screen and (max-width: 660px){
+
+    .admin h4 {
+        font-size:4vw;
+        padding-left:0;
+       line-height:50px;
+    }
+    #overview{
+        margin-top:20px;
+    }
+    .admin .circleGreen, .circleOrange, .circleRed {
+        top: 12px;
+    }
+
+
+}
+@media only screen and (max-width: 475px){
+    .admin .circleGreen, .circleOrange, .circleRed {
+        width:15px;
+        height:15px;
+        top: 17px;
+    }
+}
+@media only screen and (max-width: 425px){
+    .header h1 {
+        font-size:20px;
+    }
+}
+
+@media only screen and (max-width: 350px){
+    .admin h4 {
+        line-height: 30px;
+    }
+    .admin .circleGreen, .circleOrange, .circleRed {
+        top: 7px;
+    }
+}
