@@ -10,21 +10,22 @@ function fillSite(_allData) {
     //console.log(_allData);
     let basketBtn = document.getElementById("basketBtn");
     let basketOverlay = document.getElementById("basketOverlay");
-    basketBtn.addEventListener("mouseenter", function () {
-        if (localStorage.orders != "[]") {
-            changeClass(true, basketOverlay, "displayMobile");
-        }
-    });
-    basketBtn.addEventListener("mouseleave", function () {
-        changeClass(false, basketOverlay, "displayMobile");
-    });
-    basketOverlay.addEventListener("mouseenter", function () {
-        changeClass(true, basketOverlay, "displayMobile");
-    });
-    basketOverlay.addEventListener("mouseleave", function () {
-        changeClass(false, basketOverlay, "displayMobile");
-    });
-    basketOverlay.addEventListener("click", function () {
+    /* basketBtn.addEventListener("mouseenter", function (): void {
+         if (localStorage.orders != "[]") {
+             changeClass(true, basketOverlay, "displayMobile");
+         }
+     });
+     basketBtn.addEventListener("mouseleave", function (): void {
+         changeClass(false, basketOverlay, "displayMobile");
+     });
+     basketOverlay.addEventListener("mouseenter", function (): void {
+         changeClass(true, basketOverlay, "displayMobile");
+     });
+     basketOverlay.addEventListener("mouseleave", function (): void {
+         changeClass(false, basketOverlay, "displayMobile");
+     });*/
+    basketBtn.addEventListener("click", function () {
+        console.log("hier");
         if (localStorage.orders != "[]") {
             if (basketOverlay.classList.contains("displayMobile")) {
                 changeClass(false, basketOverlay, "displayMobile");
