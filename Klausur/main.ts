@@ -26,6 +26,17 @@ function fillSite(_allData: Item[]): void {
     basketOverlay.addEventListener("mouseleave", function (): void {
         changeClass(false, basketOverlay, "displayMobile");
     });
+    basketOverlay.addEventListener("click", function (): void {
+        if (localStorage.orders != "[]") {
+            if (basketOverlay.classList.contains("displayMobile")){
+                changeClass(false, basketOverlay, "displayMobile");
+            }
+            else {
+                changeClass(true, basketOverlay, "displayMobile");
+            }
+            
+        } 
+    });
 
     for (let index: number = 0; index < _allData.length; index++) {
 

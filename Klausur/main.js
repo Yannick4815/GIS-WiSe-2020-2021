@@ -24,6 +24,16 @@ function fillSite(_allData) {
     basketOverlay.addEventListener("mouseleave", function () {
         changeClass(false, basketOverlay, "displayMobile");
     });
+    basketOverlay.addEventListener("click", function () {
+        if (localStorage.orders != "[]") {
+            if (basketOverlay.classList.contains("displayMobile")) {
+                changeClass(false, basketOverlay, "displayMobile");
+            }
+            else {
+                changeClass(true, basketOverlay, "displayMobile");
+            }
+        }
+    });
     for (let index = 0; index < _allData.length; index++) {
         //main div
         let div = document.createElement("div");
