@@ -136,7 +136,7 @@ label{
     cursor: pointer;
 }
 
-.main input[type=text], .main input[type=email], .main input[type=pwd] {
+.main input[type=text], .main input[type=email], .main input[type=password] {
     border:none;
     border-bottom:1px solid #ccc;
     background-color: transparent;
@@ -149,7 +149,7 @@ label{
     transition: .3s;
     border-radius:0;
 }
-.main input[type=text]:focus, .main input[type=email]:focus, .main input[type=pwd]:focus {
+.main input[type=text]:focus, .main input[type=email]:focus, .main input[type=password]:focus {
     border-bottom:1px solid teal;
 }
 .main input[type=submit], input[type=button] {
