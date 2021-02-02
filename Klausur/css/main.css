@@ -317,6 +317,18 @@ label{
     padding:10px;
     margin-top: 100px;
     display: none;
+    
+}
+#basket {
+    max-height:200px;
+    overflow-y: scroll;
+}
+#basketGradient {
+    position: relative;
+    width:100%;
+    height:100%;
+    /*background: rgb(0,0,0);*/
+    background: linear-gradient(0deg, rgba(0,0,0,0.5046393557422969) 13%, rgba(120,120,120,0.19091386554621848) 41%, rgba(255,255,255,1) 100%);
 }
 #basketOverlay h4{
     font-size:18px;
