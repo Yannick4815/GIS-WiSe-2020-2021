@@ -7,7 +7,7 @@ async function submit() {
         message("Vielen Dank für Ihre Reservierung! Sie erhalten weitere Details per E-Mail.", "index.html");
     }
     else {
-        document.getElementById("error").style.display = "inline-block";
+        document.getElementById("error").classList.add("displayError");
         document.getElementById("error").innerText = response.message;
     }
 }
@@ -21,26 +21,26 @@ document.getElementById("submit").addEventListener("click", function () {
     if (document.getElementById("inputVorname").style.display != "none") {
         if (!checkFor(document.getElementById("inputVorname"), [""])) {
             inputError.innerText = "Alle Felder ausfüllen";
-            inputError.style.display = "inline-block";
+            inputError.classList.add("displayError");
             document.getElementById("inputVorname").style.borderBottomColor = "red";
             pass = false;
         }
         if (!checkFor(document.getElementById("inputNachname"), [""])) {
             inputError.innerText = "Alle Felder ausfüllen";
-            inputError.style.display = "inline-block";
+            inputError.classList.add("displayError");
             document.getElementById("inputNachname").style.borderBottomColor = "red";
             pass = false;
         }
     }
     if (!checkFor(document.getElementById("email"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
-        inputError.style.display = "inline-block";
+        inputError.classList.add("displayError");
         document.getElementById("email").style.borderBottomColor = "red";
         pass = false;
     }
     if (!checkFor(document.getElementById("pwd"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
-        inputError.style.display = "inline-block";
+        inputError.classList.add("displayError");
         document.getElementById("pwd").style.borderBottomColor = "red";
         pass = false;
     }

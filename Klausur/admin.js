@@ -140,27 +140,27 @@ document.getElementById("submit").addEventListener("click", async function () {
     let inputError = document.getElementById("inputError");
     if (!checkFor(document.getElementById("name"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
-        inputError.style.display = "inline-block";
+        inputError.classList.add("displayError");
         document.getElementById("name").style.borderBottomColor = "red";
     }
     else if (!checkFor(document.getElementById("preis"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
-        inputError.style.display = "inline-block";
+        inputError.classList.add("displayError");
         document.getElementById("preis").style.borderBottomColor = "red";
     }
     else if (!checkFor(document.getElementById("preis"), ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ","])) {
         inputError.innerText = "Nur Zahlen und Komma verwenden";
-        inputError.style.display = "inline-block";
+        inputError.classList.add("displayError");
         document.getElementById("preis").style.borderBottomColor = "red";
     }
     else if (!checkFor(document.getElementById("desc"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
-        inputError.style.display = "inline-block";
+        inputError.classList.add("displayError");
         document.getElementById("desc").style.borderBottomColor = "red";
     }
     else if (!checkFor(document.getElementById("img"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
-        inputError.style.display = "inline-block";
+        inputError.classList.add("displayError");
         document.getElementById("img").style.borderBottomColor = "red";
     }
     else {
