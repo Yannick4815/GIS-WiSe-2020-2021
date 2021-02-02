@@ -26,10 +26,9 @@ function fillSite(_allData: Item[]): void {
      basketOverlay.addEventListener("mouseleave", function (): void {
          changeClass(false, basketOverlay, "displayMobile");
      });*/
+     
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         basketBtn.addEventListener("touchstart", function (): void {
-            console.log("hier");
-            alert("hier");
             if (localStorage.orders != "[]") {
                 if (basketOverlay.classList.contains("displayMobile")) {
                     changeClass(false, basketOverlay, "displayMobile");
@@ -42,8 +41,6 @@ function fillSite(_allData: Item[]): void {
         });
     } else {
         basketBtn.addEventListener("click", function (): void {
-            console.log("hier");
-            alert("hier");
             if (localStorage.orders != "[]") {
                 if (basketOverlay.classList.contains("displayMobile")) {
                     changeClass(false, basketOverlay, "displayMobile");

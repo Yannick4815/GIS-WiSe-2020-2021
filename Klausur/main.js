@@ -26,8 +26,6 @@ function fillSite(_allData) {
      });*/
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         basketBtn.addEventListener("touchstart", function () {
-            console.log("hier");
-            alert("hier");
             if (localStorage.orders != "[]") {
                 if (basketOverlay.classList.contains("displayMobile")) {
                     changeClass(false, basketOverlay, "displayMobile");
@@ -40,8 +38,6 @@ function fillSite(_allData) {
     }
     else {
         basketBtn.addEventListener("click", function () {
-            console.log("hier");
-            alert("hier");
             if (localStorage.orders != "[]") {
                 if (basketOverlay.classList.contains("displayMobile")) {
                     changeClass(false, basketOverlay, "displayMobile");
