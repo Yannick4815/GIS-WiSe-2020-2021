@@ -1,6 +1,8 @@
 
 let con: HTMLElement = document.getElementById("flexbox");
-
+if (localStorage.orders == undefined) {
+    localStorage.orders = JSON.stringify([]);
+}
 if (localStorage.orders.length == undefined || localStorage.orders.length == 0) {
     localStorage.orders = JSON.stringify([]);
 }
