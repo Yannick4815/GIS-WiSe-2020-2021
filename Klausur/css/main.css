@@ -147,6 +147,7 @@ label{
     display: block;
     margin-bottom:30px;
     transition: .3s;
+    border-radius:0;
 }
 .main input[type=text]:focus, .main input[type=email]:focus, .main input[type=pwd]:focus {
     border-bottom:1px solid teal;

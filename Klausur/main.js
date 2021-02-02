@@ -36,6 +36,18 @@ function fillSite(_allData) {
             }
         }
     });
+    basketBtn.addEventListener("touchstart", function () {
+        console.log("hier");
+        alert("hier");
+        if (localStorage.orders != "[]") {
+            if (basketOverlay.classList.contains("displayMobile")) {
+                changeClass(false, basketOverlay, "displayMobile");
+            }
+            else {
+                changeClass(true, basketOverlay, "displayMobile");
+            }
+        }
+    });
     for (let index = 0; index < _allData.length; index++) {
         //main div
         let div = document.createElement("div");

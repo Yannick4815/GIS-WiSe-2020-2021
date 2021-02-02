@@ -39,6 +39,19 @@ function fillSite(_allData: Item[]): void {
             
         } 
     });
+    basketBtn.addEventListener("touchstart", function (): void {
+        console.log("hier");
+        alert("hier");
+        if (localStorage.orders != "[]") {
+            if (basketOverlay.classList.contains("displayMobile")){
+                changeClass(false, basketOverlay, "displayMobile");
+            }
+            else {
+                changeClass(true, basketOverlay, "displayMobile");
+            }
+            
+        } 
+    });
 
     for (let index: number = 0; index < _allData.length; index++) {
 
