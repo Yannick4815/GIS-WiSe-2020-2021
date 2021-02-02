@@ -180,14 +180,13 @@ label{
     display: flex;
     flex-wrap: wrap;
     background-color: #333;
-    width: 1005px;
-    height:800px;
+    width: 1020px;
+    height:auto;
     min-height: 200px;
     
     padding:15px;
     margin: 0 auto;
-    
-    overflow-y: scroll;
+    box-sizing: border-box;
 }
 .flexbox > div, #preview {
     background-color: #f1f1f1;
@@ -580,8 +579,11 @@ a {
 }
 
 @media only screen and (max-width: 643px){
-    h1{
+    .header h1{
         font-size:28px;
+        line-height:70px;
+    }
+    .header h2 {
         line-height:70px;
     }
     .header{
