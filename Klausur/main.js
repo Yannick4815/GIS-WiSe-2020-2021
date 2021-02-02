@@ -24,30 +24,34 @@ function fillSite(_allData) {
      basketOverlay.addEventListener("mouseleave", function (): void {
          changeClass(false, basketOverlay, "displayMobile");
      });*/
-    basketBtn.addEventListener("click", function () {
-        console.log("hier");
-        alert("hier");
-        if (localStorage.orders != "[]") {
-            if (basketOverlay.classList.contains("displayMobile")) {
-                changeClass(false, basketOverlay, "displayMobile");
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        basketBtn.addEventListener("touchstart", function () {
+            console.log("hier");
+            alert("hier");
+            if (localStorage.orders != "[]") {
+                if (basketOverlay.classList.contains("displayMobile")) {
+                    changeClass(false, basketOverlay, "displayMobile");
+                }
+                else {
+                    changeClass(true, basketOverlay, "displayMobile");
+                }
             }
-            else {
-                changeClass(true, basketOverlay, "displayMobile");
+        });
+    }
+    else {
+        basketBtn.addEventListener("click", function () {
+            console.log("hier");
+            alert("hier");
+            if (localStorage.orders != "[]") {
+                if (basketOverlay.classList.contains("displayMobile")) {
+                    changeClass(false, basketOverlay, "displayMobile");
+                }
+                else {
+                    changeClass(true, basketOverlay, "displayMobile");
+                }
             }
-        }
-    });
-    basketBtn.addEventListener("touchstart", function () {
-        console.log("hier");
-        alert("hier");
-        if (localStorage.orders != "[]") {
-            if (basketOverlay.classList.contains("displayMobile")) {
-                changeClass(false, basketOverlay, "displayMobile");
-            }
-            else {
-                changeClass(true, basketOverlay, "displayMobile");
-            }
-        }
-    });
+        });
+    }
     for (let index = 0; index < _allData.length; index++) {
         //main div
         let div = document.createElement("div");

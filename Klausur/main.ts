@@ -12,46 +12,51 @@ function fillSite(_allData: Item[]): void {
     //console.log(_allData);
     let basketBtn: HTMLElement = document.getElementById("basketBtn");
     let basketOverlay: HTMLElement = document.getElementById("basketOverlay");
-   /* basketBtn.addEventListener("mouseenter", function (): void {
-        if (localStorage.orders != "[]") {
-            changeClass(true, basketOverlay, "displayMobile");
-        } 
-    });
-    basketBtn.addEventListener("mouseleave", function (): void {
-        changeClass(false, basketOverlay, "displayMobile");
-    });
-    basketOverlay.addEventListener("mouseenter", function (): void {
-        changeClass(true, basketOverlay, "displayMobile");
-    });
-    basketOverlay.addEventListener("mouseleave", function (): void {
-        changeClass(false, basketOverlay, "displayMobile");
-    });*/
-    basketBtn.addEventListener("click", function (): void {
-        console.log("hier");
-        alert("hier");
-        if (localStorage.orders != "[]") {
-            if (basketOverlay.classList.contains("displayMobile")){
-                changeClass(false, basketOverlay, "displayMobile");
+    /* basketBtn.addEventListener("mouseenter", function (): void {
+         if (localStorage.orders != "[]") {
+             changeClass(true, basketOverlay, "displayMobile");
+         } 
+     });
+     basketBtn.addEventListener("mouseleave", function (): void {
+         changeClass(false, basketOverlay, "displayMobile");
+     });
+     basketOverlay.addEventListener("mouseenter", function (): void {
+         changeClass(true, basketOverlay, "displayMobile");
+     });
+     basketOverlay.addEventListener("mouseleave", function (): void {
+         changeClass(false, basketOverlay, "displayMobile");
+     });*/
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        basketBtn.addEventListener("touchstart", function (): void {
+            console.log("hier");
+            alert("hier");
+            if (localStorage.orders != "[]") {
+                if (basketOverlay.classList.contains("displayMobile")) {
+                    changeClass(false, basketOverlay, "displayMobile");
+                }
+                else {
+                    changeClass(true, basketOverlay, "displayMobile");
+                }
+
             }
-            else {
-                changeClass(true, basketOverlay, "displayMobile");
+        });
+    } else {
+        basketBtn.addEventListener("click", function (): void {
+            console.log("hier");
+            alert("hier");
+            if (localStorage.orders != "[]") {
+                if (basketOverlay.classList.contains("displayMobile")) {
+                    changeClass(false, basketOverlay, "displayMobile");
+                }
+                else {
+                    changeClass(true, basketOverlay, "displayMobile");
+                }
+
             }
-            
-        } 
-    });
-    basketBtn.addEventListener("touchstart", function (): void {
-        console.log("hier");
-        alert("hier");
-        if (localStorage.orders != "[]") {
-            if (basketOverlay.classList.contains("displayMobile")){
-                changeClass(false, basketOverlay, "displayMobile");
-            }
-            else {
-                changeClass(true, basketOverlay, "displayMobile");
-            }
-            
-        } 
-    });
+        });
+    }
+
+
 
     for (let index: number = 0; index < _allData.length; index++) {
 
@@ -256,18 +261,18 @@ async function displaySum(_basket: HTMLElement): Promise<void> {
     let h4: HTMLElement = document.createElement("h4");
 
     h4.innerText = calculateSum(await getData());
-   /* communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
-        .then((allDataFetched) =>
-            h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
-            //console.log("allDataFetched")
-
-        );*/
+    /* communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
+         .then((allDataFetched) =>
+             h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
+             //console.log("allDataFetched")
+ 
+         );*/
     h4.setAttribute("id", "sum");
     console.log("basket: " + _basket.hasChildNodes());
-    if (_basket.style.display != "none"){
+    if (_basket.style.display != "none") {
         _basket.removeChild(sumOld);
     }
-   
+
     _basket.appendChild(h4);
 
 }
