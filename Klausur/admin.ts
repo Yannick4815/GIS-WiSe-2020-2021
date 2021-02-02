@@ -192,7 +192,7 @@ document.getElementById("submit").addEventListener("click", async function (this
     document.getElementById("desc").style.borderBottomColor = "#ccc";
     document.getElementById("img").style.borderBottomColor = "#ccc";
 
-    let inputError: HTMLElement = document.getElementById("inputError");
+    let inputError: HTMLElement = document.getElementById("error");
 
     if (!checkFor(document.getElementById("name"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
@@ -272,13 +272,13 @@ function updatePreview(): void {
 
 function checkLength(_el: HTMLInputElement): void {
     let inputAsArray: string[] = _el.value.split("");
-    let errorDisplay: HTMLElement = document.getElementById("inputError");
+    let errorDisplay: HTMLElement = document.getElementById("error");
     if (_el.id == "name") {
         if (inputAsArray.length > 20) {
             inputAsArray.pop();
             _el.value = inputAsArray.join("");
             errorDisplay.innerText = "Maximale Zeichen-Anzahl erreicht";
-            errorDisplay.style.display = "block";
+            errorDisplay.classList.add("displayError")
         }
 
     }
@@ -287,7 +287,7 @@ function checkLength(_el: HTMLInputElement): void {
             inputAsArray.pop();
             _el.value = inputAsArray.join("");
             errorDisplay.innerText = "Maximale Zeichen-Anzahl erreicht";
-            errorDisplay.style.display = "block";
+            errorDisplay.classList.add("displayError")
         }
 
     }
