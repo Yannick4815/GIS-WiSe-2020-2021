@@ -8,8 +8,8 @@ async function getData(): Promise<Item[]> {
 
 async function connectToServer(_requestType: string): Promise<ResponseBody> {
 
-
-    let url: string = "http://localhost:8100";
+    let url: string = "https://testgis2021.herokuapp.com";
+    //let url: string = "http://localhost:8100";
     if (_requestType == "getAll"){
         url = url + "?requestType=getAll";
     }
@@ -23,7 +23,7 @@ async function connectToServer(_requestType: string): Promise<ResponseBody> {
     }
     console.log(url);
 
-    //let url: string = "https://testgis2021.herokuapp.com";
+    
     
 
     let response: Response = await fetch(url);

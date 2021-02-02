@@ -6,7 +6,8 @@ async function getData() {
     return itemList;
 }
 async function connectToServer(_requestType) {
-    let url = "http://localhost:8100";
+    let url = "https://testgis2021.herokuapp.com";
+    //let url: string = "http://localhost:8100";
     if (_requestType == "getAll") {
         url = url + "?requestType=getAll";
     }
@@ -19,7 +20,6 @@ async function connectToServer(_requestType) {
         url = url + "?" + _requestType;
     }
     console.log(url);
-    //let url: string = "https://testgis2021.herokuapp.com";
     let response = await fetch(url);
     return await response.json();
 }
