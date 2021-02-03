@@ -189,6 +189,10 @@ async function displaySum(_basket) {
     sum.innerText = calculateSum(await getData());
     console.log("basket: " + _basket.hasChildNodes());
 }
+document.getElementById("emptyBtn").addEventListener("click", function () {
+    localStorage.orders = "";
+    window.location.reload();
+});
 async function start() {
     fillSite(await getData());
 }

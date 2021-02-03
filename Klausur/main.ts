@@ -259,6 +259,10 @@ async function displaySum(_basket: HTMLElement): Promise<void> {
 
 }
 
+document.getElementById("emptyBtn").addEventListener("click", function (): void {
+    localStorage.orders = "";
+    window.location.reload();
+});
 
 async function start(): Promise<void> {
     fillSite(await getData());
