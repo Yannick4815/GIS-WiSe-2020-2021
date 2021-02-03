@@ -42,24 +42,39 @@ function checkFor(_el, _searchArray) {
     let pass = false;
     let inputElement = _el;
     let inputAsArray = inputElement.value.split("");
-    _searchArray.forEach(query => {
-        if (query == "") {
-            if (inputElement.value != "") {
+    if (_searchArray[0] == "contains") {
+        for (let i = 1; i < _searchArray.length; i++) {
+            if (!inputAsArray.includes(_searchArray[i])) {
+                pass = false;
+                console.log("does not contain " + _searchArray[i]);
+                break;
+            }
+            else {
                 pass = true;
             }
         }
-        else {
-            for (let i = 0; i < inputAsArray.length; i++) {
-                if (!_searchArray.includes(inputAsArray[i])) {
-                    pass = false;
-                    break;
-                }
-                else {
+    }
+    else {
+        _searchArray.forEach(query => {
+            if (query == "") {
+                if (inputElement.value != "") {
                     pass = true;
                 }
             }
-        }
-    });
+            else {
+                for (let i = 0; i < inputAsArray.length; i++) {
+                    if (!_searchArray.includes(inputAsArray[i])) {
+                        pass = false;
+                        break;
+                    }
+                    else {
+                        pass = true;
+                    }
+                }
+            }
+        });
+    }
+    console.log("return " + pass);
     return pass;
 }
 function moveLabel(_input) {

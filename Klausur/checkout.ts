@@ -15,6 +15,7 @@ async function submit(): Promise<void> {
 
 
 let inputError: HTMLElement = document.getElementById("error");
+
 document.getElementById("submit").addEventListener("click", function (this: HTMLButtonElement): void {
     document.getElementById("vorname").style.borderBottomColor = "#ccc";
     document.getElementById("nachname").style.borderBottomColor = "#ccc";
@@ -43,13 +44,19 @@ document.getElementById("submit").addEventListener("click", function (this: HTML
         document.getElementById("email").style.borderBottomColor = "red";
         pass = false;
     }
+    if (!checkFor(document.getElementById("email"), ["contains", "@", "."])) {
+        inputError.innerText = "Inkorrektes E-Mail-Format";
+        inputError.classList.add("displayError");
+        document.getElementById("email").style.borderBottomColor = "red";
+        pass = false;
+    }
     if (!checkFor(document.getElementById("pwd"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
         inputError.classList.add("displayError");
         document.getElementById("pwd").style.borderBottomColor = "red";
         pass = false;
     }
-
+    console.log("finalPass " + pass);
     if (pass) {
         submit();
     }

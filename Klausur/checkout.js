@@ -37,12 +37,19 @@ document.getElementById("submit").addEventListener("click", function () {
         document.getElementById("email").style.borderBottomColor = "red";
         pass = false;
     }
+    if (!checkFor(document.getElementById("email"), ["contains", "@", "."])) {
+        inputError.innerText = "Inkorrektes E-Mail-Format";
+        inputError.classList.add("displayError");
+        document.getElementById("email").style.borderBottomColor = "red";
+        pass = false;
+    }
     if (!checkFor(document.getElementById("pwd"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
         inputError.classList.add("displayError");
         document.getElementById("pwd").style.borderBottomColor = "red";
         pass = false;
     }
+    console.log("finalPass " + pass);
     if (pass) {
         submit();
     }

@@ -19,18 +19,18 @@ async function connectToServer(_requestType: string): Promise<ResponseBody> {
         url = url + "?" + query.toString();
     }
     else {
-       url = url + "?" + _requestType;
+        url = url + "?" + _requestType;
     }
     console.log(url);
 
-    
-    
+
+
 
     let response: Response = await fetch(url);
 
     return await response.json();
 
-   
+
 }
 
 function calculateSum(_allData: Item[]): string {
@@ -52,44 +52,60 @@ function onError(_el: HTMLImageElement): void {
 
 function checkFor(_el: HTMLElement, _searchArray: string[]): boolean {
     let pass: boolean = false;
-    
+
     let inputElement: HTMLInputElement = <HTMLInputElement>_el;
     let inputAsArray: string[] = inputElement.value.split("");
 
-    _searchArray.forEach(query => {
-        if (query == "") {
-            if (inputElement.value != "") {
+    if (_searchArray[0] == "contains") {
+
+        for (let i: number = 1; i < _searchArray.length; i++) {
+            if (!inputAsArray.includes(_searchArray[i])) {
+                pass = false;
+                console.log("does not contain " + _searchArray[i]);
+                break;
+            }
+            else {
                 pass = true;
             }
         }
-        else {
-            for (let i: number = 0; i < inputAsArray.length; i++) {
-               
-                if (!_searchArray.includes(inputAsArray[i])) {
-                    pass = false;
-                    break;
-                    
-                }
-                else {
+    }
+    else {
+        _searchArray.forEach(query => {
+            if (query == "") {
+                if (inputElement.value != "") {
                     pass = true;
                 }
             }
-        }
-    });
+            else {
+                for (let i: number = 0; i < inputAsArray.length; i++) {
+
+                    if (!_searchArray.includes(inputAsArray[i])) {
+                        pass = false;
+                        break;
+
+                    }
+                    else {
+                        pass = true;
+                    }
+                }
+            }
+        });
+    }
+    console.log("return " + pass);
     return pass;
 }
 
 function moveLabel(_input: HTMLInputElement): void {
     let label: HTMLElement = document.getElementById(_input.id + "Label");
-    
+
     if (_input.value != "") {
-        
+
         label.classList.add("moveBack");
         label.classList.remove("move");
         _input.placeholder = "";
     }
     else {
-       
+
         label.classList.add("move");
         label.classList.remove("moveBack");
         _input.placeholder = label.innerText;
@@ -120,5 +136,5 @@ function message(_mes: string, _target: string): void {
     container.appendChild(mesDiv);
     body.appendChild(container);
 
-    setTimeout(function() { window.location.href = _target; }, 7000);
+    setTimeout(function () { window.location.href = _target; }, 7000);
 }
