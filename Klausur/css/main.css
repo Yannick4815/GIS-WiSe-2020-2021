@@ -29,7 +29,6 @@ h3 {
 h4{
     line-height: 60px; /* 300px/3=3px ;  3px=1%  Höhe20% => 20*3px = 60px */
     font-size: 25px;
-
     position: relative;
     left:25px;
 }

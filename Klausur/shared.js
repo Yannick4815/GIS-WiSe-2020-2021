@@ -28,7 +28,7 @@ function calculateSum(_allData) {
     let sum = 0.00;
     for (let i = 0; i < lSArray.length; i++) {
         _allData.forEach(element => {
-            if (element.name == lSArray[i]) {
+            if (element._id == lSArray[i]) {
                 sum += Number(element.preis.replace(",", "."));
             }
         });
@@ -63,7 +63,7 @@ function checkFor(_el, _searchArray) {
     return pass;
 }
 function moveLabel(_input) {
-    let label = document.getElementById("label_" + _input.id);
+    let label = document.getElementById(_input.id + "Label");
     if (_input.value != "") {
         label.classList.add("moveBack");
         label.classList.remove("move");
@@ -72,7 +72,7 @@ function moveLabel(_input) {
     else {
         label.classList.add("move");
         label.classList.remove("moveBack");
-        _input.placeholder = _input.getAttribute("data");
+        _input.placeholder = label.innerText;
     }
 }
 function message(_mes, _target) {

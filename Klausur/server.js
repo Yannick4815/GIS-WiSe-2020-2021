@@ -16,7 +16,6 @@ var Klausur;
             port = 8100;
         items = await connectDB("Items");
         user = await connectDB("User");
-        findAndSetUser("Kamera 1", "600b0d7934383dc921ee36d5", items);
         let server = Http.createServer();
         server.addListener("request", handleRequest);
         server.addListener("listening", handleListen);
@@ -29,18 +28,17 @@ var Klausur;
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
-        if (_request.method == "POST") {
-            let body = "";
+        if (_request.method == "POST") { /*Für Ausbau mit POST-Anfragen*/
+            /*let body = "";
             _request.on("formData", data => {
                 body += data;
             });
             _request.on("end", async () => {
-                let post = JSON.parse(body);
+                let post: any = JSON.parse(body);
                 _response.write(JSON.stringify(post));
-            });
+            });*/
         }
         else {
-            //_response.write("Keine POST anfrage");
             let adresse = _request.url;
             let q = Url.parse(adresse, true);
             let qdata = q.query;
@@ -58,8 +56,6 @@ var Klausur;
                 console.log("Reading");
                 result = user.find({ email: qdata.email });
                 let foundUser = await result.toArray();
-                let newUserObj;
-                //console.log(await result.toArray());
                 let id;
                 let userExists;
                 let insert = false;
@@ -69,9 +65,8 @@ var Klausur;
                 }
                 else {
                     userExists = false;
-                    console.log("NOT FOUND USER");
+                    console.log("CANNOT FOUND USER");
                 }
-                console.log(qdata.requestType);
                 if (qdata.requestType == "login") {
                     if (userExists) {
                         if (qdata.pwd == foundUser[0].passwort) {
@@ -90,10 +85,6 @@ var Klausur;
                     if (!userExists) {
                         let res = await user.insertOne({ vorname: qdata.vorname, nachname: qdata.nachname, email: qdata.email, passwort: qdata.pwd });
                         id = res.insertedId;
-                        //let newUser: Mongo.Cursor = user.find({ email: qdata.email });
-                        //newUserObj = await newUser.toArray();
-                        //console.log("hier");
-                        //id = newUserObj[0]._id;
                         insert = true;
                     }
                     else {
@@ -102,14 +93,14 @@ var Klausur;
                 }
                 if (insert) {
                     let itemArr = JSON.parse(String(qdata.items));
+                    console.log(itemArr);
                     itemArr.forEach(element => {
+                        console.log("set" + element);
                         findAndSetUser(element, id, items);
                     });
                     responseBody.status = "success";
                     responseBody.message = "Vielen Dank für Ihre Reservierung";
                 }
-                //result = items.find({});
-                //
             }
             else if (qdata.requestType == "changeState") {
                 changeItemState(String(qdata.element), Number(qdata.state), items);
@@ -119,12 +110,11 @@ var Klausur;
                 let foundUser = await result.toArray();
                 if (JSON.stringify(foundUser) != "[]") {
                     responseBody.message = foundUser[0].vorname + " " + foundUser[0].nachname;
+                    responseBody.status = "success";
                 }
                 else {
                     console.log("cant find user " + qdata.user);
                 }
-                //console.log(foundUser);
-                responseBody.status = "success";
             }
             else if (qdata.requestType == "add") {
                 items.insertOne({
@@ -154,69 +144,8 @@ var Klausur;
             else {
                 _response.write("error");
             }
-            //console.log(responseBody);
             _response.write(JSON.stringify(responseBody));
-            //_response.end();
-            /*
-            let responseBody: ResponseBody = {status: "error", message: ""};
-            if (qdata.requestType == "register") {
-                if (resArr.length == 0) {
-                    console.log("E-Mail frei");
-
-                    orders.insertOne({vorname: qdata.vorname, nachname: qdata.nachname, matrikel: qdata.matrikel, email: qdata.email, pwd: qdata.pwd})
-                    responseBody.status = "registered";
-
-                    responseBody.message = "E-Mail angelegt";
-                }
-                else {
-                    console.log("E-Mail besetzt");
-
-                    responseBody.status = "error";
-
-                    responseBody.message = "E-Mail wird bereits verwendet";
-                }
-            }
-            else if (qdata.requestType == "login") {
-                if (resArr.length == 0) {
-                    console.log("Kein Konto mit dieser E-Mail gefunden");
-
-                    responseBody.status = "error";
-
-                    responseBody.message = "Kein Konto mit dieser E-Mail gefunden";
-                }
-                else {
-                    let pwd: string = resArr[0].pwd;
-                    let pwdEntered: string = String(qdata.pwd);
-                    if (pwd == pwdEntered ) {
-                        console.log("matching");
-
-                        responseBody.status = "loggedIn";
-
-                        responseBody.message = "Sie wurden eingeloggt";
-                    }
-                    else {
-                        console.log("Falsches Passwort");
-
-                        responseBody.status = "error";
-
-                        responseBody.message = "Falsches Passwort";
-                    }
-
-                }
-                
-            }
-            else if (qdata.requestType == "getAll") {
-                responseBody.status = "fill";
-                responseBody.message = JSON.stringify(resArr);
-            }*/
-            //console.log("qdata.email:" + qdata.email);
-            //console.log("email:" + email);
-            //let orders: Promise<Mongo.Collection> = connectDB();
-            //let orders: string = "testtest";
-            //_response.write(JSON.stringify(await result.toArray()));
-            //_response.write(JSON.stringify(responseBody));
         }
-        //_response.write("Testst");
         _response.end();
     }
 })(Klausur = exports.Klausur || (exports.Klausur = {}));
@@ -228,7 +157,7 @@ async function connectDB(_collection) {
     return mongoClient.db("Klausur").collection(_collection);
 }
 async function findAndSetUser(_element, _userId, _items) {
-    await _items.updateOne({ name: _element }, {
+    await _items.updateOne({ _id: new Mongo.ObjectId(String(_element)) }, {
         $set: {
             user: _userId,
             status: "2"
@@ -241,6 +170,6 @@ async function changeItemState(_element, _state, _items) {
             status: String(_state)
         }
     });
-    console.log(_element + " " + _state);
+    console.log("Change " + _element + " to " + _state);
 }
 //# sourceMappingURL=server.js.map

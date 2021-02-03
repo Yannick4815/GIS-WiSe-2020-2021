@@ -1,4 +1,5 @@
 "use strict";
+/*Eingebunden in index.html*/
 let con = document.getElementById("flexbox");
 if (localStorage.orders == undefined) {
     localStorage.orders = JSON.stringify([]);
@@ -7,23 +8,12 @@ if (localStorage.orders.length == undefined || localStorage.orders.length == 0) 
     localStorage.orders = JSON.stringify([]);
 }
 function fillSite(_allData) {
-    //console.log(_allData);
     let basketBtn = document.getElementById("basketBtn");
+    let basket = document.getElementById("basket");
     let basketOverlay = document.getElementById("basketOverlay");
-    /* basketBtn.addEventListener("mouseenter", function (): void {
-         if (localStorage.orders != "[]") {
-             changeClass(true, basketOverlay, "displayMobile");
-         }
-     });
-     basketBtn.addEventListener("mouseleave", function (): void {
-         changeClass(false, basketOverlay, "displayMobile");
-     });
-     basketOverlay.addEventListener("mouseenter", function (): void {
-         changeClass(true, basketOverlay, "displayMobile");
-     });
-     basketOverlay.addEventListener("mouseleave", function (): void {
-         changeClass(false, basketOverlay, "displayMobile");
-     });*/
+    let sum = document.createElement("h4");
+    sum.setAttribute("id", "sum");
+    basket.appendChild(sum);
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         basketBtn.addEventListener("touchstart", function () {
             if (localStorage.orders != "[]") {
@@ -52,12 +42,13 @@ function fillSite(_allData) {
         //main div
         let div = document.createElement("div");
         div.setAttribute("class", "item");
-        div.setAttribute("id", "item_" + _allData[index].name);
+        div.setAttribute("id", "item_" + _allData[index]._id);
         //heading div
         let divHeading = document.createElement("div");
         divHeading.setAttribute("class", "itemHeading");
         let h4 = document.createElement("h4");
         h4.innerText = _allData[index].name;
+        h4.setAttribute("id", "name_" + _allData[index]._id);
         let divCircle = document.createElement("div");
         if (_allData[index].status == 1) {
             divCircle.setAttribute("class", "circleGreen");
@@ -93,7 +84,7 @@ function fillSite(_allData) {
         let button = document.createElement("button");
         button.innerText = "In den Warenkorb";
         button.setAttribute("class", "reservierenBtn");
-        button.setAttribute("id", "order_" + _allData[index].name);
+        button.setAttribute("id", "order_" + _allData[index]._id);
         if (_allData[index].status != 1) {
             changeClass(true, div, "disabled");
             changeClass(true, button, "disabled");
@@ -102,10 +93,10 @@ function fillSite(_allData) {
         //check if item is in basket
         let orders = JSON.parse(localStorage.orders);
         orders.forEach(el => {
-            if (el == _allData[index].name) {
+            if (el == _allData[index]._id) {
                 changeClass(true, div, "onList");
                 button.innerText = "Aus Warenkorb entfernen";
-                countAndFillBasket(true, el);
+                countAndFillBasket(true, _allData[index].name);
             }
         });
         div.appendChild(divHeading);
@@ -116,6 +107,7 @@ function fillSite(_allData) {
     }
     addListeners();
 }
+/*true = Klasse hinzufügen, false = Klasse entfernen*/
 function changeClass(_addOrRemove, _el, _class) {
     if (_addOrRemove) {
         _el.classList.add(_class);
@@ -131,7 +123,6 @@ function toggleOverlay(_orders) {
     else {
         changeClass(false, document.getElementById("basketOverlay"), "display");
     }
-    console.log("orders:" + _orders.length + "count" + _orders);
 }
 function addListeners() {
     document.querySelectorAll(".reservierenBtn").forEach(item => {
@@ -142,24 +133,26 @@ function addListeners() {
         else {
             item.addEventListener("click", function () {
                 let el = document.getElementById(this.id);
-                let orders = JSON.parse(localStorage.orders); //Figur aus dem Localstorage holen
-                let stringArr = this.id.split("_");
+                let orders = JSON.parse(localStorage.orders);
+                let stringArr = this.id.split("_"); /*id aufgebaut wie folgt: order_PRODUKTID*/
                 let itemEl = document.getElementById("item_" + stringArr[1]);
+                let itemName = document.getElementById("name_" + stringArr[1]).innerText;
                 let search = orders.find(e => e === stringArr[1]);
+                console.log(stringArr[1]);
                 if (search != undefined) {
                     let key = orders.indexOf(search, 0);
                     orders.splice(key, 1);
                     el.innerText = "In den Warenkorb";
                     itemEl.classList.remove("onList");
                     fillStorage(orders);
-                    countAndFillBasket(false, stringArr[1]);
+                    countAndFillBasket(false, itemName);
                 }
                 else {
                     orders.push(stringArr[1]);
                     el.innerText = "Aus Warenkorb entfernen";
                     itemEl.classList.add("onList");
                     fillStorage(orders);
-                    countAndFillBasket(true, stringArr[1]);
+                    countAndFillBasket(true, itemName);
                 }
             });
         }
@@ -177,44 +170,25 @@ function countAndFillBasket(_add, _item) {
     let itemsCount = JSON.parse(localStorage.orders).length;
     let basketBtn = document.getElementById("basketBtn");
     let basket = document.getElementById("basket");
-    console.log(itemsCount);
     if (_add == true) {
         let h4 = document.createElement("h4");
         h4.innerText = _item;
         h4.setAttribute("id", "basket_" + _item);
-        basket.appendChild(h4);
+        basket.insertBefore(h4, basket.firstChild);
     }
     else {
         let h4 = document.getElementById("basket_" + _item);
         basket.removeChild(h4);
     }
+    toggleOverlay(localStorage.orders);
     displaySum(basket);
     basketBtn.innerText = "Warenkorb (" + itemsCount + ")";
-    toggleOverlay(localStorage.orders);
 }
 async function displaySum(_basket) {
-    let sumOld = document.getElementById("sum");
-    let h4 = document.createElement("h4");
-    h4.innerText = calculateSum(await getData());
-    /* communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
-         .then((allDataFetched) =>
-             h4.innerText = calculateSum(JSON.parse(allDataFetched)["allData"])
-             //console.log("allDataFetched")
- 
-         );*/
-    h4.setAttribute("id", "sum");
+    let sum = document.getElementById("sum");
+    sum.innerText = calculateSum(await getData());
     console.log("basket: " + _basket.hasChildNodes());
-    if (_basket.style.display != "none") {
-        _basket.removeChild(sumOld);
-    }
-    _basket.appendChild(h4);
 }
-/*communicate("https://yannick4815.github.io/GIS-WiSe-2020-2021/Klausur/testData.json")
-    .then((allDataFetched) =>
-        fillSite(JSON.parse(allDataFetched)["allData"])
-        //console.log("allDataFetched")
-
-    );*/
 async function start() {
     fillSite(await getData());
 }

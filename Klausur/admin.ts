@@ -5,31 +5,26 @@ async function mainAdmin(): Promise<void> {
 }
 
 
-
 function fillList(_allData: Item[]): void {
 
     _allData.forEach(element => {
         addRow(element);
 
     });
-
-    addEL();
 }
 
 
 let itemArray: string[] = [];
+
 async function addRow(_item: Item): Promise<void> {
     let div: HTMLElement = document.getElementById("overview");
     let span: HTMLElement = document.createElement("span");
 
-
-
     itemArray.push(_item._id, _item.user, _item.name, _item.preis, String(_item.status), _item.description, _item.img);
-
 
     let h4: HTMLElement = document.createElement("h4");
     let statusUser: string;
-    let userIndex: number = itemArray.indexOf(_item._id);
+
     if (_item.status == 1) {
         statusUser = "frei";
         span.setAttribute("class", "circleGreen");
@@ -42,38 +37,16 @@ async function addRow(_item: Item): Promise<void> {
         statusUser = "ausgeliehen" + " - " + await findUser(_item.user);
         span.setAttribute("class", "circleRed");
     }
-    h4.innerText = _item.name + " - " + _item.preis + " - " + statusUser;
+
+    h4.innerText = _item.name + " - " + _item.preis + "€ - " + statusUser;
     h4.setAttribute("id", _item._id);
     h4.appendChild(span);
     div.appendChild(h4);
 
     h4.addEventListener("click", function (this: HTMLElement): void {
         let index: number = itemArray.indexOf(this.id);
-        console.log(itemArray);
-        console.log(index);
         changeState(this, Number(itemArray[index + 4]), index);
-        console.log(this.id);
-
     });
-
-
-}
-
-function addEL(): void {
-
-    document.querySelectorAll("button").forEach(item => {
-        item.addEventListener("click", function (this: HTMLElement): void {
-            if (this.innerText == "Nein") {
-                let overlay: HTMLElement = document.getElementById("toggleStateOverlay");
-                let delOverlay: HTMLElement = document.getElementById("deleteOverlay");
-                overlay.style.display = "none";
-                delOverlay.style.display = "none";
-            }
-
-        });
-
-    });
-
 
 
 }
@@ -89,8 +62,6 @@ function changeState(_item: Element, _state: number, _index: number): void {
     let objectVar: HTMLInputElement = <HTMLInputElement>document.getElementById("objectId");
     let delOverlay: HTMLElement = document.getElementById("deleteOverlay");
     let delElVar: HTMLElement = document.getElementById("deleteElementVariable");
-
-    console.log("change: " + itemName);
 
     if (_state == 2) {
         state = 3;
@@ -115,10 +86,7 @@ function changeState(_item: Element, _state: number, _index: number): void {
     }
     objectVar.value = itemArray[_index];
 
-
-
-
-    console.log("Wechsel " + (_index + 2) + " zu " + state);
+    //console.log("Wechsel " + (_index + 2) + " zu " + state);
 
 }
 
@@ -126,6 +94,7 @@ async function findUser(_id: string): Promise<string> {
 
     let res: ResponseBody = await connectToServer("requestType=findUser&user=" + _id);
     return res.message;
+
 }
 
 document.getElementById("toggleYes").addEventListener("click", function (this: HTMLButtonElement): void {
@@ -148,17 +117,11 @@ document.getElementById("toggleYes").addEventListener("click", function (this: H
     reload("toggleStateDiv");
 
 });
-function reload(_id: string): void {
-    let div: HTMLElement = document.getElementById(_id);
-    let img: HTMLImageElement = document.createElement("img");
-    img.setAttribute("src", "img/loading.gif");
-    img.setAttribute("alt", "loading");
 
-    div.innerHTML = "";
-    div.appendChild(img);
+document.getElementById("toggleNo").addEventListener("click", function (this: HTMLElement): void {
+    document.getElementById("toggleStateOverlay").style.display = "none";
+});
 
-    setTimeout(function () { window.location.reload(); }, 2000);
-}
 document.getElementById("deleteYes").addEventListener("click", function (this: HTMLButtonElement): void {
     let elVar: HTMLInputElement = <HTMLInputElement>document.getElementById("objectId");
     let request: string;
@@ -168,9 +131,25 @@ document.getElementById("deleteYes").addEventListener("click", function (this: H
     connectToServer(request);
     reload("deleteOverlayDiv");
 });
+
 document.getElementById("deleteNo").addEventListener("click", function (this: HTMLButtonElement): void {
     document.getElementById("deleteOverlay").style.display = "none";
 });
+
+
+function reload(_id: string): void {
+
+    let div: HTMLElement = document.getElementById(_id);
+    let img: HTMLImageElement = document.createElement("img");
+    img.setAttribute("src", "img/loading.gif");
+    img.setAttribute("alt", "loading");
+
+    div.innerHTML = "";
+    div.appendChild(img);
+
+    setTimeout(function () { window.location.reload(); }, 2000);
+
+}
 
 
 
@@ -221,6 +200,7 @@ document.getElementById("submit").addEventListener("click", async function (this
     }
     else {
         let result: ResponseBody = await connectToServer("insert");
+
         if (result.status == "success") {
             message("Produkt erfolgreich hinzugefügt", "admin.html");
         }
@@ -234,16 +214,19 @@ document.getElementById("submit").addEventListener("click", async function (this
 
 
 
-
 function updatePreview(): void {
+
     let inputName: HTMLInputElement = <HTMLInputElement>document.getElementById("name");
     let inputPreis: HTMLInputElement = <HTMLInputElement>document.getElementById("preis");
     let inputDesc: HTMLInputElement = <HTMLInputElement>document.getElementById("desc");
     let inputImg: HTMLInputElement = <HTMLInputElement>document.getElementById("img");
 
     let preview: HTMLElement = document.getElementById("previewDiv");
+
     if (inputName.value != "" || inputPreis.value != "" || inputImg.value != "" || inputDesc.value != "") {
+        
         preview.style.display = "inline-block";
+
         let preName: HTMLElement = document.getElementById("previewName");
         preName.innerText = inputName.value;
 
@@ -251,6 +234,7 @@ function updatePreview(): void {
         preImg.src = inputImg.value;
 
         let prePreis: HTMLElement = document.getElementById("previewPreis");
+
         if (inputPreis.value != "") {
             prePreis.innerText = inputPreis.value + " € / Tag";
         }
@@ -258,16 +242,13 @@ function updatePreview(): void {
             prePreis.innerText = "";
         }
 
-
         let preDesc: HTMLElement = document.getElementById("previewDesc");
         preDesc.innerText = inputDesc.value;
+
     }
     else {
         preview.style.display = "none";
     }
-
-    console.log(inputPreis.value);
-
 }
 
 function checkLength(_el: HTMLInputElement): void {
@@ -278,17 +259,15 @@ function checkLength(_el: HTMLInputElement): void {
             inputAsArray.pop();
             _el.value = inputAsArray.join("");
             errorDisplay.innerText = "Maximale Zeichen-Anzahl erreicht";
-            errorDisplay.classList.add("displayError")
+            errorDisplay.classList.add("displayError");
         }
-
     }
     if (_el.id == "desc") {
         if (inputAsArray.length > 320) {
             inputAsArray.pop();
             _el.value = inputAsArray.join("");
             errorDisplay.innerText = "Maximale Zeichen-Anzahl erreicht";
-            errorDisplay.classList.add("displayError")
+            errorDisplay.classList.add("displayError");
         }
-
     }
 }

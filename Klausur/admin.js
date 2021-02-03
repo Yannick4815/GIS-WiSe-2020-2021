@@ -7,7 +7,6 @@ function fillList(_allData) {
     _allData.forEach(element => {
         addRow(element);
     });
-    addEL();
 }
 let itemArray = [];
 async function addRow(_item) {
@@ -16,7 +15,6 @@ async function addRow(_item) {
     itemArray.push(_item._id, _item.user, _item.name, _item.preis, String(_item.status), _item.description, _item.img);
     let h4 = document.createElement("h4");
     let statusUser;
-    let userIndex = itemArray.indexOf(_item._id);
     if (_item.status == 1) {
         statusUser = "frei";
         span.setAttribute("class", "circleGreen");
@@ -29,28 +27,13 @@ async function addRow(_item) {
         statusUser = "ausgeliehen" + " - " + await findUser(_item.user);
         span.setAttribute("class", "circleRed");
     }
-    h4.innerText = _item.name + " - " + _item.preis + " - " + statusUser;
+    h4.innerText = _item.name + " - " + _item.preis + "€ - " + statusUser;
     h4.setAttribute("id", _item._id);
     h4.appendChild(span);
     div.appendChild(h4);
     h4.addEventListener("click", function () {
         let index = itemArray.indexOf(this.id);
-        console.log(itemArray);
-        console.log(index);
         changeState(this, Number(itemArray[index + 4]), index);
-        console.log(this.id);
-    });
-}
-function addEL() {
-    document.querySelectorAll("button").forEach(item => {
-        item.addEventListener("click", function () {
-            if (this.innerText == "Nein") {
-                let overlay = document.getElementById("toggleStateOverlay");
-                let delOverlay = document.getElementById("deleteOverlay");
-                overlay.style.display = "none";
-                delOverlay.style.display = "none";
-            }
-        });
     });
 }
 function changeState(_item, _state, _index) {
@@ -63,7 +46,6 @@ function changeState(_item, _state, _index) {
     let objectVar = document.getElementById("objectId");
     let delOverlay = document.getElementById("deleteOverlay");
     let delElVar = document.getElementById("deleteElementVariable");
-    console.log("change: " + itemName);
     if (_state == 2) {
         state = 3;
         stateText = "ausgeliehen";
@@ -84,7 +66,7 @@ function changeState(_item, _state, _index) {
         delElVar.innerText = itemName;
     }
     objectVar.value = itemArray[_index];
-    console.log("Wechsel " + (_index + 2) + " zu " + state);
+    //console.log("Wechsel " + (_index + 2) + " zu " + state);
 }
 async function findUser(_id) {
     let res = await connectToServer("requestType=findUser&user=" + _id);
@@ -105,15 +87,9 @@ document.getElementById("toggleYes").addEventListener("click", function () {
     connectToServer(request);
     reload("toggleStateDiv");
 });
-function reload(_id) {
-    let div = document.getElementById(_id);
-    let img = document.createElement("img");
-    img.setAttribute("src", "img/loading.gif");
-    img.setAttribute("alt", "loading");
-    div.innerHTML = "";
-    div.appendChild(img);
-    setTimeout(function () { window.location.reload(); }, 2000);
-}
+document.getElementById("toggleNo").addEventListener("click", function () {
+    document.getElementById("toggleStateOverlay").style.display = "none";
+});
 document.getElementById("deleteYes").addEventListener("click", function () {
     let elVar = document.getElementById("objectId");
     let request;
@@ -125,6 +101,15 @@ document.getElementById("deleteYes").addEventListener("click", function () {
 document.getElementById("deleteNo").addEventListener("click", function () {
     document.getElementById("deleteOverlay").style.display = "none";
 });
+function reload(_id) {
+    let div = document.getElementById(_id);
+    let img = document.createElement("img");
+    img.setAttribute("src", "img/loading.gif");
+    img.setAttribute("alt", "loading");
+    div.innerHTML = "";
+    div.appendChild(img);
+    setTimeout(function () { window.location.reload(); }, 2000);
+}
 document.querySelectorAll("input").forEach(item => {
     item.addEventListener("input", function () {
         moveLabel(this);
@@ -198,7 +183,6 @@ function updatePreview() {
     else {
         preview.style.display = "none";
     }
-    console.log(inputPreis.value);
 }
 function checkLength(_el) {
     let inputAsArray = _el.value.split("");

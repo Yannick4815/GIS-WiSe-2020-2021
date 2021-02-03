@@ -10,7 +10,7 @@ async function connectToServer(_requestType: string): Promise<ResponseBody> {
 
     let url: string = "https://testgis2021.herokuapp.com";
     //let url: string = "http://localhost:8100";
-    if (_requestType == "getAll"){
+    if (_requestType == "getAll") {
         url = url + "?requestType=getAll";
     }
     else if (_requestType == "insert") {
@@ -38,7 +38,7 @@ function calculateSum(_allData: Item[]): string {
     let sum: number = 0.00;
     for (let i: number = 0; i < lSArray.length; i++) {
         _allData.forEach(element => {
-            if (element.name == lSArray[i]) {
+            if (element._id == lSArray[i]) {
                 sum += Number(element.preis.replace(",", "."));
             }
         });
@@ -80,7 +80,7 @@ function checkFor(_el: HTMLElement, _searchArray: string[]): boolean {
 }
 
 function moveLabel(_input: HTMLInputElement): void {
-    let label: HTMLElement = document.getElementById("label_" + _input.id);
+    let label: HTMLElement = document.getElementById(_input.id + "Label");
     
     if (_input.value != "") {
         
@@ -92,7 +92,7 @@ function moveLabel(_input: HTMLInputElement): void {
        
         label.classList.add("move");
         label.classList.remove("moveBack");
-        _input.placeholder = _input.getAttribute("data");
+        _input.placeholder = label.innerText;
 
     }
 }
@@ -120,5 +120,5 @@ function message(_mes: string, _target: string): void {
     container.appendChild(mesDiv);
     body.appendChild(container);
 
-    setTimeout(function(){ window.location.href = _target; }, 7000);
+    setTimeout(function() { window.location.href = _target; }, 7000);
 }
