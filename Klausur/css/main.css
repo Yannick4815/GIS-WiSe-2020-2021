@@ -124,13 +124,18 @@ label{
     margin-top:30px;
     margin-bottom:20px;
 }
-.h5_Btn{
+.h5Btn{
     color:white;
     float:right;
     font-weight: 400;
     font-size:16px;
 }
-.h5_Btn:hover {
+#basketOverlay .h5Btn {
+    font-size:12px;
+    margin-top: 0 !important; /*verhinder margin-top Abstand für Responsive*/
+    float: right !important;
+}
+.h5Btn:hover {
     text-decoration: underline;
     cursor: pointer;
 }
@@ -601,7 +606,7 @@ a {
     .container {
         margin-top: 70px;
     }
-    .h5_Btn{
+    .h5Btn{
         float: none;
         margin-top:60px;
     }
