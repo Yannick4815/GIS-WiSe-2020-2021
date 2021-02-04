@@ -42,6 +42,9 @@
         height:15px;
         top: 17px;
     }
+    #overview h4 {
+        padding-left: 0;
+    }
 }
 @media only screen and (max-width: 425px){
     .header h1 {
