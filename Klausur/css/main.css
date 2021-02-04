@@ -349,13 +349,18 @@ div.disabled{
 #profileOverlay{
     background-color: #333;
     width:220px;
-    height:70px;
+    height:78px;
     position: fixed;
     top: 200px;
-    left:-150px;
+    left:-140px;
     padding:10px;
+    padding-right:20px;
     box-sizing: border-box;
     z-index: 100;
+    border-top-right-radius: 78px;
+    border-bottom-right-radius: 78px;
+    border: 4px solid teal;
+    border-left:0;
 }
 #profileOverlay img{
     width:50px;
@@ -660,7 +665,7 @@ a {
     animation: moveBackProfile;
     animation-duration: .4s;
     animation-timing-function: ease-in-out;
-    left:-150px;
+    left:-140px;
   }
 
   @keyframes move {
@@ -691,7 +696,7 @@ a {
 
   @keyframes moveProfile {
     from{   
-        left:-150px; 
+        left:-140px; 
     }
     to{
         left:0px;  
@@ -702,7 +707,7 @@ a {
         left:0px;
     }
     to{ 
-        left:-150px;
+        left:-140px;
     }
   }
 
