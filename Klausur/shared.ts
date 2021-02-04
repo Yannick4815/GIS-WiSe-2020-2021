@@ -138,3 +138,34 @@ function message(_mes: string, _target: string): void {
 
     setTimeout(function () { window.location.href = _target; }, 7000);
 }
+
+async function submit(_type: string): Promise<void> {
+
+    let response: ResponseBody = await connectToServer("insert");
+
+    if (response.status == "success" && _type == "order") {
+        localStorage.orders = "";
+        message("Vielen Dank für Ihre Reservierung! Sie erhalten weitere Details per E-Mail.", "index.html");
+    }
+    else if (response.status == "success" && _type == "loginIndex") {
+       
+        localStorage.activeUser = response.message;
+        window.location.href = "profile.html";
+    }
+    else {
+        document.getElementById("error").classList.add("displayError");
+        document.getElementById("error").innerText = response.message;
+    }
+}
+
+let user: Benutzer;
+async function getUserInfo(): Promise<boolean> {
+    if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
+        let response: ResponseBody = await connectToServer("requestType=getUserInfo&user=" + localStorage.activeUser);
+        if (response.status == "success") {
+            user = JSON.parse(response.message);
+            return true;
+        }  
+    }
+    return false;
+}

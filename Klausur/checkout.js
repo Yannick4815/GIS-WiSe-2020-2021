@@ -1,15 +1,4 @@
 "use strict";
-async function submit() {
-    let response = await connectToServer("insert");
-    if (response.status == "success") {
-        localStorage.orders = "";
-        message("Vielen Dank für Ihre Reservierung! Sie erhalten weitere Details per E-Mail.", "index.html");
-    }
-    else {
-        document.getElementById("error").classList.add("displayError");
-        document.getElementById("error").innerText = response.message;
-    }
-}
 let inputError = document.getElementById("error");
 document.getElementById("submit").addEventListener("click", function () {
     document.getElementById("vorname").style.borderBottomColor = "#ccc";
@@ -51,7 +40,7 @@ document.getElementById("submit").addEventListener("click", function () {
     }
     console.log("finalPass " + pass);
     if (pass) {
-        submit();
+        submit("order");
     }
 });
 document.querySelectorAll("input").forEach(item => {
@@ -104,19 +93,35 @@ document.getElementById("neukunde").addEventListener("click", function () {
     rT.value = "register";
 });
 document.getElementById("anmelden").addEventListener("click", function () {
+    anmelden();
+});
+function anmelden() {
     if (inputVorname.style.display != "none") {
         inputVorname.style.display = "none";
         inputNachname.style.display = "none";
         labelVorname.style.display = "none";
         labelNachname.style.display = "none";
     }
-    this.classList.add("active");
+    document.getElementById("anmelden").classList.add("active");
     document.getElementById("neukunde").classList.remove("active");
     rT.value = "login";
-});
+}
 async function main() {
     if (localStorage.orders != "[]" && localStorage.orders != "") {
         fill(await getData());
+        if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
+            if (await getUserInfo()) {
+                anmelden();
+                console.log(localStorage.activeUser);
+                let inputEmail = document.getElementById("email");
+                inputEmail.value = user.email;
+                let inputPwd = document.getElementById("pwd");
+                inputPwd.value = user.passwort;
+            }
+            else {
+                message("Es ist ein Fehler Aufgetreten! Der Benutzer wurde nicht gefunden", "index.html");
+            }
+        }
     }
     else {
         message("Es ist ein Fehler aufgetreten!", "index.html");

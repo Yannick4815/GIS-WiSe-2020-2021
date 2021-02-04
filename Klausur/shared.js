@@ -111,4 +111,30 @@ function message(_mes, _target) {
     body.appendChild(container);
     setTimeout(function () { window.location.href = _target; }, 7000);
 }
+async function submit(_type) {
+    let response = await connectToServer("insert");
+    if (response.status == "success" && _type == "order") {
+        localStorage.orders = "";
+        message("Vielen Dank für Ihre Reservierung! Sie erhalten weitere Details per E-Mail.", "index.html");
+    }
+    else if (response.status == "success" && _type == "loginIndex") {
+        localStorage.activeUser = response.message;
+        window.location.href = "profile.html";
+    }
+    else {
+        document.getElementById("error").classList.add("displayError");
+        document.getElementById("error").innerText = response.message;
+    }
+}
+let user;
+async function getUserInfo() {
+    if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
+        let response = await connectToServer("requestType=getUserInfo&user=" + localStorage.activeUser);
+        if (response.status == "success") {
+            user = JSON.parse(response.message);
+            return true;
+        }
+    }
+    return false;
+}
 //# sourceMappingURL=shared.js.map

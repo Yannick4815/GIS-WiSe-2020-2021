@@ -24,6 +24,13 @@
     <div class="header">
         <h1>AStA-Verleih</h1>
         <h2 id="basketBtn">Warenkorb (0)</h2>
+
+        <img id="profileOverlayMobile" src="img/profile.png" alt="Profile">
+    </div>
+
+    <div id="profileOverlay">
+        <h2 id="meinBereich">Login</h2>
+        <img id="profileBtn" src="img/profile.png" alt="Profile">
     </div>
 
     <div id="basketOverlay" >
@@ -32,10 +39,29 @@
         <div id="basketBtnDiv">
             <button id="checkoutBtn" onclick='window.location.href="checkout.html"'>Checkout</button>
             <h5 id="emptyBtn" class="h5Btn">Warenkorb leeren</h5>
-        </div>
-        
-        
+        </div> 
     </div>
+
+
+    <div id="loginOverlay">
+        <div id="loginOverlayDiv">
+            <h2>Login</h2>
+            <h3 id="close">X</h3>
+            <form action="" method="GET">
+                <label id="emailLabel" for="email">E-Mail</label>
+                <input id="email" type="email" name="email" placeholder="E-Mail">
+
+                <label id="pwdLabel" for="pwd">Passwort</label>
+                <input id="pwd" type="password" name="pwd" placeholder="Passwort">
+
+                <input type="hidden" name="requestType" value="loginIndex">
+
+                <h6 id="error"></h6>
+                <input id="submit" type="button" value="Login">
+            </form>
+        </div> 
+    </div>
+
     <div class="container">
        
             

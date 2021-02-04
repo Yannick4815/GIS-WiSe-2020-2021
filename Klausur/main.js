@@ -1,6 +1,7 @@
 "use strict";
 /*Eingebunden in index.html*/
 let con = document.getElementById("flexbox");
+let activeUser = false;
 if (localStorage.orders == undefined) {
     localStorage.orders = JSON.stringify([]);
 }
@@ -11,6 +12,13 @@ function fillSite(_allData) {
     let basketBtn = document.getElementById("basketBtn");
     let basket = document.getElementById("basket");
     let basketOverlay = document.getElementById("basketOverlay");
+    let meinBereich = document.getElementById("meinBereich");
+    console.log(localStorage.activeUser);
+    if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
+        console.log("hier");
+        meinBereich.innerText = "Mein Bereich";
+        activeUser = true;
+    }
     let sum = document.createElement("h4");
     sum.setAttribute("id", "sum");
     basket.appendChild(sum);
@@ -193,6 +201,48 @@ document.getElementById("emptyBtn").addEventListener("click", function () {
     localStorage.orders = "";
     window.location.reload();
 });
+document.getElementById("profileBtn").addEventListener("click", function () {
+    let el = document.getElementById("profileOverlay");
+    if (el.classList.contains("moveProfile")) {
+        el.classList.remove("moveProfile");
+        el.classList.add("moveBackProfile");
+    }
+    else {
+        el.classList.remove("moveBackProfile");
+        el.classList.add("moveProfile");
+    }
+});
+document.querySelectorAll("input").forEach(item => {
+    item.addEventListener("input", function () {
+        moveLabel(this);
+    });
+});
+document.getElementById("meinBereich").addEventListener("click", function () {
+    if (activeUser) {
+        window.location.href = "profile.html";
+    }
+    else {
+        toggleLogin();
+    }
+});
+document.getElementById("profileOverlayMobile").addEventListener("click", function () {
+    toggleLogin();
+});
+document.getElementById("close").addEventListener("click", function () {
+    toggleLogin();
+});
+document.getElementById("submit").addEventListener("click", function () {
+    submit("loginIndex");
+});
+function toggleLogin() {
+    let overlay = document.getElementById("loginOverlay");
+    if (overlay.style.display == "block") {
+        overlay.style.display = "none";
+    }
+    else {
+        overlay.style.display = "block";
+    }
+}
 async function start() {
     fillSite(await getData());
 }

@@ -1,5 +1,5 @@
 
-html{ overflow-x: hidden; }
+html{ overflow-x: hidden;}
 body {
     background-image: url("../img/background.jpg");
     background-attachment: fixed;
@@ -104,6 +104,10 @@ label{
     padding-left: 20px;
     padding-right:20px;
 }
+.adminMain #overview h4{
+    border-bottom: 0;
+}
+
 #overview + h4{
     background-color: teal;
 }
@@ -118,6 +122,28 @@ label{
 }
 #overview {
     margin-top:50px;
+}
+#overview h4 ~ h3 {
+    color:white;
+    font-weight: normal;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 20px;
+    font-size: 25px;
+    line-height: 60px;
+}
+#meinBereich > h3 {
+    line-height: 40px;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+#listStart > h4:first-of-type {
+    margin-top: 40px;
+}
+#listStart > h4:last-of-type {
+    border-bottom: none;
 }
 
 .main h2{
@@ -140,7 +166,7 @@ label{
     cursor: pointer;
 }
 
-.main input[type=text], .main input[type=email], .main input[type=password] {
+input[type=text], input[type=email], input[type=password] {
     border:none;
     border-bottom:1px solid #ccc;
     background-color: transparent;
@@ -153,10 +179,10 @@ label{
     transition: .3s;
     border-radius:0;
 }
-.main input[type=text]:focus, .main input[type=email]:focus, .main input[type=password]:focus {
+input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
     border-bottom:1px solid teal;
 }
-.main input[type=submit], input[type=button] {
+input[type=submit], input[type=button] {
     margin-top:30px;
     font-size: 24px;
     line-height: 24px;
@@ -169,7 +195,7 @@ label{
     transition: .3s;
     display: block;
 }
-.main input[type=submit]:hover, input[type=button]:hover {
+input[type=submit]:hover, [type=button]:hover {
     background-color: #008080;
     color:white;
     border: 1px solid white;
@@ -298,6 +324,14 @@ label{
     background-color: #330a28;
 }
 
+.hide{
+    display: none;
+}
+.show {
+    display: block;
+}
+
+
 div.disabled{
     opacity: 0.5;
     border: 0;
@@ -312,6 +346,44 @@ div.disabled{
     border:1px solid #333;
 }
 
+#profileOverlay{
+    background-color: #333;
+    width:220px;
+    height:70px;
+    position: fixed;
+    top: 200px;
+    left:-150px;
+    padding:10px;
+    box-sizing: border-box;
+    z-index: 100;
+}
+#profileOverlay img{
+    width:50px;
+    height: 50px;
+    float: right;
+    filter: invert(1);
+    cursor: pointer;
+}
+#profileOverlay h2 {
+    line-height:50px;
+    font-size:20px;
+    display: inline-block;
+    transition: .3s;
+}
+#profileOverlay h2:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+#profileOverlayMobile {
+    height:50px;
+    width:50px;
+    margin:10px;
+    margin-right:20px;
+    float: right;
+    filter: invert(1);
+    display:none;
+}
+
 #basketOverlay {
     position: fixed;
     top:0;
@@ -324,6 +396,54 @@ div.disabled{
     margin-top: 100px;
     display: none;
     
+}
+#loginOverlay{
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 102;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(1, 1, 1, 0.8);
+    display: none;
+}
+#loginOverlayDiv{
+    margin:0 auto;
+    width: 440px;
+    height: auto;
+    padding:20px;
+    background-color: #333;
+    margin-top: 200px;
+    border-radius:5px;
+    box-sizing: border-box;
+}
+#loginOverlayDiv h2 {
+    display: inline-block;
+}
+#loginOverlayDiv h3 {
+    float:right;
+    line-height:28px;
+    margin:0;
+    padding:0;
+    color: white;
+    cursor: pointer;
+    font-weight: 400;
+    transition: .3s;
+}
+#loginOverlayDiv h3:hover{
+    color:grey;
+}
+#loginOverlayDiv input {
+    width: 100%;
+    margin: 0 auto;
+}
+#loginOverlayDiv input:last-of-type {
+    margin-top:40px;
+    width:auto;
+    min-width: 200px;
+}
+#loginOverlayDiv label {
+    margin-top:30px;
 }
 
 
@@ -530,6 +650,19 @@ a {
     opacity: 1;
   }
 
+  #profileOverlay.moveProfile{
+    animation: moveProfile;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    left:0px;
+  }
+  #profileOverlay.moveBackProfile{
+    animation: moveBackProfile;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    left:-150px;
+  }
+
   @keyframes move {
     from{
       top:0px;
@@ -555,6 +688,25 @@ a {
       opacity: 1;
     }
   }
+
+  @keyframes moveProfile {
+    from{   
+        left:-150px; 
+    }
+    to{
+        left:0px;  
+    }
+  }
+  @keyframes moveBackProfile {
+    from{
+        left:0px;
+    }
+    to{ 
+        left:-150px;
+    }
+  }
+
+  
 
 
 
@@ -652,6 +804,13 @@ a {
     }
     #previewImage {
         max-width:100%;
+    }
+    #loginOverlayDiv {
+        width:100vw;
+        border-radius: 0;
+    }
+    #loginOverlayDiv input{
+        max-width: 100%;
     }
 }
 

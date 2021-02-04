@@ -2,6 +2,8 @@
 
 let con: HTMLElement = document.getElementById("flexbox");
 
+let activeUser: boolean = false;
+
 if (localStorage.orders == undefined) {
     localStorage.orders = JSON.stringify([]);
 }
@@ -14,6 +16,13 @@ function fillSite(_allData: Item[]): void {
     let basket: HTMLElement = document.getElementById("basket");
     let basketOverlay: HTMLElement = document.getElementById("basketOverlay");
 
+    let meinBereich: HTMLElement = document.getElementById("meinBereich");
+    console.log(localStorage.activeUser);
+    if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
+        console.log("hier");
+        meinBereich.innerText = "Mein Bereich";
+        activeUser = true;
+    }
     let sum: HTMLElement = document.createElement("h4");
     sum.setAttribute("id", "sum");
     basket.appendChild(sum);
@@ -263,6 +272,55 @@ document.getElementById("emptyBtn").addEventListener("click", function (): void 
     localStorage.orders = "";
     window.location.reload();
 });
+
+document.getElementById("profileBtn").addEventListener("click", function (): void {
+    let el: HTMLElement = document.getElementById("profileOverlay");
+    if (el.classList.contains("moveProfile"))  {
+        el.classList.remove("moveProfile");
+        el.classList.add("moveBackProfile");
+    }
+    else {
+        el.classList.remove("moveBackProfile");
+        el.classList.add("moveProfile");
+    }
+});
+
+document.querySelectorAll("input").forEach(item => {
+    item.addEventListener("input", function (this: HTMLInputElement): void {
+        moveLabel(this);
+    });
+});
+document.getElementById("meinBereich").addEventListener("click", function (): void {
+    if (activeUser) {
+        window.location.href = "profile.html";
+    }
+    else {
+        toggleLogin();
+    }
+    
+});
+document.getElementById("profileOverlayMobile").addEventListener("click", function (): void {
+    toggleLogin();
+});
+document.getElementById("close").addEventListener("click", function (): void {
+    toggleLogin();
+});
+
+document.getElementById("submit").addEventListener("click", function (): void {
+    submit("loginIndex");
+});
+
+function toggleLogin(): void {
+    let overlay: HTMLElement = document.getElementById("loginOverlay");
+    if (overlay.style.display == "block") {
+        overlay.style.display = "none";
+    }
+    else{
+        overlay.style.display = "block";
+    }
+}
+
+
 
 async function start(): Promise<void> {
     fillSite(await getData());

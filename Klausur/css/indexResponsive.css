@@ -25,14 +25,20 @@
         position: fixed;
         bottom:0;
         background-color: #333;
-        padding-left: 30px;
-        padding-right:30px;
+        padding: 8px 12px;
         right:0;
-        line-height:80px;
+        font-size:20px;
+        line-height:50px;
         border: 2px solid #ccc;
     }
     .flexbox > div:last-of-type {
         margin-bottom:80px;
+    }
+    #profileOverlay {
+        display: none;
+    }
+    #profileOverlayMobile {
+        display:block;
     }
 }
 @media only screen and (max-width: 364px){

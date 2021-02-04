@@ -224,7 +224,7 @@ function updatePreview(): void {
     let preview: HTMLElement = document.getElementById("previewDiv");
 
     if (inputName.value != "" || inputPreis.value != "" || inputImg.value != "" || inputDesc.value != "") {
-        
+
         preview.style.display = "inline-block";
 
         let preName: HTMLElement = document.getElementById("previewName");
@@ -270,4 +270,55 @@ function checkLength(_el: HTMLInputElement): void {
             errorDisplay.classList.add("displayError");
         }
     }
+}
+
+document.getElementById("filter").addEventListener("input", function (): void {
+    filter();
+});
+
+
+
+function filter(): void {
+    let filter: HTMLInputElement = <HTMLInputElement>document.getElementById("filter");
+    let elements: NodeList = document.querySelectorAll("h4");
+    let results: number = elements.length;
+    let noEl: HTMLElement = document.createElement("h3");
+    let overview: HTMLElement = document.getElementById("overview");
+    noEl.setAttribute("id", "noEl");
+    document.querySelectorAll("h4").forEach(el => {
+        if (el.innerText.toUpperCase().includes(filter.value.toUpperCase())) {
+            if (!el.classList.contains("show")){
+                el.classList.add("show");
+            }
+            if (el.classList.contains("hide")){
+                el.classList.remove("hide");
+            }
+        
+            results++;
+        }
+        else {
+            if (el.classList.contains("show")){
+                el.classList.remove("show");
+            }
+            if (!el.classList.contains("hide")){
+                el.classList.add("hide");
+            }
+            results--;
+        }
+
+    });
+    if (results == 0) {
+        noEl.innerText = "Kein Objekt gefunden";
+        if (overview.lastElementChild.id != "noEl") {
+            overview.appendChild(noEl);
+        }
+    }
+    else {
+
+        if (overview.lastElementChild.id == "noEl") {
+            overview.removeChild(overview.lastElementChild);
+        }
+    }
+
+    console.log(results);
 }

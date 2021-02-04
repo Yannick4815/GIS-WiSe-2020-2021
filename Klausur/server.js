@@ -42,7 +42,7 @@ var Klausur;
             let adresse = _request.url;
             let q = Url.parse(adresse, true);
             let qdata = q.query;
-            console.log(qdata.requestType);
+            console.log("Request: " + qdata.requestType);
             let result;
             let resArr;
             let responseBody = { status: "error", message: "" };
@@ -120,7 +120,7 @@ var Klausur;
                 items.insertOne({
                     user: "",
                     name: qdata.name,
-                    preis: qdata.preis,
+                    preis: String(Number(String(qdata.preis).replace(",", ".")).toFixed(2)).replace(".", ","),
                     status: 1,
                     description: qdata.description,
                     img: qdata.img
@@ -139,6 +139,68 @@ var Klausur;
                 else {
                     responseBody.message = "Element nicht gefunden";
                     console.log("can't find item");
+                }
+            }
+            else if (qdata.requestType == "loginIndex") {
+                result = user.find({ email: qdata.email });
+                let foundUser = await result.toArray();
+                let id;
+                let userExists;
+                if (foundUser.length > 0) {
+                    userExists = true;
+                    console.log("FOUND USER");
+                }
+                else {
+                    userExists = false;
+                    console.log("CANNOT FOUND USER");
+                }
+                if (userExists) {
+                    if (qdata.pwd == foundUser[0].passwort) {
+                        id = foundUser[0]._id;
+                        responseBody.status = "success";
+                        responseBody.message = id;
+                    }
+                    else {
+                        responseBody.message = "Falsches Passwort";
+                    }
+                }
+                else {
+                    responseBody.message = "Kein Konto mit dieser E-Mail gefunden";
+                }
+            }
+            else if (qdata.requestType == "getUserInfo") {
+                try {
+                    result = user.find({ _id: new Mongo.ObjectId(String(qdata.user)) });
+                    let foundUser = await result.toArray();
+                    console.log("GET Info of: " + foundUser[0]);
+                    responseBody.status = "success";
+                    if (foundUser.length > 0) {
+                        responseBody.message = JSON.stringify(foundUser[0]);
+                    }
+                    else {
+                        console.log("Error");
+                    }
+                }
+                catch (error) {
+                    console.log("CACTHED: Benutzer nicht gefunden");
+                }
+            }
+            else if (qdata.requestType == "getAllUserItems") {
+                try {
+                    result = items.find({ user: new Mongo.ObjectId(String(qdata.user)) });
+                    let foundItems = await result.toArray();
+                    console.log("founditems: " + foundItems);
+                    responseBody.status = "success";
+                    if (foundItems.length > 0) {
+                        responseBody.message = JSON.stringify(foundItems);
+                    }
+                    else {
+                        responseBody.message = "empty";
+                        console.log("Keine Items ausgeliehen");
+                    }
+                }
+                catch (error) {
+                    console.log("CACTHED: Benutzer nicht gefunden");
                 }
             }
             else {
@@ -165,11 +227,21 @@ async function findAndSetUser(_element, _userId, _items) {
     });
 }
 async function changeItemState(_element, _state, _items) {
-    await _items.updateOne({ _id: new Mongo.ObjectId(String(_element)) }, {
-        $set: {
-            status: String(_state)
-        }
-    });
+    if (_state == 1) {
+        await _items.updateOne({ _id: new Mongo.ObjectId(String(_element)) }, {
+            $set: {
+                user: "",
+                status: String(_state)
+            }
+        });
+    }
+    else {
+        await _items.updateOne({ _id: new Mongo.ObjectId(String(_element)) }, {
+            $set: {
+                status: String(_state)
+            }
+        });
+    }
     console.log("Change " + _element + " to " + _state);
 }
 //# sourceMappingURL=server.js.map
