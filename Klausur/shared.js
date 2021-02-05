@@ -1,4 +1,9 @@
 "use strict";
+window.onload = function () {
+    if (localStorage == null) {
+        message("LocalStorage wird nicht unterstützt", "index.html");
+    }
+};
 async function getData() {
     let respJSON = await connectToServer("getAll");
     let itemList = JSON.parse(respJSON.message);

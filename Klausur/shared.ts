@@ -1,4 +1,10 @@
 
+window.onload = function(): void {
+    if (localStorage == null) {
+        message("LocalStorage wird nicht unterstützt", "index.html");
+    }
+};
+
 async function getData(): Promise<Item[]> {
     let respJSON: ResponseBody = await connectToServer("getAll");
     let itemList: Item[] = JSON.parse(respJSON.message);
@@ -153,7 +159,7 @@ function findAndSetError(): void {  /*muss extra aufgerufen (aus einem defered s
 }
 
 async function submit(_type: string): Promise<void> {
-   
+
 
     if (document.querySelectorAll("form").length == 1 && document.querySelectorAll("#submit").length == 1) {
         let error: HTMLElement = document.createElement("h6");
@@ -192,3 +198,5 @@ async function getUserInfo(): Promise<boolean> {
     }
     return false;
 }
+
+
