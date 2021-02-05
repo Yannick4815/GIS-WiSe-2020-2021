@@ -226,7 +226,12 @@ document.getElementById("meinBereich").addEventListener("click", function () {
     }
 });
 document.getElementById("profileOverlayMobile").addEventListener("click", function () {
-    toggleLogin();
+    if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
+        window.location.href = "profile.html";
+    }
+    else {
+        toggleLogin();
+    }
 });
 document.getElementById("close").addEventListener("click", function () {
     toggleLogin();
