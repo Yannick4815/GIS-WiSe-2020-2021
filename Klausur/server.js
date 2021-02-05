@@ -1,4 +1,5 @@
 "use strict";
+/*Inhalt der main() Funktion, sowie Code zum Parsen der URL übernommen oder sehr ähnlich aus/zu https://hs-furtwangen.github.io/GIS-WiSe-2020-2021/content/P3.1/*/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Klausur = void 0;
 const Http = require("http");

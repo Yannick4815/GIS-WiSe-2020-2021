@@ -1,3 +1,5 @@
+/*Inhalt der main() Funktion, sowie Code zum Parsen der URL übernommen oder sehr ähnlich aus/zu https://hs-furtwangen.github.io/GIS-WiSe-2020-2021/content/P3.1/*/
+
 import * as Http from "http";
 import * as Mongo from "mongodb";
 import { ParsedUrlQuery } from "querystring";
