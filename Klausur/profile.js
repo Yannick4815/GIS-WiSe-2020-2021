@@ -12,7 +12,9 @@ async function getAllUserItems() {
     let response = await connectToServer("requestType=getAllUserItems&user=" + user._id);
     let items;
     let statusUser;
-    let start = document.getElementById("listStart");
+    let start = document.createElement("h2");
+    start.setAttribute("id", "listStart");
+    document.getElementById("listParent").appendChild(start);
     if (response.status == "success") {
         if (response.message == "empty") {
             items = [];

@@ -166,7 +166,7 @@ document.querySelectorAll("input").forEach(item => {
 
 document.getElementById("submit").addEventListener("click", async function (this: HTMLInputElement): Promise<void> {
     findAndSetError();
-    
+
     document.getElementById("name").style.borderBottomColor = "#ccc";
     document.getElementById("preis").style.borderBottomColor = "#ccc";
     document.getElementById("desc").style.borderBottomColor = "#ccc";
@@ -222,19 +222,25 @@ function updatePreview(): void {
     let inputDesc: HTMLInputElement = <HTMLInputElement>document.getElementById("desc");
     let inputImg: HTMLInputElement = <HTMLInputElement>document.getElementById("img");
 
+    let itemHeadingDiv: HTMLElement = document.getElementById("itemHeading");
+    let itemDescriptionDiv: HTMLElement = document.getElementById("itemDescription");
+
     let preview: HTMLElement = document.getElementById("previewDiv");
 
     if (inputName.value != "" || inputPreis.value != "" || inputImg.value != "" || inputDesc.value != "") {
 
         preview.style.display = "inline-block";
 
-        let preName: HTMLElement = document.getElementById("previewName");
+        let preName: HTMLElement = document.createElement("h4");
+        preName.setAttribute("id", "previewName");
         preName.innerText = inputName.value;
+        customAppend(preName, itemHeadingDiv);
 
         let preImg: HTMLImageElement = <HTMLImageElement>document.getElementById("previewImage");
         preImg.src = inputImg.value;
 
-        let prePreis: HTMLElement = document.getElementById("previewPreis");
+        let prePreis: HTMLElement = document.createElement("h6");
+        prePreis.setAttribute("id", "previewPreis");
 
         if (inputPreis.value != "") {
             prePreis.innerText = inputPreis.value + " € / Tag";
@@ -243,15 +249,37 @@ function updatePreview(): void {
             prePreis.innerText = "";
         }
 
-        let preDesc: HTMLElement = document.getElementById("previewDesc");
+        let preDesc: HTMLElement = document.createElement("h5");
+        preDesc.setAttribute("id", "previewDesc");
         preDesc.innerText = inputDesc.value;
+
+        customAppend(prePreis, itemDescriptionDiv);
+        customAppend(preDesc, itemDescriptionDiv);
+        
 
     }
     else {
+        customRemove("previewName", itemHeadingDiv);
+        customRemove("previewPreis", itemDescriptionDiv);
+        customRemove("previewDesc", itemDescriptionDiv);
         preview.style.display = "none";
     }
 }
-
+function customAppend(_appendChild: HTMLElement, _appendParent: HTMLElement): void {
+    if (document.getElementById(_appendChild.id) == null) {
+        _appendParent.appendChild(_appendChild);
+    }
+    else{
+        _appendParent.removeChild(document.getElementById(_appendChild.id));
+        _appendParent.appendChild(_appendChild);
+    }
+}
+function customRemove(_childId: string, _appendParent: HTMLElement): void {
+    let child: HTMLElement = document.getElementById(_childId);
+    if (child != null) {
+        _appendParent.removeChild(child);
+    }
+}
 function checkLength(_el: HTMLInputElement): void {
     let inputAsArray: string[] = _el.value.split("");
     let errorDisplay: HTMLElement = document.getElementById("error");

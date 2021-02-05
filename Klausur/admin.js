@@ -164,25 +164,51 @@ function updatePreview() {
     let inputPreis = document.getElementById("preis");
     let inputDesc = document.getElementById("desc");
     let inputImg = document.getElementById("img");
+    let itemHeadingDiv = document.getElementById("itemHeading");
+    let itemDescriptionDiv = document.getElementById("itemDescription");
     let preview = document.getElementById("previewDiv");
     if (inputName.value != "" || inputPreis.value != "" || inputImg.value != "" || inputDesc.value != "") {
         preview.style.display = "inline-block";
-        let preName = document.getElementById("previewName");
+        let preName = document.createElement("h4");
+        preName.setAttribute("id", "previewName");
         preName.innerText = inputName.value;
+        customAppend(preName, itemHeadingDiv);
         let preImg = document.getElementById("previewImage");
         preImg.src = inputImg.value;
-        let prePreis = document.getElementById("previewPreis");
+        let prePreis = document.createElement("h6");
+        prePreis.setAttribute("id", "previewPreis");
         if (inputPreis.value != "") {
             prePreis.innerText = inputPreis.value + " € / Tag";
         }
         else {
             prePreis.innerText = "";
         }
-        let preDesc = document.getElementById("previewDesc");
+        let preDesc = document.createElement("h5");
+        preDesc.setAttribute("id", "previewDesc");
         preDesc.innerText = inputDesc.value;
+        customAppend(prePreis, itemDescriptionDiv);
+        customAppend(preDesc, itemDescriptionDiv);
     }
     else {
+        customRemove("previewName", itemHeadingDiv);
+        customRemove("previewPreis", itemDescriptionDiv);
+        customRemove("previewDesc", itemDescriptionDiv);
         preview.style.display = "none";
+    }
+}
+function customAppend(_appendChild, _appendParent) {
+    if (document.getElementById(_appendChild.id) == null) {
+        _appendParent.appendChild(_appendChild);
+    }
+    else {
+        _appendParent.removeChild(document.getElementById(_appendChild.id));
+        _appendParent.appendChild(_appendChild);
+    }
+}
+function customRemove(_childId, _appendParent) {
+    let child = document.getElementById(_childId);
+    if (child != null) {
+        _appendParent.removeChild(child);
     }
 }
 function checkLength(_el) {
