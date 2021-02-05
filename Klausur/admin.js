@@ -118,6 +118,7 @@ document.querySelectorAll("input").forEach(item => {
     });
 });
 document.getElementById("submit").addEventListener("click", async function () {
+    findAndSetError();
     document.getElementById("name").style.borderBottomColor = "#ccc";
     document.getElementById("preis").style.borderBottomColor = "#ccc";
     document.getElementById("desc").style.borderBottomColor = "#ccc";

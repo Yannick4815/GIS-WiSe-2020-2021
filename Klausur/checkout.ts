@@ -1,9 +1,7 @@
 
 
-
-let inputError: HTMLElement = document.getElementById("error");
-
 document.getElementById("submit").addEventListener("click", function (this: HTMLButtonElement): void {
+    findAndSetError();
     document.getElementById("vorname").style.borderBottomColor = "#ccc";
     document.getElementById("nachname").style.borderBottomColor = "#ccc";
     document.getElementById("email").style.borderBottomColor = "#ccc";

@@ -1,6 +1,6 @@
 "use strict";
-let inputError = document.getElementById("error");
 document.getElementById("submit").addEventListener("click", function () {
+    findAndSetError();
     document.getElementById("vorname").style.borderBottomColor = "#ccc";
     document.getElementById("nachname").style.borderBottomColor = "#ccc";
     document.getElementById("email").style.borderBottomColor = "#ccc";

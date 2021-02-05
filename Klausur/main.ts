@@ -300,7 +300,7 @@ document.getElementById("meinBereich").addEventListener("click", function (): vo
     
 });
 document.getElementById("profileOverlayMobile").addEventListener("click", function (): void {
-    if( localStorage.activeUser != undefined && localStorage.activeUser != "") {
+    if ( localStorage.activeUser != undefined && localStorage.activeUser != "") {
         window.location.href = "profile.html";
     }
     else{

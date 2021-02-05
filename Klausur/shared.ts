@@ -139,7 +139,30 @@ function message(_mes: string, _target: string): void {
     setTimeout(function () { window.location.href = _target; }, 7000);
 }
 
+let inputError: HTMLElement;
+
+function findAndSetError(): void {  /*muss extra aufgerufen (aus einem defered script)werden, da sonst manchmal querySelector kein element findet*/
+    if (document.querySelectorAll("form").length == 1 && document.querySelectorAll("#submit").length == 1) {
+        let error: HTMLElement = document.createElement("h6");
+        error.setAttribute("id", "error");
+        let submit: HTMLElement = document.getElementById("submit");
+        document.querySelector("form").insertBefore(error, submit);
+        console.log("hier");
+        inputError = document.getElementById(error.id);
+    }
+}
+
 async function submit(_type: string): Promise<void> {
+   
+
+    if (document.querySelectorAll("form").length == 1 && document.querySelectorAll("#submit").length == 1) {
+        let error: HTMLElement = document.createElement("h6");
+        error.setAttribute("id", "error");
+        let submit: HTMLElement = document.getElementById("submit");
+        document.querySelector("form").insertBefore(error, submit);
+        console.log("hier");
+        inputError = document.getElementById(error.id);
+    }
 
     let response: ResponseBody = await connectToServer("insert");
 
@@ -148,13 +171,13 @@ async function submit(_type: string): Promise<void> {
         message("Vielen Dank für Ihre Reservierung! Sie erhalten weitere Details per E-Mail.", "index.html");
     }
     else if (response.status == "success" && _type == "loginIndex") {
-       
+
         localStorage.activeUser = response.message;
         window.location.href = "profile.html";
     }
     else {
-        document.getElementById("error").classList.add("displayError");
-        document.getElementById("error").innerText = response.message;
+        inputError.classList.add("displayError");
+        inputError.innerText = response.message;
     }
 }
 
@@ -165,7 +188,7 @@ async function getUserInfo(): Promise<boolean> {
         if (response.status == "success") {
             user = JSON.parse(response.message);
             return true;
-        }  
+        }
     }
     return false;
 }

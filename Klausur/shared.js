@@ -111,7 +111,26 @@ function message(_mes, _target) {
     body.appendChild(container);
     setTimeout(function () { window.location.href = _target; }, 7000);
 }
+let inputError;
+function findAndSetError() {
+    if (document.querySelectorAll("form").length == 1 && document.querySelectorAll("#submit").length == 1) {
+        let error = document.createElement("h6");
+        error.setAttribute("id", "error");
+        let submit = document.getElementById("submit");
+        document.querySelector("form").insertBefore(error, submit);
+        console.log("hier");
+        inputError = document.getElementById(error.id);
+    }
+}
 async function submit(_type) {
+    if (document.querySelectorAll("form").length == 1 && document.querySelectorAll("#submit").length == 1) {
+        let error = document.createElement("h6");
+        error.setAttribute("id", "error");
+        let submit = document.getElementById("submit");
+        document.querySelector("form").insertBefore(error, submit);
+        console.log("hier");
+        inputError = document.getElementById(error.id);
+    }
     let response = await connectToServer("insert");
     if (response.status == "success" && _type == "order") {
         localStorage.orders = "";
@@ -122,8 +141,8 @@ async function submit(_type) {
         window.location.href = "profile.html";
     }
     else {
-        document.getElementById("error").classList.add("displayError");
-        document.getElementById("error").innerText = response.message;
+        inputError.classList.add("displayError");
+        inputError.innerText = response.message;
     }
 }
 let user;
