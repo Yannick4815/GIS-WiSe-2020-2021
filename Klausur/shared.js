@@ -7,7 +7,6 @@ window.onload = function () {
 async function getData() {
     let respJSON = await connectToServer("getAll");
     let itemList = JSON.parse(respJSON.message);
-    console.log(itemList);
     return itemList;
 }
 async function connectToServer(_requestType) {
@@ -24,7 +23,6 @@ async function connectToServer(_requestType) {
     else {
         url = url + "?" + _requestType;
     }
-    console.log(url);
     let response = await fetch(url);
     return await response.json();
 }
@@ -51,7 +49,6 @@ function checkFor(_el, _searchArray) {
         for (let i = 1; i < _searchArray.length; i++) {
             if (!inputAsArray.includes(_searchArray[i])) {
                 pass = false;
-                console.log("does not contain " + _searchArray[i]);
                 break;
             }
             else {
@@ -79,7 +76,6 @@ function checkFor(_el, _searchArray) {
             }
         });
     }
-    console.log("return " + pass);
     return pass;
 }
 function moveLabel(_input) {
@@ -123,19 +119,11 @@ function findAndSetError() {
         error.setAttribute("id", "error");
         let submit = document.getElementById("submit");
         document.querySelector("form").insertBefore(error, submit);
-        console.log("hier");
         inputError = document.getElementById(error.id);
     }
 }
 async function submit(_type) {
-    if (document.querySelectorAll("form").length == 1 && document.querySelectorAll("#submit").length == 1) {
-        let error = document.createElement("h6");
-        error.setAttribute("id", "error");
-        let submit = document.getElementById("submit");
-        document.querySelector("form").insertBefore(error, submit);
-        console.log("hier");
-        inputError = document.getElementById(error.id);
-    }
+    findAndSetError();
     let response = await connectToServer("insert");
     if (response.status == "success" && _type == "order") {
         localStorage.orders = "";

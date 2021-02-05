@@ -38,7 +38,6 @@ document.getElementById("submit").addEventListener("click", function () {
         document.getElementById("pwd").style.borderBottomColor = "red";
         pass = false;
     }
-    console.log("finalPass " + pass);
     if (pass) {
         submit("order");
     }
@@ -112,7 +111,6 @@ async function main() {
         if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
             if (await getUserInfo()) {
                 anmelden();
-                console.log(localStorage.activeUser);
                 let inputEmail = document.getElementById("email");
                 inputEmail.value = user.email;
                 let inputPwd = document.getElementById("pwd");
@@ -126,7 +124,6 @@ async function main() {
     else {
         message("Es ist ein Fehler aufgetreten!", "index.html");
     }
-    console.log("local: " + localStorage.orders);
 }
 main();
 //# sourceMappingURL=checkout.js.map

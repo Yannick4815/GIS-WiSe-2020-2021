@@ -274,7 +274,6 @@ async function findAndSetUser(_element: string, _userId: string, _items: Mongo.C
             user: _userId,
             status: "2"
         }
-
     });
 }
 
@@ -285,7 +284,6 @@ async function changeItemState(_element: string, _state: number, _items: Mongo.C
                 user: "",
                 status: String(_state)
             }
-    
         });
     }
     else {
@@ -293,9 +291,7 @@ async function changeItemState(_element: string, _state: number, _items: Mongo.C
             $set: {
                 status: String(_state)
             }
-    
         });
     }
-    
     console.log("Change " + _element + " to " + _state);
 }

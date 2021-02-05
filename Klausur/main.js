@@ -13,9 +13,7 @@ function fillSite(_allData) {
     let basket = document.getElementById("basket");
     let basketOverlay = document.getElementById("basketOverlay");
     let meinBereich = document.getElementById("meinBereich");
-    console.log(localStorage.activeUser);
     if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
-        console.log("hier");
         meinBereich.innerText = "Mein Bereich";
         activeUser = true;
     }
@@ -146,7 +144,6 @@ function addListeners() {
                 let itemEl = document.getElementById("item_" + stringArr[1]);
                 let itemName = document.getElementById("name_" + stringArr[1]).innerText;
                 let search = orders.find(e => e === stringArr[1]);
-                console.log(stringArr[1]);
                 if (search != undefined) {
                     let key = orders.indexOf(search, 0);
                     orders.splice(key, 1);
@@ -169,7 +166,6 @@ function addListeners() {
 //fülle localStorage mit mitgegebenem Warenkorb
 function fillStorage(_orders) {
     localStorage.orders = JSON.stringify(_orders);
-    console.log(localStorage);
 }
 //zähle items im Warenkorb
 //wenn _add = true, füge mitgegebenes Item auf den Warenkorb
@@ -195,7 +191,6 @@ function countAndFillBasket(_add, _item) {
 async function displaySum(_basket) {
     let sum = document.getElementById("sum");
     sum.innerText = calculateSum(await getData());
-    console.log("basket: " + _basket.hasChildNodes());
 }
 document.getElementById("emptyBtn").addEventListener("click", function () {
     localStorage.orders = "";

@@ -17,12 +17,12 @@ function fillSite(_allData: Item[]): void {
     let basketOverlay: HTMLElement = document.getElementById("basketOverlay");
 
     let meinBereich: HTMLElement = document.getElementById("meinBereich");
-    console.log(localStorage.activeUser);
+
     if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
-        console.log("hier");
         meinBereich.innerText = "Mein Bereich";
         activeUser = true;
     }
+
     let sum: HTMLElement = document.createElement("h4");
     sum.setAttribute("id", "sum");
     basket.appendChild(sum);
@@ -170,6 +170,7 @@ function toggleOverlay(_orders: string[]): void {
 
 function addListeners(): void {
     document.querySelectorAll(".reservierenBtn").forEach(item => {
+
         let el: HTMLElement = document.getElementById(item.id);
 
         if (el.classList.contains("disabled")) {
@@ -189,7 +190,6 @@ function addListeners(): void {
                 let itemName: string = document.getElementById("name_" + stringArr[1]).innerText;
 
                 let search: string = orders.find(e => e === stringArr[1]);
-                console.log(stringArr[1]);
 
                 if (search != undefined) {
                     let key: number = orders.indexOf(search, 0);
@@ -206,19 +206,8 @@ function addListeners(): void {
                     fillStorage(orders);
                     countAndFillBasket(true, itemName);
                 }
-
-
-
-
-
-
-
-
-
-
             });
         }
-
     });
 }
 
@@ -226,7 +215,6 @@ function addListeners(): void {
 //fülle localStorage mit mitgegebenem Warenkorb
 function fillStorage(_orders: string[]): void {
     localStorage.orders = JSON.stringify(_orders);
-    console.log(localStorage);
 }
 
 
@@ -234,6 +222,7 @@ function fillStorage(_orders: string[]): void {
 //wenn _add = true, füge mitgegebenes Item auf den Warenkorb
 //wenn _add = false, entferne mitgegebenes Item aus dem Warenkorb
 function countAndFillBasket(_add: boolean, _item: string): void {
+
     let itemsCount: number = JSON.parse(localStorage.orders).length;
     let basketBtn: HTMLElement = document.getElementById("basketBtn");
     let basket: HTMLElement = document.getElementById("basket");
@@ -264,17 +253,19 @@ async function displaySum(_basket: HTMLElement): Promise<void> {
 
     sum.innerText = calculateSum(await getData());
 
-    console.log("basket: " + _basket.hasChildNodes());
-
 }
 
 document.getElementById("emptyBtn").addEventListener("click", function (): void {
+
     localStorage.orders = "";
     window.location.reload();
+
 });
 
 document.getElementById("profileBtn").addEventListener("click", function (): void {
+
     let el: HTMLElement = document.getElementById("profileOverlay");
+
     if (el.classList.contains("moveProfile"))  {
         el.classList.remove("moveProfile");
         el.classList.add("moveBackProfile");
@@ -297,16 +288,14 @@ document.getElementById("meinBereich").addEventListener("click", function (): vo
     else {
         toggleLogin();
     }
-    
 });
 document.getElementById("profileOverlayMobile").addEventListener("click", function (): void {
     if ( localStorage.activeUser != undefined && localStorage.activeUser != "") {
         window.location.href = "profile.html";
     }
-    else{
+    else {
         toggleLogin();
     }
-   
 });
 document.getElementById("close").addEventListener("click", function (): void {
     toggleLogin();
@@ -321,7 +310,7 @@ function toggleLogin(): void {
     if (overlay.style.display == "block") {
         overlay.style.display = "none";
     }
-    else{
+    else {
         overlay.style.display = "block";
     }
 }

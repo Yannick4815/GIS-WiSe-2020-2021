@@ -37,7 +37,6 @@ async function addRow(_item) {
     });
 }
 function changeState(_item, _state, _index) {
-    let state;
     let stateText;
     let itemName = itemArray[_index + 2];
     let elVar = document.getElementById("toggleElementVariable");
@@ -47,14 +46,12 @@ function changeState(_item, _state, _index) {
     let delOverlay = document.getElementById("deleteOverlay");
     let delElVar = document.getElementById("deleteElementVariable");
     if (_state == 2) {
-        state = 3;
         stateText = "ausgeliehen";
         overlay.style.display = "block";
         elVar.innerText = itemName;
         stVar.innerText = stateText;
     }
     else if (_state == 3) {
-        state = 1;
         stateText = "frei";
         overlay.style.display = "block";
         elVar.innerText = itemName;
@@ -62,11 +59,9 @@ function changeState(_item, _state, _index) {
     }
     else {
         delOverlay.style.display = "block";
-        state = 1;
         delElVar.innerText = itemName;
     }
     objectVar.value = itemArray[_index];
-    //console.log("Wechsel " + (_index + 2) + " zu " + state);
 }
 async function findUser(_id) {
     let res = await connectToServer("requestType=findUser&user=" + _id);
@@ -93,7 +88,6 @@ document.getElementById("toggleNo").addEventListener("click", function () {
 document.getElementById("deleteYes").addEventListener("click", function () {
     let elVar = document.getElementById("objectId");
     let request;
-    console.log("delete" + elVar.innerText);
     request = "requestType=delete&element=" + elVar.value;
     connectToServer(request);
     reload("deleteOverlayDiv");
@@ -123,7 +117,6 @@ document.getElementById("submit").addEventListener("click", async function () {
     document.getElementById("preis").style.borderBottomColor = "#ccc";
     document.getElementById("desc").style.borderBottomColor = "#ccc";
     document.getElementById("img").style.borderBottomColor = "#ccc";
-    let inputError = document.getElementById("error");
     if (!checkFor(document.getElementById("name"), [""])) {
         inputError.innerText = "Alle Felder ausfüllen";
         inputError.classList.add("displayError");
@@ -169,12 +162,15 @@ function updatePreview() {
     let preview = document.getElementById("previewDiv");
     if (inputName.value != "" || inputPreis.value != "" || inputImg.value != "" || inputDesc.value != "") {
         preview.style.display = "inline-block";
+        /*Name*/
         let preName = document.createElement("h4");
         preName.setAttribute("id", "previewName");
         preName.innerText = inputName.value;
         customAppend(preName, itemHeadingDiv);
+        /*Bild*/
         let preImg = document.getElementById("previewImage");
         preImg.src = inputImg.value;
+        /*Preis*/
         let prePreis = document.createElement("h6");
         prePreis.setAttribute("id", "previewPreis");
         if (inputPreis.value != "") {
@@ -183,10 +179,11 @@ function updatePreview() {
         else {
             prePreis.innerText = "";
         }
+        customAppend(prePreis, itemDescriptionDiv);
+        /*Beschreibung*/
         let preDesc = document.createElement("h5");
         preDesc.setAttribute("id", "previewDesc");
         preDesc.innerText = inputDesc.value;
-        customAppend(prePreis, itemDescriptionDiv);
         customAppend(preDesc, itemDescriptionDiv);
     }
     else {
@@ -272,6 +269,5 @@ function filter() {
             overview.removeChild(overview.lastElementChild);
         }
     }
-    console.log(results);
 }
 //# sourceMappingURL=admin.js.map

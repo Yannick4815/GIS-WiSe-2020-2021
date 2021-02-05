@@ -1,7 +1,9 @@
 
 
 document.getElementById("submit").addEventListener("click", function (this: HTMLButtonElement): void {
+
     findAndSetError();
+
     document.getElementById("vorname").style.borderBottomColor = "#ccc";
     document.getElementById("nachname").style.borderBottomColor = "#ccc";
     document.getElementById("email").style.borderBottomColor = "#ccc";
@@ -41,7 +43,7 @@ document.getElementById("submit").addEventListener("click", function (this: HTML
         document.getElementById("pwd").style.borderBottomColor = "red";
         pass = false;
     }
-    console.log("finalPass " + pass);
+
     if (pass) {
         submit("order");
     }
@@ -53,6 +55,7 @@ document.querySelectorAll("input").forEach(item => {
         moveLabel(this);
     });
 });
+
 function fill(_allData: Item[]): void {
 
     let overview: HTMLElement = document.getElementById("overview");
@@ -72,13 +75,13 @@ function fill(_allData: Item[]): void {
                 itemArray.push(element._id);
 
             }
-
         });
 
         h4.appendChild(span);
         overview.appendChild(h4);
 
     }
+
     arrayInput.value = JSON.stringify(itemArray);
     fillSum(calculateSum(_allData));
 }
@@ -109,20 +112,21 @@ document.getElementById("neukunde").addEventListener("click", function (): void 
         labelVorname.style.display = "block";
         labelNachname.style.display = "block";
     }
+
     this.classList.add("active");
     document.getElementById("anmelden").classList.remove("active");
     rT.value = "register";
-
-
 });
 
 
 document.getElementById("anmelden").addEventListener("click", function (): void {
 
     anmelden();
+
 });
 
 function anmelden(): void {
+
     if (inputVorname.style.display != "none") {
         inputVorname.style.display = "none";
         inputNachname.style.display = "none";
@@ -130,6 +134,7 @@ function anmelden(): void {
         labelNachname.style.display = "none";
 
     }
+
     document.getElementById("anmelden").classList.add("active");
     document.getElementById("neukunde").classList.remove("active");
     rT.value = "login";
@@ -137,13 +142,13 @@ function anmelden(): void {
 
 
 async function main(): Promise<void> {
+    
     if (localStorage.orders != "[]" && localStorage.orders != "") {
         fill(await getData());
 
-        if(localStorage.activeUser != undefined && localStorage.activeUser != "") {
+        if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
             if (await getUserInfo()) {
                 anmelden();
-                console.log(localStorage.activeUser);
                 let inputEmail: HTMLInputElement = <HTMLInputElement>document.getElementById("email");
                 inputEmail.value = user.email;
     
@@ -159,7 +164,6 @@ async function main(): Promise<void> {
     else {
         message("Es ist ein Fehler aufgetreten!", "index.html");
     }
-    console.log("local: " + localStorage.orders);
-
 }
+
 main();

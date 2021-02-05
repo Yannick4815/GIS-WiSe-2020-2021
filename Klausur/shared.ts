@@ -8,7 +8,6 @@ window.onload = function(): void {
 async function getData(): Promise<Item[]> {
     let respJSON: ResponseBody = await connectToServer("getAll");
     let itemList: Item[] = JSON.parse(respJSON.message);
-    console.log(itemList);
     return itemList;
 }
 
@@ -27,16 +26,10 @@ async function connectToServer(_requestType: string): Promise<ResponseBody> {
     else {
         url = url + "?" + _requestType;
     }
-    console.log(url);
-
-
-
 
     let response: Response = await fetch(url);
 
     return await response.json();
-
-
 }
 
 function calculateSum(_allData: Item[]): string {
@@ -67,7 +60,6 @@ function checkFor(_el: HTMLElement, _searchArray: string[]): boolean {
         for (let i: number = 1; i < _searchArray.length; i++) {
             if (!inputAsArray.includes(_searchArray[i])) {
                 pass = false;
-                console.log("does not contain " + _searchArray[i]);
                 break;
             }
             else {
@@ -97,7 +89,6 @@ function checkFor(_el: HTMLElement, _searchArray: string[]): boolean {
             }
         });
     }
-    console.log("return " + pass);
     return pass;
 }
 
@@ -109,6 +100,7 @@ function moveLabel(_input: HTMLInputElement): void {
         label.classList.add("moveBack");
         label.classList.remove("move");
         _input.placeholder = "";
+
     }
     else {
 
@@ -120,7 +112,9 @@ function moveLabel(_input: HTMLInputElement): void {
 }
 
 function message(_mes: string, _target: string): void {
+
     let body: HTMLElement = document.getElementById("body");
+
     let container: HTMLDivElement = document.createElement("div");
     let mesDiv: HTMLDivElement = document.createElement("div");
     let mes: HTMLParagraphElement = document.createElement("h2");
@@ -142,7 +136,7 @@ function message(_mes: string, _target: string): void {
     container.appendChild(mesDiv);
     body.appendChild(container);
 
-    setTimeout(function () { window.location.href = _target; }, 7000);
+    setTimeout(function (): void { window.location.href = _target; }, 7000);
 }
 
 let inputError: HTMLElement;
@@ -153,22 +147,13 @@ function findAndSetError(): void {  /*muss extra aufgerufen (aus einem defered s
         error.setAttribute("id", "error");
         let submit: HTMLElement = document.getElementById("submit");
         document.querySelector("form").insertBefore(error, submit);
-        console.log("hier");
         inputError = document.getElementById(error.id);
     }
 }
 
 async function submit(_type: string): Promise<void> {
 
-
-    if (document.querySelectorAll("form").length == 1 && document.querySelectorAll("#submit").length == 1) {
-        let error: HTMLElement = document.createElement("h6");
-        error.setAttribute("id", "error");
-        let submit: HTMLElement = document.getElementById("submit");
-        document.querySelector("form").insertBefore(error, submit);
-        console.log("hier");
-        inputError = document.getElementById(error.id);
-    }
+    findAndSetError();
 
     let response: ResponseBody = await connectToServer("insert");
 
@@ -177,7 +162,6 @@ async function submit(_type: string): Promise<void> {
         message("Vielen Dank für Ihre Reservierung! Sie erhalten weitere Details per E-Mail.", "index.html");
     }
     else if (response.status == "success" && _type == "loginIndex") {
-
         localStorage.activeUser = response.message;
         window.location.href = "profile.html";
     }
@@ -187,7 +171,9 @@ async function submit(_type: string): Promise<void> {
     }
 }
 
+
 let user: Benutzer;
+
 async function getUserInfo(): Promise<boolean> {
     if (localStorage.activeUser != undefined && localStorage.activeUser != "") {
         let response: ResponseBody = await connectToServer("requestType=getUserInfo&user=" + localStorage.activeUser);
